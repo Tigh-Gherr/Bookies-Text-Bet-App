@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:background="@android:color/transparent"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/text_view_participantName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="Name"
+            android:textColor="@color/textColourPrimary"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/text_view_participantOdds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="Odds"
+            android:textSize="15sp" />
+
+
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:layout_gravity="bottom"
+        android:background="@color/md_grey_200"
+        android:layout_marginLeft="@dimen/recycler_item_divider_margin"
+        android:layout_marginRight="@dimen/recycler_item_divider_margin"/>
+
+</FrameLayout>

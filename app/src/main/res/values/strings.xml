@@ -1,0 +1,90 @@
+<resources>
+    <string name="app_name">Tommy French\'s Bookmakers</string>
+
+    <string name="toolbar_title_multiple_bets">Bet %1$s/%2$s Result</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_editing_error">Report Bet Error</string>
+    <string name="action_test_text_bet">Test Text Bet</string>
+
+    <string name="title_activity_result">Bet Result</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="title_activity_selection_screen">Official App</string>
+    <string name="title_activity_input">Input Barcode</string>
+    <string name="title_activity_account_input">Account Input</string>
+    <string name="title_activity_meetings">Text Bet</string>
+    <string name="title_activity_text_bet_market">Text Bet</string>
+    <string name="title_activity_bet_slip">Bet Slip</string>
+    <string name="title_activity_better_text_bet">Text Bet Slip</string>
+    <string name="title_activity_add_selection">Meetings</string>
+
+    <string name="sms_body_edited_wrong">There appears to be an error with barcode %s can a member of staff please review this?</string>
+    <string name="sms_body_test_text_bet">Test</string>
+    <string name="sms_body_text_bet_account">Account: %s \n</string>
+    <string name="sms_body_text_bet_selections">%1$s%2$s at %3$s\n</string>
+    <string name="sms_body_text_bet_wagers">%1$s%2$s %3$s</string>
+    <string name="sms_body_text_bet">Account: %1$s\n%2$s%3$s</string>
+
+    <string name="alert_dialog_title_confirm_bet_recheck">Confirm Message</string>
+    <string name="alert_dialog_title_confirm_text_bet">Confirm Text Bet</string>
+    <string name="alert_dialog_body_confirm_text_bet">Send current betslip to Tommy French Bookmaker\'s via SMS (standard network chargers may apply).</string>
+    <string name="alert_dialog_body_test">This will send a test message to Tommy French Bookmakers text betting service.</string>
+    <string name="alert_dialog_body_editing_error">This will request (via text message) Tommy French Bookmakers to review the currently scanned docket. Standard network chargers may apply.</string>
+    <string name="alert_dialog_button_confirm">Confirm</string>
+    <string name="alert_dialog_button_cancel">Cancel</string>
+
+    <string name="error_message_no_internet">Lost internet connection. Reconnect and retry.</string>
+    <string name="error_message_barcode_format">Incorrect barcode format: %s</string>
+    <string name="error_message_barcode_length">Barcode is either too long or too short.</string>
+    <string name="error_message_empty_betslip">The betslip is empty.</string>
+    <string name="error_message_no_wagers">No wagers added.</string>
+
+    <string name="text_view_checking_internet">Checking internet…</string>
+    <string name="text_view_select_scanning_option">Select barcode scanning option:</string>
+    <string name="text_view_barcode_info">Barcodes are 14–17 digits long.</string>
+    <string name="text_view_totalStake">Bet Stake: £</string>
+    <string name="text_view_barcode">Barcode:</string>
+    <string name="text_view_payout_total">Bet Payout:</string>
+
+    <string name="edit_text_input">Enter barcode.</string>
+    <string name="edit_text_barcode_length">Your barcode length:</string>
+
+    <string name="card_view_more">MORE</string>
+    <string name="card_view_less">LESS</string>
+
+    <string name="button_type">Type</string>
+    <string name="button_scan">Scan</string>
+    <string name="button_go">Go</string>
+
+    <string name="hint_account_number">Account Number</string>
+    <string name="hint_reference_number">Reference Number</string>
+
+    <string name="download_url_account">http://www.barcodetesting.co.nf/getDocket/fromAccountAndReference.php?account=%1$s&amp;reference=%2$s</string>
+    <string name="download_url_barcode">http://www.barcodetesting.co.nf/getDocket/fromBarcode.php?barcode=%s</string>
+    <string name="download_url_williamhill_xml">http://cachepricefeeds.williamhill.com/openbet_cdn?action=template&amp;template=getHierarchyByMarketType&amp;classId=2&amp;marketSort=--&amp;filterBIR=N</string>
+
+    <string name="snackbar_action_return">Return</string>
+    <string name="snackbar_action_undo">UNDO</string>
+    <string name="snackbar_action_add_wager">Add wager</string>
+
+    <string name="snackbar_body_no_wagers">No wagers to show.</string>
+    <string name="snackbar_body_message_sent">Message sent.</string>
+    <string name="snackbar_body_sending_failed">Sending failed.</string>
+    <string name="snackbar_body_no_signal">No signal.</string>
+    <string name="snackbar_body_no_pdu">No PDU.</string>
+    <string name="snackbar_body_mobile_radio_off">Mobile radio off.</string>
+    <string name="snackbar_body_message_delivered">Message delivered.</string>
+    <string name="snackbar_body_message_not_delivered">Message not delivered.</string>
+    <string name="snackbar_body_selection_already_on_betslip">%s already on betslip.</string>
+    <string name="snackbar_body_added_without_odds">%s added without odds.</string>
+    <string name="snackbar_body_added_with_oddes">%1$s added at %2$s.</string>
+    <string name="snackbar_body_betslip_selection_removed">%s removed.</string>
+    <string name="snackbar_body_betslip_wager_removed">£%1$s%2$s %3$s was removed.</string>
+    <string name="snackbar_body_no_selections">No selections to place a wager on.</string>
+    <string name="snackbar_body_enter_valid_wager">Enter a valid wager.</string>
+    <string name="snackbar_body_wager_added">%s added.</string>
+    <string name="title_activity_test_correct_score">TestCorrectScoreActivity</string>
+    <string name="title_activity_grow_correct_score">GrowCorrectScoreActivity</string>
+
+
+</resources>

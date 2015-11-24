@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="£"
+            android:textSize="18sp"/>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/appcompat_edit_text_dialogNewWagerStake"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:inputType="numberDecimal"
+            android:layout_weight="2"
+            android:hint="0.50"/>
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/appcompat_checkbox_dialogNewWagerEachWay"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Each way"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/appcompat_spinner_dialogNewWagerWagers"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+
+</LinearLayout>

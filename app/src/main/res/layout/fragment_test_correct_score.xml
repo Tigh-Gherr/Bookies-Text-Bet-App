@@ -1,0 +1,66 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_white_1000"
+    tools:context="com.tommyfrenchbookmakers.officialapp.TestCorrectScoreActivityFragment"
+    tools:showIn="@layout/activity_test_correct_score">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Correct Score"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/appcompat_button_confirmOdds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="odds"
+                android:textColor="@color/md_white_1000" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/text_view_homeScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home: 0" />
+
+        <com.tommyfrenchbookmakers.officialapp.SeekbarWithIntervals
+            android:id="@+id/seekbar_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
+
+
+        <TextView
+            android:id="@+id/text_view_awayScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Away: 0" />
+
+        <com.tommyfrenchbookmakers.officialapp.SeekbarWithIntervals
+            android:id="@+id/seekbar_away"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</FrameLayout>

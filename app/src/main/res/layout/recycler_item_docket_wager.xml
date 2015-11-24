@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        android:background="@android:color/transparent"/>
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view_wagerCard"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        card_view:cardCornerRadius="2dp"
+        card_view:cardBackgroundColor="@color/md_white_1000"
+        card_view:cardElevation="3dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center">
+
+            <LinearLayout
+                android:id="@+id/linear_layout_wager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_view_bsWagerStake"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Stake"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_view_eachWay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:text="ew"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/text_view_WagerType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linear_layout_wager"
+                android:gravity="center"
+                android:text="Wager Type"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+            <ImageView
+                android:id="@+id/image_view_wagerWinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_view_WagerType"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/ic_check_black_24dp" />
+
+            <TextView
+                android:id="@+id/text_view_wagerPayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_view_WagerType"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:text="Payout" />
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="8dp"
+        android:background="@android:color/transparent"/>
+
+</LinearLayout>

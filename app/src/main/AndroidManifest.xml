@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.android.tighearnan.frenchsscanner"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:versionCode="2"
+    android:versionName="1.1">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-feature
+        android:name="android.hardware.camera2"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.Camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.Camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="com.tommyfrenchbookmakers.officialapp.activities.resultchecker.ScannerActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask">
+        </activity>
+        <activity
+            android:name="com.tommyfrenchbookmakers.officialapp.activities.resultchecker.ResultPagerActivity"
+            android:label="@string/title_activity_result"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tommyfrenchbookmakers.officialapp.activities.resultchecker.ScannerActivity" />
+        </activity>
+        <activity
+            android:name="com.tommyfrenchbookmakers.officialapp.activities.SplashScreenActivity"
+            android:label="@string/app_name"
+            android:noHistory="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tommyfrenchbookmakers.officialapp.activities.SelectionScreenActivity"
+            android:label="@string/title_activity_selection_screen"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.tommyfrenchbookmakers.officialapp.activities.resultchecker.TypeBarcodeActivity"
+            android:label="@string/title_activity_input"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tommyfrenchbookmakers.officialapp.activities.SelectionScreenActivity" />
+        </activity>
+        <activity
+            android:name="com.tommyfrenchbookmakers.officialapp.activities.resultchecker.AccountInputActivity"
+            android:label="@string/title_activity_account_input"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tommyfrenchbookmakers.officialapp.activities.SelectionScreenActivity" />
+        </activity>
+        <activity
+            android:name="com.tommyfrenchbookmakers.officialapp.activities.textbet.TextBetSlipActivity"
+            android:label="@string/title_activity_better_text_bet"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tommyfrenchbookmakers.officialapp.activities.SelectionScreenActivity" />
+        </activity>
+        <activity
+            android:name="com.tommyfrenchbookmakers.officialapp.activities.textbet.AddSelectionActivity"
+            android:label="@string/title_activity_add_selection"
+            android:parentActivityName="com.tommyfrenchbookmakers.officialapp.activities.textbet.TextBetSlipActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tommyfrenchbookmakers.officialapp.activities.textbet.TextBetSlipActivity" />
+        </activity>
+        <activity
+            android:name="com.tommyfrenchbookmakers.officialapp.TestCorrectScoreActivity"
+            android:label="@string/title_activity_test_correct_score"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity
+            android:name="com.tommyfrenchbookmakers.officialapp.GrowCorrectScoreActivity"
+            android:label="@string/title_activity_grow_correct_score"
+            android:theme="@style/AppTheme">
+        </activity>
+    </application>
+
+</manifest>

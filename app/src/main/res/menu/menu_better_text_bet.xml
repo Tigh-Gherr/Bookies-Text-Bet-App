@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.tommyfrenchbookmakers.officialapp.activities.textbet.AddSelectionActivity">
+    <item
+        android:id="@+id/show_wagers"
+        android:icon="@drawable/ic_magnifying_glass_pound_54px"
+        android:orderInCategory="100"
+        android:title="Show Wagers"
+        app:showAsAction="always" />
+</menu>

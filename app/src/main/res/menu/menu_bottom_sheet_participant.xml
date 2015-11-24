@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/add_with_odds"
+        android:title="Add with odds" />
+    <item android:id="@+id/add_without_odds"
+        android:title="Add without odds" />
+</menu>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/popup_takeOdds"
+        android:checkable="true"
+        android:title="Take odds" />
+    <item
+        android:id="@+id/popup_nrFav"
+        android:checkable="true"
+        android:title="NR Insert Fav" />
+    <item
+        android:id="@+id/popup_nr2ndFav"
+        android:checkable="true"
+        android:title="NR Insert 2nd Fav" />
+
+</menu>

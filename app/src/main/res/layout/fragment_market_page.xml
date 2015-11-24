@@ -1,0 +1,42 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.tommyfrenchbookmakers.officialapp.fragments.textbet.MarketPageFragment">
+
+    <LinearLayout
+        android:id="@+id/linear_layout_raceOver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/progress_bar_textBetMarketSpinner"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+        <TextView
+            android:id="@+id/text_view_textBetMarketDownloadingParticipants"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/progress_bar_textBetMarketSpinner"
+            android:layout_centerHorizontal="true"
+            android:text="Downloading market..."
+            android:textColor="@color/md_grey_400"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_participants"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:alpha="0"
+        android:background="@color/md_white_1000"
+        android:visibility="invisible" />
+
+</FrameLayout>

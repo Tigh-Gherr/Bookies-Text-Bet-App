@@ -1,0 +1,145 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    tools:context="com.tommyfrenchbookmakers.officialapp.fragments.textbet.TextBetSlipActivityFragment"
+    tools:showIn="@layout/activity_better_text_bet">
+
+    <TextView
+        android:id="@+id/text_view_addContentToBetSlip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:text="Use the button below to add a selection/wager"
+        android:textColor="@color/md_grey_500"
+        android:textSize="18sp" />
+
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        android:id="@+id/sliding_layout_betSlipWagers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:gravity="bottom"
+        sothree:umanoPanelHeight="@dimen/text_betslip_panel_height"
+        sothree:umanoShadowHeight="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_betterBetSlipSelections"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <View
+                android:id="@+id/view_space"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:background="@android:color/transparent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/frame_layout_topPanel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bet_slip_top_panel_height"
+                android:background="@color/md_white_1000"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:gravity="left|center">
+
+                    <TextView
+                        android:id="@+id/text_view_numberOfWagers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="#" />
+
+                    <TextView
+                        android:id="@+id/text_view_textNumberOfWagers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" wager" />
+
+                    <TextView
+                        android:id="@+id/text_view_textNumberOfWagersPlural"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="s" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/text_view_potentialWinnings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center"
+                    android:alpha="0"
+                    android:text="Potential Winnings" />
+            </FrameLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_betterBetSlipWagers"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_gravity="bottom"
+                android:alpha="0" />
+
+        </LinearLayout>
+
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fam_betSlipOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        app:layout_behavior="com.tommyfrenchbookmakers.officialapp.FloatingActionMenuBehaviour">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_newSelection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_magnifying_glass_plus_32px"
+            fab:fab_label="Add Selection"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_newWager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_pound_32px"
+            fab:fab_label="Add Wager"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_placeBet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_paper_plane_32px"
+            fab:fab_label="Place Bet"
+            fab:fab_size="mini" />
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+</android.support.design.widget.CoordinatorLayout>

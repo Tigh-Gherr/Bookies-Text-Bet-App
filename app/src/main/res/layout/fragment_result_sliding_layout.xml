@@ -1,0 +1,21 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear_layout_slidingPanel"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/background_material_light">
+
+    <include
+        android:id="@+id/topPanel"
+        layout="@layout/fragment_result_top_panel" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:id="@+id/recycler_view_wagerWinnings"
+        android:layout_width="match_parent"
+        android:layout_height="132dp"
+        android:scrollbars="horizontal" />
+
+</LinearLayout>

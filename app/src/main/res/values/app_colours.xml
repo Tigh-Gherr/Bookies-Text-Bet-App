@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primaryColour">@color/md_indigo_500</color>
+    <color name="primaryColourDark">@color/md_indigo_700</color>
+    <color name="accentColour">@color/md_red_500</color>
+    <color name="highlightColour">@color/md_indigo_300</color>
+    <color name="textColourPrimary">#212121</color>
+    <color name="textColourSecondary">#737373</color>
+
+</resources>
