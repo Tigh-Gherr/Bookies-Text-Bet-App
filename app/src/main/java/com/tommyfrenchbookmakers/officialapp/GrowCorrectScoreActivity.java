@@ -41,7 +41,7 @@ public class GrowCorrectScoreActivity extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(DiscreteSeekBar seekBar) {
-
+                // Testing the comment.
             }
 
             @Override
