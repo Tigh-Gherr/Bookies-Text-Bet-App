@@ -116,13 +116,21 @@
         </activity>
         <activity
             android:name="com.tommyfrenchbookmakers.officialapp.TestCorrectScoreActivity"
+            android:parentActivityName="com.tommyfrenchbookmakers.officialapp.activities.SelectionScreenActivity"
             android:label="@string/title_activity_test_correct_score"
             android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tommyfrenchbookmakers.officialapp.activities.SelectionScreenActivity" />
         </activity>
         <activity
             android:name="com.tommyfrenchbookmakers.officialapp.GrowCorrectScoreActivity"
             android:label="@string/title_activity_grow_correct_score"
+            android:parentActivityName="com.tommyfrenchbookmakers.officialapp.activities.SelectionScreenActivity"
             android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tommyfrenchbookmakers.officialapp.activities.SelectionScreenActivity" />
         </activity>
     </application>
 
