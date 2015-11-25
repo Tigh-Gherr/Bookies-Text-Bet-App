@@ -1,52 +1,50 @@
 package com.tommyfrenchbookmakers.officialapp.fragments.resultchecker;
 
-import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NavUtils;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.view.Gravity;
+import android.os.Bundle;
+import android.support.v7.widget.AppCompatImageButton;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.tighearnan.frenchsscanner.R;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.Result;
 import com.tommyfrenchbookmakers.officialapp.Global;
 import com.tommyfrenchbookmakers.officialapp.activities.resultchecker.ResultPagerActivity;
 import com.tommyfrenchbookmakers.officialapp.customutils.NetworkUtils;
-import com.tommyfrenchbookmakers.officialapp.enumerators.DownloadType;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Random;
 
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
+import me.dm7.barcodescanner.zbar.BarcodeFormat;
+import me.dm7.barcodescanner.zbar.Result;
+import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
-public class ScannerActivityFragment extends Fragment implements ZXingScannerView.ResultHandler {
+/**
+ * A placeholder fragment containing a simple view.
+ */
+public class BarcodeScannerActivityFragment extends Fragment implements ZBarScannerView.ResultHandler {
 
     private int mCameraNumber = 0;
 
-    private ImageView mLogoImageView;
-    private ImageButton mToggleCameraImageButton;
-    private ImageButton mToggleFlashImageButton;
+    private ZBarScannerView mScannerView;
+    private AppCompatImageButton mToggleCameraImageButton;
+    private AppCompatImageButton mToggleFlashImageButton;
 
-    private ZXingScannerView mScannerView;
+    public BarcodeScannerActivityFragment() {
+    }
 
-    public ScannerActivityFragment() {
+    private void createSnackBar(int stringResId) {
+        Snackbar.make(getView(), stringResId, Snackbar.LENGTH_LONG).show();
+    }
+
+    private void restartCamera() {
+        mScannerView.startCamera(mCameraNumber);
+        setFlash(false);
     }
 
     private void setFlash(boolean turnOn) {
@@ -59,39 +57,45 @@ public class ScannerActivityFragment extends Fragment implements ZXingScannerVie
         }
     }
 
+    @Override
+    public void handleResult(Result result) {
+        String barcode = result.getContents();
+
+        if(!barcode.startsWith("0")) {
+            Toast.makeText(getActivity(), "Not a docket.", Toast.LENGTH_LONG).show();
+            mScannerView.startCamera(mCameraNumber);
+            return;
+        } else {
+            barcode = barcode.substring(1);
+        }
+
+        if(result.getBarcodeFormat() == BarcodeFormat.I25) {
+            if(NetworkUtils.networkIsAvailable(getActivity())) {
+                Intent i = new Intent(getActivity(), ResultPagerActivity.class);
+                i.putExtra(Global.INTENT_KEY_DOWNLOAD_TYPE, Global.DOWNLOAD_TYPE_BARCODE);
+                i.putExtra(Global.INTENT_KEY_BARCODE, barcode);
+                startActivity(i);
+            } else {
+                createSnackBar(R.string.error_message_no_internet);
+                restartCamera();
+            }
+        } else {
+            createSnackBar(R.string.error_message_barcode_format);
+            restartCamera();
+        }
+
+        mScannerView.startCamera(mCameraNumber);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_scanner, container, false);
+        View v = inflater.inflate(R.layout.fragment_barcode_scanner, container, false);
 
-        mScannerView = (ZXingScannerView) v.findViewById(R.id.scanner_view);
-        mScannerView.setFormats(new ArrayList<>(Collections.singletonList(BarcodeFormat.ITF)));
+        mScannerView = (ZBarScannerView) v.findViewById(R.id.scanner_view);
+        mScannerView.setFormats(new ArrayList<BarcodeFormat>(Collections.singletonList(BarcodeFormat.I25)));
 
-        mLogoImageView = (ImageView) v.findViewById(R.id.image_view_frenchsLogo);
-        mLogoImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Random rn = new Random();
-                String barcodes[] = {
-                        "121065221926915",
-                        "121065281923315",
-                        "121065291925315",
-                        "121065201684115",
-                        "121065221924715",
-                        "121065261923815",
-                        "121065291958115",
-                        "121065272151015",
-                        "121065272154215"
-                };
-                Intent i = new Intent(getActivity(), ResultPagerActivity.class);
-                i.putExtra(DownloadType.intentKey(), DownloadType.BARCODE);
-                i.putExtra("BARCODE", barcodes[rn.nextInt(barcodes.length)]);
-                startActivity(i);
-            }
-        });
-
-        mToggleCameraImageButton = (ImageButton) v.findViewById(R.id.image_button_toggleCamera);
+        mToggleCameraImageButton = (AppCompatImageButton) v.findViewById(R.id.appcompat_image_button_toggleCamera);
         if (android.hardware.Camera.getNumberOfCameras() < 2) {
             mToggleCameraImageButton.setVisibility(View.INVISIBLE);
             mToggleCameraImageButton.setClickable(false);
@@ -134,7 +138,7 @@ public class ScannerActivityFragment extends Fragment implements ZXingScannerVie
             }
         });
 
-        mToggleFlashImageButton = (ImageButton) v.findViewById(R.id.image_button_toggleFlash);
+        mToggleFlashImageButton = (AppCompatImageButton) v.findViewById(R.id.appcompat_image_button_toggleFlash);
         if (!getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
             mToggleFlashImageButton.setVisibility(View.GONE);
             mToggleFlashImageButton.setClickable(false);
@@ -164,55 +168,16 @@ public class ScannerActivityFragment extends Fragment implements ZXingScannerVie
     }
 
     @Override
-    public void handleResult(Result result) {
-        String barcode = result.getText();
-
-        if(!result.getText().startsWith("0")) {
-            Toast.makeText(getActivity(), "Not a docket.", Toast.LENGTH_LONG).show();
-            mScannerView.startCamera(mCameraNumber);
-            return;
-        }
-
-        if(result.getText().startsWith("0")) barcode = barcode.substring(1);
-
-        if (result.getBarcodeFormat() == BarcodeFormat.ITF || result.getBarcodeFormat() == BarcodeFormat.CODE_128) {
-            if (NetworkUtils.networkIsAvailable(getActivity())) {
-                Intent i = new Intent(getActivity(), ResultPagerActivity.class);
-                i.putExtra(DownloadType.intentKey(), DownloadType.BARCODE);
-                i.putExtra("BARCODE", barcode);
-                startActivity(i);
-            } else {
-                Toast toast = Toast.makeText(getActivity(), R.string.error_message_no_internet, Toast.LENGTH_LONG);
-                ((TextView) ((LinearLayout) toast.getView()).getChildAt(0))
-                        .setGravity(Gravity.CENTER_HORIZONTAL);
-                toast.show();
-                mScannerView.startCamera(mCameraNumber);
-                setFlash(false);
-            }
-        } else {
-            Toast toast = Toast.makeText(getActivity(), getString(R.string.error_message_barcode_format, result.getBarcodeFormat().toString()),
-                    Toast.LENGTH_LONG);
-            ((TextView) ((LinearLayout) toast.getView()).getChildAt(0))
-                    .setGravity(Gravity.CENTER_HORIZONTAL);
-            toast.show();
-
-            mScannerView.startCamera(mCameraNumber);
-            setFlash(false);
-        }
-
+    public void onResume() {
+        super.onResume();
+        mScannerView.startCamera();
+        setFlash(false);
+        mScannerView.setResultHandler(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mScannerView.stopCamera();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mScannerView.startCamera(mCameraNumber);
-        setFlash(false);
-        mScannerView.setResultHandler(this);
     }
 }

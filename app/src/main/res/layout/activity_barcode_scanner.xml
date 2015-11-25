@@ -6,17 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.tommyfrenchbookmakers.officialapp.TestCameraActivity">
+    tools:context="com.tommyfrenchbookmakers.officialapp.activities.resultchecker.BarcodeScannerActivity">
 
     <fragment android:id="@+id/fragment"
-        android:name="com.tommyfrenchbookmakers.officialapp.TestCameraActivityFragment"
+        android:name="com.tommyfrenchbookmakers.officialapp.fragments.resultchecker.BarcodeScannerActivityFragment"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:layout="@layout/fragment_test_camera" />
+        tools:layout="@layout/fragment_barcode_scanner" />
 
 
 </android.support.design.widget.CoordinatorLayout>

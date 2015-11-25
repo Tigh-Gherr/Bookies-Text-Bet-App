@@ -119,23 +119,6 @@
                     android:textColor="@color/md_white_1000"
                     android:textStyle="bold"/>
 
-                <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/appcompat_button_grow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Grow"
-                    android:textColor="@color/md_white_1000"
-                    android:textStyle="bold"/>
-
-                <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/appcompat_button_camera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Camera"
-                    android:textColor="@color/md_white_1000"
-                    android:textStyle="bold"/>
-
 
             </LinearLayout>
 

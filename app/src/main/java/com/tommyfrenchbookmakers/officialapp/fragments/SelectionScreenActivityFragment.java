@@ -20,13 +20,11 @@ import android.view.ViewGroup;
 
 import com.android.tighearnan.frenchsscanner.R;
 import com.tommyfrenchbookmakers.officialapp.Global;
-import com.tommyfrenchbookmakers.officialapp.GrowCorrectScoreActivity;
-import com.tommyfrenchbookmakers.officialapp.TestCameraActivity;
 import com.tommyfrenchbookmakers.officialapp.TestCorrectScoreActivity;
 import com.tommyfrenchbookmakers.officialapp.activities.resultchecker.AccountInputActivity;
-import com.tommyfrenchbookmakers.officialapp.activities.textbet.TextBetSlipActivity;
-import com.tommyfrenchbookmakers.officialapp.activities.resultchecker.ScannerActivity;
+import com.tommyfrenchbookmakers.officialapp.activities.resultchecker.BarcodeScannerActivity;
 import com.tommyfrenchbookmakers.officialapp.activities.resultchecker.TypeBarcodeActivity;
+import com.tommyfrenchbookmakers.officialapp.activities.textbet.TextBetSlipActivity;
 import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlip;
 import com.tommyfrenchbookmakers.officialapp.singletons.BetSlipSingleton;
 
@@ -64,7 +62,7 @@ public class SelectionScreenActivityFragment extends Fragment {
                     case Global.REQUEST_PERMISSION_SMS:
                         builder.setTitle("Request Permission to use SMS");
                         builder.setMessage("TFB App's Text Betting feature requires you to allow the app to send messages " +
-                                "direclty from the app to TFB. To use this feature, click Allow on the forthcoming " +
+                                "directly from the app to TFB. To use this feature, click Allow on the forthcoming " +
                                 "pop-up.");
                         break;
                 }
@@ -93,7 +91,7 @@ public class SelectionScreenActivityFragment extends Fragment {
             case Global.REQUEST_PERMISSION_CAMERA:
                 if(granted) {
                     // Granted
-                    startActivity(new Intent(getActivity(), ScannerActivity.class));
+                    startActivity(new Intent(getActivity(), BarcodeScannerActivity.class));
                 } else {
                     Snackbar.make(getView(), "Cannot start Barcode Scanner, Camera permission not granted.", Snackbar.LENGTH_LONG)
                             .show();
@@ -126,9 +124,9 @@ public class SelectionScreenActivityFragment extends Fragment {
             public void onClick(View v) {
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if(checkForPermission(Global.REQUEST_PERMISSION_CAMERA, Manifest.permission.CAMERA))
-                        startActivity(new Intent(getActivity(), ScannerActivity.class));
+                        startActivity(new Intent(getActivity(), BarcodeScannerActivity.class));
                 } else {
-                    startActivity(new Intent(getActivity(), ScannerActivity.class));
+                    startActivity(new Intent(getActivity(), BarcodeScannerActivity.class));
                 }
             }
         });
@@ -172,23 +170,16 @@ public class SelectionScreenActivityFragment extends Fragment {
             }
         });
 
-        AppCompatButton growButton = (AppCompatButton) v.findViewById(R.id.appcompat_button_grow);
-        growButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), GrowCorrectScoreActivity.class));
-            }
-        });
+//        AppCompatButton growButton = (AppCompatButton) v.findViewById(R.id.appcompat_button_grow);
+//        growButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(getActivity(), GrowCorrectScoreActivity.class));
+//            }
+//        });
 
-        AppCompatButton cameraButton = (AppCompatButton) v.findViewById(R.id.appcompat_button_camera);
-        cameraButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), TestCameraActivity.class));
-            }
-        });
-
-//        testButton.setVisibility(View.GONE);
+//        belowButton.setVisibility(View.GONE);
+//        growButton.setVisibility(View.GONE);
         return v;
     }
 }

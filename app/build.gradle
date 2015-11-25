@@ -28,7 +28,6 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:support-v4:23.1.1'
     // Functionality
-    compile 'me.dm7.barcodescanner:zxing:1.8.2'
     compile 'me.dm7.barcodescanner:zbar:1.8.3'
     compile files('libs/combinatoricslib-2.0.jar')
     // UI
@@ -36,5 +35,5 @@ dependencies {
     compile 'com.github.clans:fab:1.6.0'
     compile 'jp.wasabeef:recyclerview-animators:2.0.0'
     compile 'com.cocosw:bottomsheet:1.+@aar'
-    compile 'org.adw.library:discrete-seekbar:1.0.0'
+//    compile 'org.adw.library:discrete-seekbar:1.0.0'
 }

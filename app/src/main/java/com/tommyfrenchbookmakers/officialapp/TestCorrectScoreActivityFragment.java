@@ -25,7 +25,7 @@ import java.util.List;
 public class TestCorrectScoreActivityFragment extends Fragment {
 
     private TextView mHomeTextView;
-//    private AppCompatSeekBar mHomeSeekBar;
+    //    private AppCompatSeekBar mHomeSeekBar;
     private SeekbarWithIntervals mHomeSeekBar;
     private TextView mHomeStartScoreTextView;
     private LinearLayout mHomeMiddleScoresLinearLayout;
@@ -33,7 +33,7 @@ public class TestCorrectScoreActivityFragment extends Fragment {
 
     private TextView mAwayTextView;
     private SeekbarWithIntervals mAwaySeekBar;
-//    private AppCompatSeekBar mAwaySeekBar;
+    //    private AppCompatSeekBar mAwaySeekBar;
     private TextView mAwayStartScoreTextView;
     private LinearLayout mAwayMiddleScoresLinearLayout;
     private TextView mAwayEndScoreLinearLayout;
