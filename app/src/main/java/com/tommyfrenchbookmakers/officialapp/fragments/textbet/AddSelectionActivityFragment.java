@@ -184,14 +184,12 @@ public class AddSelectionActivityFragment extends Fragment {
                     Market market = meeting.getMarkets().get(mMarketTimesTabLayout.getSelectedTabPosition());
                     ((AddSelectionActivity) getActivity()).setToolbarTitle(meeting.getName());
                     ((AddSelectionActivity) getActivity()).getSupportActionBar().setSubtitle(
-                            "EW: " + (!market.getEwOdds().equals("1/1") ? market.getEwOdds() : "N/A") + " Triciast: " + (market.isTricast() ? "Yes" : "No")
+                            "EW: " + (!market.getEwOdds().equals("1/1") ? market.getEwOdds() : "N/A") + " Tricast: " + (market.isTricast() ? "Yes" : "No")
                     );
                 } else {
                     ((AddSelectionActivity) getActivity()).setToolbarTitle(getString(R.string.title_activity_add_selection));
                     ((AddSelectionActivity) getActivity()).getSupportActionBar().setSubtitle(null);
                 }
-
-                // TODO: Add meeting info to subtitle
             }
 
             @Override

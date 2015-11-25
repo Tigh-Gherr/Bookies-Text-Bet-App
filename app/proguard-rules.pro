@@ -15,10 +15,13 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-repackageclasses "com.tommyfrenchbookmakers.officialapp"
+
+-keep class android.support.v7.app.** { *; }
 -keep class android.support.v4.app.** { *; }
 -keep interface android.support.v4.app.** { *; }
--keep class android.support.v7.app.** { *; }
 -keep interface android.support.v7.app.** { *; }
 -keep class android.support.design.app.** { *; }
--keep class com.google.zxing.** { *; }
--keep class org.paukov.combinatorics.** {*; }
+
+#-keep class com.google.zxing.** { *; }
+#-keep class org.paukov.combinatorics.** {*; }
