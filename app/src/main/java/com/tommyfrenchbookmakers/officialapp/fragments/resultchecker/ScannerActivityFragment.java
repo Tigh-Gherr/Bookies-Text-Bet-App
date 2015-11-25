@@ -31,6 +31,7 @@ import com.tommyfrenchbookmakers.officialapp.enumerators.DownloadType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -65,7 +66,7 @@ public class ScannerActivityFragment extends Fragment implements ZXingScannerVie
         View v = inflater.inflate(R.layout.fragment_scanner, container, false);
 
         mScannerView = (ZXingScannerView) v.findViewById(R.id.scanner_view);
-        mScannerView.setFormats(new ArrayList<>(Arrays.asList(BarcodeFormat.ITF)));
+        mScannerView.setFormats(new ArrayList<>(Collections.singletonList(BarcodeFormat.ITF)));
 
         mLogoImageView = (ImageView) v.findViewById(R.id.image_view_frenchsLogo);
         mLogoImageView.setOnClickListener(new View.OnClickListener() {
@@ -135,7 +136,7 @@ public class ScannerActivityFragment extends Fragment implements ZXingScannerVie
 
         mToggleFlashImageButton = (ImageButton) v.findViewById(R.id.image_button_toggleFlash);
         if (!getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
-            mToggleFlashImageButton.setVisibility(View.INVISIBLE);
+            mToggleFlashImageButton.setVisibility(View.GONE);
             mToggleFlashImageButton.setClickable(false);
         }
         mToggleFlashImageButton.setOnTouchListener(new View.OnTouchListener() {

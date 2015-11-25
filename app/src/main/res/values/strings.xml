@@ -85,6 +85,7 @@
     <string name="snackbar_body_wager_added">%s added.</string>
     <string name="title_activity_test_correct_score">TestCorrectScoreActivity</string>
     <string name="title_activity_grow_correct_score">GrowCorrectScoreActivity</string>
+    <string name="title_activity_test_camera">TestCameraActivity</string>
 
 
 </resources>

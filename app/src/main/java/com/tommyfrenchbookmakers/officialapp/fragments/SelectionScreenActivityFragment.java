@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import com.android.tighearnan.frenchsscanner.R;
 import com.tommyfrenchbookmakers.officialapp.Global;
 import com.tommyfrenchbookmakers.officialapp.GrowCorrectScoreActivity;
+import com.tommyfrenchbookmakers.officialapp.TestCameraActivity;
 import com.tommyfrenchbookmakers.officialapp.TestCorrectScoreActivity;
 import com.tommyfrenchbookmakers.officialapp.activities.resultchecker.AccountInputActivity;
 import com.tommyfrenchbookmakers.officialapp.activities.textbet.TextBetSlipActivity;
@@ -176,6 +177,14 @@ public class SelectionScreenActivityFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), GrowCorrectScoreActivity.class));
+            }
+        });
+
+        AppCompatButton cameraButton = (AppCompatButton) v.findViewById(R.id.appcompat_button_camera);
+        cameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), TestCameraActivity.class));
             }
         });
 

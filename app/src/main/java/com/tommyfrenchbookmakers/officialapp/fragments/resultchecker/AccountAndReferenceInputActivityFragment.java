@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.tighearnan.frenchsscanner.R;
+import com.tommyfrenchbookmakers.officialapp.Global;
 import com.tommyfrenchbookmakers.officialapp.activities.resultchecker.ResultPagerActivity;
 import com.tommyfrenchbookmakers.officialapp.customutils.NetworkUtils;
 import com.tommyfrenchbookmakers.officialapp.enumerators.DownloadType;
@@ -39,9 +40,9 @@ public class AccountAndReferenceInputActivityFragment extends Fragment {
                 if (mReferenceNumberEditText.getText().toString().length() == 4) {
                     if (NetworkUtils.networkIsAvailable(getActivity())) {
                         Intent i = new Intent(getActivity(), ResultPagerActivity.class);
-                        i.putExtra(DownloadType.intentKey(), DownloadType.ACCOUNT_AND_REFERENCE);
-                        i.putExtra("ACCOUNT", mAccountNumberEditText.getText().toString().toLowerCase());
-                        i.putExtra("REFERENCE", mReferenceNumberEditText.getText().toString());
+                        i.putExtra(Global.INTENT_KEY_DOWNLOAD_TYPE, Global.DOWNLOAD_TYPE_ACCOUNT_AND_REFERENCE);
+                        i.putExtra(Global.INTENT_KEY_ACCOUNT, mAccountNumberEditText.getText().toString().toLowerCase());
+                        i.putExtra(Global.INTENT_KEY_REFERENCE, mReferenceNumberEditText.getText().toString());
                         startActivity(i);
                     } else {
                         Toast.makeText(getActivity(), "Not connected to internet", Toast.LENGTH_LONG).show();

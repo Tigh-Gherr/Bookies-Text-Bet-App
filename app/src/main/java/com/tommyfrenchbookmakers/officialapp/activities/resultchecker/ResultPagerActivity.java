@@ -13,7 +13,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -108,15 +107,15 @@ public class ResultPagerActivity extends AppCompatActivity implements DataDownlo
     @Override
     protected void onResume() {
         super.onResume();
-        Docket docket = GlobalDocket.get(this).getDocket();
-
-        if(mDocket == null) {
-            if(docket == null) {
-                finish();
-            } else {
-                mDocket = docket;
-            }
-        }
+//        Docket docket = GlobalDocket.get(this).getDocket();
+//
+//        if(mDocket == null) {
+//            if(docket == null) {
+//                finish();
+//            } else {
+//                mDocket = docket;
+//            }
+//        }
     }
 
     // Sets up activity
@@ -132,19 +131,20 @@ public class ResultPagerActivity extends AppCompatActivity implements DataDownlo
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Fetches the download type.
-        DownloadType type = (DownloadType) getIntent().getSerializableExtra(DownloadType.intentKey());
+//        DownloadType type = (DownloadType) getIntent().getSerializableExtra(DownloadType.intentKey());
+        int type = getIntent().getIntExtra(Global.INTENT_KEY_DOWNLOAD_TYPE, 0);
 
         // If the download dype was a barcode.
-        if (type == DownloadType.BARCODE) {
+        if (type == Global.DOWNLOAD_TYPE_BARCODE) {
             String barcode = getIntent().getStringExtra("BARCODE");
             DownloadUtils.DocketFromBarcode docketFromBarcode =
                     new DownloadUtils.DocketFromBarcode(ResultPagerActivity.this, this);
             docketFromBarcode.execute(getString(R.string.download_url_barcode, barcode));
 
         // If the download type was an account and reference
-        } else if (type == DownloadType.ACCOUNT_AND_REFERENCE) {
-            String account = getIntent().getStringExtra("ACCOUNT");
-            String reference = getIntent().getStringExtra("REFERENCE");
+        } else if (type == Global.DOWNLOAD_TYPE_ACCOUNT_AND_REFERENCE) {
+            String account = getIntent().getStringExtra(Global.INTENT_KEY_ACCOUNT);
+            String reference = getIntent().getStringExtra(Global.INTENT_KEY_REFERENCE);
 
             DownloadUtils.DocketFromAccountAndReference docketFromAccountAndReference =
                     new DownloadUtils.DocketFromAccountAndReference(ResultPagerActivity.this, this);
