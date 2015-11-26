@@ -27,9 +27,11 @@
 
     <string name="alert_dialog_title_confirm_bet_recheck">Confirm Message</string>
     <string name="alert_dialog_title_confirm_text_bet">Confirm Text Bet</string>
+
     <string name="alert_dialog_body_confirm_text_bet">Send current betslip to Tommy French Bookmaker\'s via SMS (standard network chargers may apply).</string>
     <string name="alert_dialog_body_test">This will send a test message to Tommy French Bookmakers text betting service.</string>
     <string name="alert_dialog_body_editing_error">This will request (via text message) Tommy French Bookmakers to review the currently scanned docket. Standard network chargers may apply.</string>
+
     <string name="alert_dialog_button_confirm">Confirm</string>
     <string name="alert_dialog_button_cancel">Cancel</string>
 
@@ -83,9 +85,9 @@
     <string name="snackbar_body_no_selections">No selections to place a wager on.</string>
     <string name="snackbar_body_enter_valid_wager">Enter a valid wager.</string>
     <string name="snackbar_body_wager_added">%s added.</string>
-    <string name="title_activity_test_correct_score">TestCorrectScoreActivity</string>
-    <string name="title_activity_grow_correct_score">GrowCorrectScoreActivity</string>
-    <string name="title_activity_test_camera">TestCameraActivity</string>
+    <string name="alert_dialog_body_leave_betslip_warning">Leaving this page will erase you current betslip.</string>
+    <string name="alert_dialog_button_leave">Leave</string>
+    <string name="alert_dialog_button_stay">Stay</string>
 
 
 </resources>

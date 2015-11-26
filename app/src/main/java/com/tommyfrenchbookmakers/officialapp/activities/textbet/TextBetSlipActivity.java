@@ -57,13 +57,13 @@ public class TextBetSlipActivity extends AppCompatActivity {
             // If there is a selection on the bet slip, warn the user that the bet slip will be erased.
             if (betSlip.getSelections().size() > 0) {
                 new AlertDialog.Builder(this).setTitle("Bet not sent!")
-                        .setMessage("Leaving this page will erase you current betlsip.")
-                        .setPositiveButton("Leave", new DialogInterface.OnClickListener() {
+                        .setMessage(getString(R.string.alert_dialog_body_leave_betslip_warning))
+                        .setPositiveButton(getString(R.string.alert_dialog_button_leave), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 TextBetSlipActivity.super.onBackPressed();
                             }
-                        }).setNegativeButton("Stay", new DialogInterface.OnClickListener() {
+                        }).setNegativeButton(getString(R.string.alert_dialog_button_stay), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

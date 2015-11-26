@@ -9,5 +9,5 @@ public enum WagerCategory {
     FULL_COVER_WITHOUT_SINGLES,
     UP_AND_DOWN,
     SPECIAL,
-    PENDING_RETURN;
+    PENDING_RETURN
 }
