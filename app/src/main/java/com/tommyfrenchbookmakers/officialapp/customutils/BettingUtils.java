@@ -1,5 +1,6 @@
 package com.tommyfrenchbookmakers.officialapp.customutils;
 
+import com.tommyfrenchbookmakers.officialapp.Global;
 import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlip;
 import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlipSelection;
 import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlipWager;
@@ -40,7 +41,7 @@ public class BettingUtils {
         double totalEachWayWinningsSoFar = 0d;
 
         switch (wager.getWagerType().getCategory()) {
-            case MULTIPLE:
+            case Global.WAGER_CATEGORY_MULTIPLE:
                 totalWinningsSoFar = 0d;
                 ICombinatoricsVector<BetSlipSelection> initialVector = Factory.createVector(betSlip.getSelections());
                 Generator<BetSlipSelection> generator =
@@ -66,7 +67,7 @@ public class BettingUtils {
                     totalWinningsSoFar += (combinationWinnings + combinationEachWay);
                 }
                 break;
-            case FULL_COVER_WITH_SINGLES:
+            case Global.WAGER_CATEGORY_FULL_COVER_WITH_SINGLES:
                 totalWinningsSoFar = 1d;
                 totalEachWayWinningsSoFar = 1d;
                 for (BetSlipSelection s : betSlip.getSelections()) {
@@ -86,7 +87,7 @@ public class BettingUtils {
                 totalEachWayWinningsSoFar = (totalEachWayWinningsSoFar - 1) * Double.parseDouble(wager.getUnitStake());// * bonus;
                 totalWinningsSoFar += totalEachWayWinningsSoFar;
                 break;
-            case FULL_COVER_WITHOUT_SINGLES:
+            case Global.WAGER_CATEGORY_FULL_COVER_WITHOUT_SINGLES:
                 totalWinningsSoFar = Double.parseDouble(wager.getUnitStake());
                 totalEachWayWinningsSoFar = Double.parseDouble(wager.getUnitStake());
                 double singlesToSubtract = 0d;
@@ -108,11 +109,11 @@ public class BettingUtils {
                 totalWinningsSoFar -= (singlesToSubtract + (Double.parseDouble(wager.getUnitStake()) * 2));
                 if(wager.isEachWay()) totalEachWayWinningsSoFar -= eachWaySinglesToSubtract;
                 totalWinningsSoFar += totalEachWayWinningsSoFar;
-            case UP_AND_DOWN:
+            case Global.WAGER_CATEGORY_UP_AND_DOWN:
                 break;
-            case SPECIAL:
+            case Global.WAGER_CATEGORY_SPECIAL:
                 break;
-            case PENDING_RETURN:
+            case Global.WAGER_CATEGORY_PENDING_RETURN:
                 break;
             default:
                 return 0;
