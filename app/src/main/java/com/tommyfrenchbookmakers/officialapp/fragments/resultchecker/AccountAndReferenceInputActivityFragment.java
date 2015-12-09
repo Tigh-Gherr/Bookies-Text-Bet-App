@@ -20,7 +20,6 @@ import com.android.tighearnan.frenchsscanner.R;
 import com.tommyfrenchbookmakers.officialapp.Global;
 import com.tommyfrenchbookmakers.officialapp.activities.resultchecker.ResultPagerActivity;
 import com.tommyfrenchbookmakers.officialapp.customutils.NetworkUtils;
-import com.tommyfrenchbookmakers.officialapp.enumerators.DownloadType;
 
 
 public class AccountAndReferenceInputActivityFragment extends Fragment {

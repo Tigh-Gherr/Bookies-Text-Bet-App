@@ -23,7 +23,6 @@ import com.tommyfrenchbookmakers.officialapp.singletons.GlobalDocket;
 import com.tommyfrenchbookmakers.officialapp.customutils.DownloadUtils;
 import com.tommyfrenchbookmakers.officialapp.customutils.SMSUtils;
 import com.tommyfrenchbookmakers.officialapp.docketobjects.Docket;
-import com.tommyfrenchbookmakers.officialapp.enumerators.DownloadType;
 import com.tommyfrenchbookmakers.officialapp.fragments.resultchecker.ResultActivityFragment;
 import com.tommyfrenchbookmakers.officialapp.transformers.ZoomOutPageTransformer;
 
@@ -131,7 +130,6 @@ public class ResultPagerActivity extends AppCompatActivity implements DataDownlo
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Fetches the download type.
-//        DownloadType type = (DownloadType) getIntent().getSerializableExtra(DownloadType.intentKey());
         int type = getIntent().getIntExtra(Global.INTENT_KEY_DOWNLOAD_TYPE, 0);
 
         // If the download dype was a barcode.

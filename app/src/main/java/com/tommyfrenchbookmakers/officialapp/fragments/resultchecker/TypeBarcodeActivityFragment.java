@@ -22,9 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.tighearnan.frenchsscanner.R;
+import com.tommyfrenchbookmakers.officialapp.Global;
 import com.tommyfrenchbookmakers.officialapp.activities.resultchecker.ResultPagerActivity;
 import com.tommyfrenchbookmakers.officialapp.customutils.NetworkUtils;
-import com.tommyfrenchbookmakers.officialapp.enumerators.DownloadType;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -43,7 +43,7 @@ public class TypeBarcodeActivityFragment extends Fragment {
         if (mInputEditText.getText().length() >= 14 && mInputEditText.getText().length() <= 17) {
             if (NetworkUtils.networkIsAvailable(getActivity())) {
                 Intent i = new Intent(getActivity(), ResultPagerActivity.class);
-                i.putExtra(DownloadType.intentKey(), DownloadType.BARCODE);
+                i.putExtra(Global.INTENT_KEY_BARCODE, Global.DOWNLOAD_TYPE_BARCODE);
                 i.putExtra("BARCODE", mInputEditText.getText().toString());
                 startActivity(i);
             } else {

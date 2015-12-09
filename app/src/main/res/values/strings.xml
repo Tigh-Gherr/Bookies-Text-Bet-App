@@ -17,6 +17,8 @@
     <string name="title_activity_bet_slip">Bet Slip</string>
     <string name="title_activity_better_text_bet">Text Bet Slip</string>
     <string name="title_activity_add_selection">Meetings</string>
+    <string name="title_activity_test_camera">Camera</string>
+    <string name="title_activity_test_correct_score">TestCorrectScore</string>
 
     <string name="sms_body_edited_wrong">There appears to be an error with barcode %s can a member of staff please review this?</string>
     <string name="sms_body_test_text_bet">Test</string>
