@@ -320,7 +320,7 @@ public final class ParseUtils {
                     participant.setMarketName(market.getName().substring(0, market.getName().lastIndexOf(" - ")));
                 // If the parser is leaving a Participant.
                 } else if (eventType == XmlPullParser.END_TAG && parser.getName().equals(XML_PARTICIPANT)) {
-                    // Attach the Pariticpant oject to the passed Market object.
+                    // Attach the Participant object to the passed Market object.
                     market.getParticipants().add(participant);
                 }
             }
