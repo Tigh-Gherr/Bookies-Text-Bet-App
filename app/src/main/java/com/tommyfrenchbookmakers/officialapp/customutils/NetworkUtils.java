@@ -6,7 +6,7 @@ import android.net.ConnectivityManager;
 /**
  * Created by Tíghearnán on 30/08/2015.
  */
-public class NetworkUtils {
+public final class NetworkUtils {
 
     // Used to check if the device is connected to the internet.
     public static boolean networkIsAvailable(Context c) {

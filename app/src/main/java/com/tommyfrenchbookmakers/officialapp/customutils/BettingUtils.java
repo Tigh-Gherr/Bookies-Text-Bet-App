@@ -13,7 +13,7 @@ import org.paukov.combinatorics.ICombinatoricsVector;
 /**
  * Created by Tíghearnán on 06/09/2015.
  */
-public class BettingUtils {
+public final class BettingUtils {
 
     // Used to calculate the total number of times a wager will be applied to a quantity of selections.
     public static int numberOfCombinations(int numberOfSelections, int minimumAllowedByWager) {
