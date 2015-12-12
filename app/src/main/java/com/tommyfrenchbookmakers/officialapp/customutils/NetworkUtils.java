@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
  */
 public class NetworkUtils {
 
+    // Used to check if the device is connected to the internet.
     public static boolean networkIsAvailable(Context c) {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
