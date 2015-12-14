@@ -49,6 +49,7 @@
     <string name="text_view_totalStake">Bet Stake: £</string>
     <string name="text_view_barcode">Barcode:</string>
     <string name="text_view_payout_total">Bet Payout:</string>
+    <string name="text_view_market_over">%1$s %2$s is over.</string>
 
     <string name="edit_text_input">Enter barcode.</string>
     <string name="edit_text_barcode_length">Your barcode length:</string>
@@ -70,6 +71,7 @@
     <string name="snackbar_action_return">Return</string>
     <string name="snackbar_action_undo">UNDO</string>
     <string name="snackbar_action_add_wager">Add wager</string>
+    <string name="snackbar_action_go_to_betslip">Go to BetSlip</string>
 
     <string name="snackbar_body_no_wagers">No wagers to show.</string>
     <string name="snackbar_body_message_sent">Message sent.</string>
@@ -81,7 +83,8 @@
     <string name="snackbar_body_message_not_delivered">Message not delivered.</string>
     <string name="snackbar_body_selection_already_on_betslip">%s already on betslip.</string>
     <string name="snackbar_body_added_without_odds">%s added without odds.</string>
-    <string name="snackbar_body_added_with_oddes">%1$s added at %2$s.</string>
+    <string name="snackbar_body_added_with_odds">%1$s added at %2$s.</string>
+    <string name="snackbar_body_added_at_SP">%s added at SP.</string>
     <string name="snackbar_body_betslip_selection_removed">%s removed.</string>
     <string name="snackbar_body_betslip_wager_removed">£%1$s%2$s %3$s was removed.</string>
     <string name="snackbar_body_no_selections">No selections to place a wager on.</string>
