@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.android.tighearnan.frenchsscanner.R;
 import com.cocosw.bottomsheet.BottomSheet;
 import com.tommyfrenchbookmakers.officialapp.activities.SelectionScreenActivity;
-import com.tommyfrenchbookmakers.officialapp.activities.textbet.AddSelectionActivity;
+import com.tommyfrenchbookmakers.officialapp.activities.textbet.TextBetSlipActivity;
 import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlip;
 import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlipSelection;
 import com.tommyfrenchbookmakers.officialapp.customutils.DownloadUtils;
@@ -49,6 +49,16 @@ public class MarketPageFragment extends Fragment {
     public MarketPageFragment() {
     }
 
+    private void displaySnackBar(String message) {
+        Snackbar.make(getView(), message, Snackbar.LENGTH_LONG)
+                .setAction(R.string.snackbar_action_go_to_betslip, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        NavUtils.navigateUpTo(getActivity(), new Intent(getActivity(), TextBetSlipActivity.class));
+                    }
+                }).show();
+    }
+
     public static MarketPageFragment newInstance(int marketPosition, int meetingPosition) {
         Bundle bundle = new Bundle();
         bundle.putInt("MARKET_POSITION", marketPosition);
@@ -75,6 +85,11 @@ public class MarketPageFragment extends Fragment {
                         }
                     }
 
+                    if(participant.getOdds().equals("SP")) {
+                        displaySnackBar(getString(R.string.snackbar_body_added_without_odds, participant.getName()));
+                        return;
+                    }
+
                     new BottomSheet.Builder(getActivity()).title(participant.getName() + " " + participant.getOdds())
                             .sheet(R.menu.menu_bottom_sheet_participant).listener(new DialogInterface.OnClickListener() {
                         @Override
@@ -82,23 +97,11 @@ public class MarketPageFragment extends Fragment {
                             switch (which) {
                                 case R.id.add_without_odds:
                                     betSlip.getSelections().add(new BetSlipSelection(participant, false, mMarket.getEwOdds()));
-                                    Snackbar.make(getView(), getString(R.string.snackbar_body_added_without_odds, participant.getName()), Snackbar.LENGTH_LONG)
-                                            .setAction(R.string.snackbar_action_undo, new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    betSlip.getSelections().remove(betSlip.getSelections().size() - 1);
-                                                }
-                                            }).show();
+                                    displaySnackBar(getString(R.string.snackbar_body_added_at_SP, participant.getName()));
                                     break;
                                 case R.id.add_with_odds:
                                     betSlip.getSelections().add(new BetSlipSelection(participant, true, mMarket.getEwOdds()));
-                                    Snackbar.make(getView(), getString(R.string.snackbar_body_added_with_oddes, participant.getName(), participant.getOdds()), Snackbar.LENGTH_LONG)
-                                            .setAction(R.string.snackbar_action_undo, new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    betSlip.getSelections().remove(betSlip.getSelections().size() - 1);
-                                                }
-                                            }).show();
+                                    displaySnackBar(getString(R.string.snackbar_body_added_with_odds, participant.getName(), participant.getOdds()));
                                     break;
                             }
                         }
@@ -116,7 +119,7 @@ public class MarketPageFragment extends Fragment {
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    mRaceOverLinearLayout.setVisibility(View.INVISIBLE);
+                    mRaceOverLinearLayout.setVisibility(View.GONE);
                     mParticipantRecyclerView.animate().setDuration(200).alpha(1f);
                     mParticipantRecyclerView.setVisibility(View.VISIBLE);
                 }
@@ -133,9 +136,9 @@ public class MarketPageFragment extends Fragment {
             });
 
         } else {
-            mDownloadingTextView.setText(mMarket.getName() + " " + mMarket.getOffTime() + " is over.");
+            mDownloadingTextView.setText(getString(R.string.text_view_market_over, mMarket.getName(), mMarket.getOffTime()));
             mProgressBar.animate().alpha(0f);
-            mProgressBar.setVisibility(View.INVISIBLE);
+            mProgressBar.setVisibility(View.GONE);
         }
     }
 
