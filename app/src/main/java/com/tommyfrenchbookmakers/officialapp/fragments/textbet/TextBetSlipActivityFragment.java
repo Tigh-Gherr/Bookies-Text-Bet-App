@@ -179,9 +179,16 @@ public class TextBetSlipActivityFragment extends Fragment {
             public void onWagerConfirmed(String unitStake, boolean eachWay, WagerType wagerType) {
                 DecimalFormat df = new DecimalFormat("0.00");
 
+                if(unitStake.length() == 0) {
+                    Snackbar.make(getView(), R.string.snackbar_body_no_stake_entered, Snackbar.LENGTH_LONG).show();
+                    return;
+                }
+
                 BetSlipWager wager = null;
 
+                // Checks to see if a bet of the same type already exists, if so it selects said BetSlipWager.
                 for(BetSlipWager w : mBetSlip.getWagers()) {
+                    // If they are the same type, and they're both each way or not.
                     if(w.getWagerType() == wagerType && (w.isEachWay() == eachWay)) {
                         wager = w;
                         break;
@@ -190,11 +197,14 @@ public class TextBetSlipActivityFragment extends Fragment {
                 try {
                     unitStake = df.format(Double.parseDouble(unitStake));
 
+                    // If wager isn't null; will only be true if the chosen WagerType already has been chosen before.
                     if(wager != null) {
+                        // Add the new stake and the old stake together, and notify the RecyclerView of the valye changing.
                         wager.setUnitStake(df.format(Double.parseDouble(wager.getUnitStake()) + Double.parseDouble(unitStake)));
                         mWagersAdapter.notifyItemChanged(mBetSlip.getWagers().indexOf(wager));
                         Snackbar.make(getView(), "£" + unitStake + " " + wagerType.getName() + (eachWay ? "ew" : "") + " added!", Snackbar.LENGTH_SHORT).show();
                     } else {
+                        // Create a new BetSlipWager with the passed values. and notify the RecycerView of this addition.
                         wager = new BetSlipWager(wagerType, unitStake, eachWay);
                         mBetSlip.getWagers().add(wager);
                         mWagersAdapter.notifyItemInserted(mBetSlip.getWagers().size());
@@ -202,6 +212,7 @@ public class TextBetSlipActivityFragment extends Fragment {
                     }
                     updateWagersInfo();
                 } catch (NumberFormatException mfe) {
+                    // If an incompatible stake was entered, display an error.
                     Snackbar.make(getView(), R.string.snackbar_body_enter_valid_wager, Snackbar.LENGTH_SHORT).show();
                 }
             }
