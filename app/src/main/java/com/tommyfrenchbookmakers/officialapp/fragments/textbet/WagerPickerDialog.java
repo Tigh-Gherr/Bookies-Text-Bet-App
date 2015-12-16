@@ -10,14 +10,13 @@ import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.android.tighearnan.frenchsscanner.R;
+import com.tommyfrenchbookmakers.officialapp.Global;
 import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlip;
-import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlipSelection;
 import com.tommyfrenchbookmakers.officialapp.enumerators.WagerType;
 import com.tommyfrenchbookmakers.officialapp.interfaces.WagerConfirmedListener;
 import com.tommyfrenchbookmakers.officialapp.singletons.BetSlipSingleton;
@@ -59,7 +58,7 @@ public class WagerPickerDialog extends AppCompatDialogFragment {
         mStakeEditText.postDelayed(new Runnable() {
             @Override
             public void run() {
-                InputMethodManager keyboard = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager keyboard = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 keyboard.showSoftInput(mStakeEditText, 0);
             }
         }, 50);
@@ -73,12 +72,12 @@ public class WagerPickerDialog extends AppCompatDialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (WagerType.getValueOf(mWagersSpinner.getSelectedItem().toString()).isSameRace()) {
-                    if(mEachWayCheckBox.isEnabled()) {
+                    if (mEachWayCheckBox.isEnabled()) {
                         mEachWayCheckBox.setChecked(false);
                         mEachWayCheckBox.setEnabled(false);
                     }
                 } else {
-                    if(!mEachWayCheckBox.isEnabled()) mEachWayCheckBox.setEnabled(true);
+                    if (!mEachWayCheckBox.isEnabled()) mEachWayCheckBox.setEnabled(true);
                 }
             }
 
@@ -114,37 +113,76 @@ public class WagerPickerDialog extends AppCompatDialogFragment {
 
         for (WagerType w : WagerType.values()) {
 
-            // Bare minimum for a bet to be considered.
+            // Bare minimum for a wager to be considered.
             if (w.getMinNumberOfSelections() <= mNumberOfSelections) {
 
-                // If the bet has a fixed number of selects and they're equal to the number number of
+                switch (w.getCategory()) {
+                    case Global.WAGER_CATEGORY_MULTIPLE:
+                        if(w == WagerType.SINGLE) {
+                            wagerTypes.add(w);
+                        } else {
+                            if(!betslip.hasSameRace()) {
+                                wagerTypes.add(w);
+                            }
+                        }
+                        break;
+                    case Global.WAGER_CATEGORY_FULL_COVER_WITH_SINGLES:
+                        if(!betslip.hasSameRace() && w.getMinNumberOfSelections() == mNumberOfSelections) {
+                            wagerTypes.add(w);
+                        }
+                        break;
+                    case Global.WAGER_CATEGORY_FULL_COVER_WITHOUT_SINGLES:
+                        if(!betslip.hasSameRace() && w.getMinNumberOfSelections() == mNumberOfSelections) {
+                            wagerTypes.add(w);
+                        }
+                        break;
+                    case Global.WAGER_CATEGORY_PENDING_RETURN:
+                        if(betslip.allInSameRace() && w.getMinNumberOfSelections() == mNumberOfSelections) {
+                            wagerTypes.add(w);
+                        }
+                        break;
+                    case Global.WAGER_CATEGORY_SPECIAL:
+                        if(!betslip.hasSameRace() && w.getMinNumberOfSelections() == mNumberOfSelections) {
+                            wagerTypes.add(w);
+                        }
+                        break;
+                    case Global.WAGER_CATEGORY_UP_AND_DOWN:
+                        if(!betslip.hasSameRace() && w.getMinNumberOfSelections() == mNumberOfSelections) {
+                            wagerTypes.add(w);
+                        }
+                        break;
+                }
+
+
+                // If the wager has a fixed number of selects and they're equal to the number number of
                 // selections on the BetSlip
-                if (w.getMinNumberOfSelections() == mNumberOfSelections && w.getHasFixedNumberOfSelections()) {
+                /*if (w.getMinNumberOfSelections() == mNumberOfSelections && w.getHasFixedNumberOfSelections()) {
                     // If WagerType is for selections in the same event.
-                    if(w.isSameRace()) {
+                    if (w.isSameRace()) {
                         // If all the selections are in the same event.
-                        if(betslip.allInSameRace()) {
+                        if (betslip.allInSameRace()) {
                             wagerTypes.add(w);
                         }
                     } else {
-
                         // If no selections are in the same event.
-                        if(!betslip.hasSameRace()) {
+                        if (!betslip.hasSameRace()) {
                             wagerTypes.add(w);
                         }
                     }
+                    // If wager doesn't have a fixed number of selections, but has a minimum
+                    // e.g Multiples.
                 } else if (!w.getHasFixedNumberOfSelections()) {
                     // If each selection is in a different event.
-                    if(!betslip.hasSameRace()) {
+                    if (!betslip.hasSameRace()) {
                         wagerTypes.add(w);
                     }
-                }
+                }*/
             }
         }
 
         // If the bet has any selections in the same race, add SINGLE to the list of available
         // wager types as it would have been skipped over in the loop.
-        if(betslip.hasSameRace()) wagerTypes.add(0, WagerType.SINGLE);
+//        if (betslip.hasSameRace()) wagerTypes.add(0, WagerType.SINGLE);
         return wagerTypes;
     }
 }
