@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.tighearnan.frenchsscanner.R;
+import com.tommyfrenchbookmakers.officialapp.Initialise;
 import com.tommyfrenchbookmakers.officialapp.customutils.NetworkUtils;
 
 
@@ -38,17 +39,10 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mNoInternetTextView.animate().alpha(0).setDuration(300);
                 mRetryButton.animate().alpha(0).setDuration(300);
+                mRetryButton.setClickable(false);
                 mCheckingInternetTextView.animate().alpha(1).setDuration(300);
                 mProgressBar.animate().alpha(1).setDuration(300);
-                mRetryButton.setClickable(false);
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        checkInternet();
-                    }
-                }, 600);
-//                checkInternet();
+              checkInternet();
             }
         });
 
@@ -56,21 +50,22 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     private void checkInternet() {
-        if (NetworkUtils.networkIsAvailable(SplashScreenActivity.this)) {
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
+        Handler h = new Handler();
+        final int animDuration = 300;
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(NetworkUtils.networkIsAvailable(SplashScreenActivity.this)) {
                     startActivity(new Intent(SplashScreenActivity.this, SelectionScreenActivity.class));
                     overridePendingTransition(R.anim.anim_fadeout, R.anim.anim_fadein);
+                } else {
+                    mCheckingInternetTextView.animate().alpha(0).setDuration(animDuration);
+                    mProgressBar.animate().alpha(0).setDuration(animDuration);
+                    mNoInternetTextView.animate().alpha(1).setDuration(animDuration);
+                    mRetryButton.animate().alpha(1).setDuration(animDuration);
+                    mRetryButton.setClickable(true);
                 }
-            }, 1500);
-        } else {
-            mCheckingInternetTextView.animate().alpha(0).setDuration(300);
-            mProgressBar.animate().alpha(0).setDuration(300);
-            mNoInternetTextView.animate().alpha(1).setDuration(300);
-            mRetryButton.animate().alpha(1).setDuration(300);
-            mRetryButton.setClickable(true);
-        }
+            }
+        }, 1500);
     }
 }
