@@ -86,6 +86,7 @@ public class MarketPageFragment extends Fragment {
                     }
 
                     if(participant.getOdds().equals("SP")) {
+                        betSlip.getSelections().add(new BetSlipSelection(participant, true, mMarket.getEwOdds()));
                         displaySnackBar(getString(R.string.snackbar_body_added_without_odds, participant.getName()));
                         return;
                     }
