@@ -37,7 +37,6 @@ public class SelectionScreenActivityFragment extends Fragment {
     private AppCompatButton mTypeButton;
     private AppCompatButton mReferenceButton;
     private AppCompatButton mTextBetButton;
-    private Toolbar mToolbar;
 
     public SelectionScreenActivityFragment() {
     }
@@ -111,12 +110,6 @@ public class SelectionScreenActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_selection_screen, container, false);
-
-        mToolbar = (Toolbar) v.findViewById(R.id.app_bar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-        mToolbar.setLogo(R.drawable.frenches_logo_128);
-        mToolbar.setNavigationIcon(null);
-
 
         mScanButton = (AppCompatButton) v.findViewById(R.id.appcompat_button_scan);
         mScanButton.setOnClickListener(new View.OnClickListener() {

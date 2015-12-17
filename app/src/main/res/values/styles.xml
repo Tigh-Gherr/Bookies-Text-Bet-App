@@ -6,6 +6,8 @@
     </style>
 
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/primaryColour</item>
         <item name="colorPrimaryDark">@color/primaryColourDark</item>
         <item name="colorAccent">@color/accentColour</item>

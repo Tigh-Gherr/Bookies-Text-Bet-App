@@ -4,12 +4,14 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +20,7 @@ import android.view.MenuItem;
 
 import com.android.tighearnan.frenchsscanner.R;
 import com.tommyfrenchbookmakers.officialapp.Global;
+import com.tommyfrenchbookmakers.officialapp.customutils.NavigationUtils;
 import com.tommyfrenchbookmakers.officialapp.interfaces.DataDownloadListener;
 import com.tommyfrenchbookmakers.officialapp.singletons.GlobalDocket;
 import com.tommyfrenchbookmakers.officialapp.customutils.DownloadUtils;
@@ -36,6 +39,8 @@ public class ResultPagerActivity extends AppCompatActivity implements DataDownlo
     // UI widgets
     private Toolbar mToolbar;
     private ViewPager mViewPager;
+    private DrawerLayout mDrawerLayout;
+    private NavigationView mNavigationView;
 
     // Custom Objects
     private Docket mDocket;
@@ -101,20 +106,23 @@ public class ResultPagerActivity extends AppCompatActivity implements DataDownlo
 
         // Sets the page transition animation.
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        Docket docket = GlobalDocket.get(this).getDocket();
-//
-//        if(mDocket == null) {
-//            if(docket == null) {
-//                finish();
-//            } else {
-//                mDocket = docket;
-//            }
-//        }
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                int id = item.getItemId();
+
+                if(id == R.id.scanner_view) {
+                    NavUtils.navigateUpFromSameTask(ResultPagerActivity.this);
+                } else {
+                    NavigationUtils.onNavigationMenuItemPressed(item.getItemId(), ResultPagerActivity.this);
+                }
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
+        });
     }
 
     // Sets up activity
@@ -132,7 +140,7 @@ public class ResultPagerActivity extends AppCompatActivity implements DataDownlo
         // Fetches the download type.
         int type = getIntent().getIntExtra(Global.INTENT_KEY_DOWNLOAD_TYPE, 0);
 
-        // If the download dype was a barcode.
+        // If the download type was a barcode.
         if (type == Global.DOWNLOAD_TYPE_BARCODE) {
             String barcode = getIntent().getStringExtra("BARCODE");
             DownloadUtils.DocketFromBarcode docketFromBarcode =

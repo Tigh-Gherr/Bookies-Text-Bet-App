@@ -1,7 +1,23 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment"
-    android:name="com.tommyfrenchbookmakers.officialapp.fragments.resultchecker.AccountAndReferenceInputActivityFragment"
-    tools:layout="@layout/fragment_account_input"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <fragment android:id="@+id/fragment"
+        android:name="com.tommyfrenchbookmakers.officialapp.fragments.resultchecker.AccountAndReferenceInputActivityFragment"
+        tools:layout="@layout/fragment_account_input"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/menu_drawer_view"
+        app:headerLayout="@layout/nav_header_layout"/>
+
+</android.support.v4.widget.DrawerLayout>

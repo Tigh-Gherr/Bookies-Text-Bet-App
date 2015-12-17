@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Account Services">
+        <menu>
+            <item
+                android:id="@+id/nav_textBet"
+                android:icon="@drawable/ic_message"
+                android:title="Text Bet" />
+            <item
+                android:id="@+id/nav_checkResult"
+                android:icon="@drawable/ic_results"
+                android:title="Check Result" />
+        </menu>
+    </item>
+
+    <item android:title="Barcode Services">
+        <menu>
+            <item
+                android:id="@+id/nav_scanBarcode"
+                android:icon="@drawable/ic_camera_alt_black_24px"
+                android:title="Scan Barcode" />
+            <item
+                android:id="@+id/nav_typeBarcode"
+                android:icon="@drawable/ic_keyboard_24dp"
+                android:title="Type Barcode" />
+        </menu>
+
+    </item>
+
+</menu>

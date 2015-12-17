@@ -2,6 +2,8 @@ package com.tommyfrenchbookmakers.officialapp.activities.textbet;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,10 +13,14 @@ import android.view.MenuItem;
 import com.android.tighearnan.frenchsscanner.R;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlip;
+import com.tommyfrenchbookmakers.officialapp.customutils.NavigationUtils;
 import com.tommyfrenchbookmakers.officialapp.fragments.textbet.TextBetSlipActivityFragment;
 import com.tommyfrenchbookmakers.officialapp.singletons.BetSlipSingleton;
 
 public class TextBetSlipActivity extends AppCompatActivity {
+
+    private DrawerLayout mDrawerLayout;
+    private NavigationView mNavigationView;
 
     // Set up Activity
     @Override
@@ -25,6 +31,21 @@ public class TextBetSlipActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+        mNavigationView.getMenu().getItem(0).getSubMenu().getItem(0).setChecked(true);
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                if(!item.isChecked()) {
+                    NavigationUtils.onNavigationMenuItemPressed(item.getItemId(), TextBetSlipActivity.this);
+                }
+
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
+        });
     }
 
     // Create options menu

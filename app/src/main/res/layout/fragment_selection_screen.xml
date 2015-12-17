@@ -3,18 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.tommyfrenchbookmakers.officialapp.fragments.SelectionScreenActivityFragment">
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <include
-            android:id="@+id/app_bar"
-            layout="@layout/app_bar" />
-
-    </android.support.design.widget.AppBarLayout>
-
+    tools:context="com.tommyfrenchbookmakers.officialapp.fragments.SelectionScreenActivityFragment"
+    tools:showIn="com.tommyfrenchbookmakers.officialapp.activities.SelectionScreenActivity">
 
     <ScrollView
         android:layout_width="match_parent"

@@ -1,35 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.tommyfrenchbookmakers.officialapp.activities.textbet.AddSelectionActivity">
+    android:layout_width="match_parent">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/abl_test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <include
-            android:id="@+id/app_bar"
-            layout="@layout/app_bar" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <fragment
-        android:id="@+id/fragment"
-        android:name="com.tommyfrenchbookmakers.officialapp.fragments.textbet.AddSelectionActivityFragment"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:layout="@layout/fragment_add_selection" />
+        tools:context="com.tommyfrenchbookmakers.officialapp.activities.textbet.AddSelectionActivity">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/abl_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <include
+                android:id="@+id/app_bar"
+                layout="@layout/app_bar" />
+
+        </android.support.design.widget.AppBarLayout>
+
+        <fragment
+            android:id="@+id/fragment"
+            android:name="com.tommyfrenchbookmakers.officialapp.fragments.textbet.AddSelectionActivityFragment"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:layout="@layout/fragment_add_selection" />
 
 
-</android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/menu_drawer_view"
+        app:headerLayout="@layout/nav_header_layout"/>
+
+</android.support.v4.widget.DrawerLayout>
