@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,13 +20,13 @@
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin">
 
-            <ImageView
+            <!--<ImageView
                 android:id="@+id/image_view_frenchsLogo"
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/frenches_logo_slogan" />
-
+-->
             <TextView
                 android:id="@+id/text_view_selectScanningOption"
                 android:layout_width="wrap_content"
@@ -92,26 +93,77 @@
                     android:layout_gravity="center"
                     android:text="Text bet"
                     android:textColor="@color/md_white_1000"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_gravity="center"
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/appcompat_button_below"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/appcompat_button_below"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="below"
-                    android:textColor="@color/md_white_1000"
-                    android:textStyle="bold"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="below"
+                android:textColor="@color/md_white_1000"
+                android:textStyle="bold" />
 
 
-            </LinearLayout>
+            <TextView
+                android:id="@+id/text_view_armaghOffice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Armagh:"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/map_view_armaghOffice"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                map:cameraTargetLat="54.345488"
+                map:cameraTargetLng="-6.656665"
+                map:cameraZoom="16"
+                map:liteMode="true"
+                map:mapType="normal"/>
+
+            <TextView
+                android:id="@+id/text_view_lurganOffices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp"
+                android:text="Lurgan:"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/map_view_lurganOffices"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                map:cameraTargetLat="54.465471"
+                map:cameraTargetLng="-6.335741"
+                map:cameraZoom="16"
+                map:liteMode="true"
+                map:mapType="normal" />
+
+            <TextView
+                android:id="@+id/text_view_derryOffice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp"
+                android:text="Derry:"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/map_view_derryOffice"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                map:cameraTargetLat="54.976558"
+                map:cameraTargetLng="-7.283950"
+                map:cameraZoom="16"
+                map:liteMode="true"
+                map:mapType="normal"/>
 
         </LinearLayout>
 

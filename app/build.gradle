@@ -36,4 +36,7 @@ dependencies {
     compile 'jp.wasabeef:recyclerview-animators:2.0.0'
     compile 'com.cocosw:bottomsheet:1.+@aar'
 //    compile 'org.adw.library:discrete-seekbar:1.0.0'
+
+    // Google Play Services
+    compile 'com.google.android.gms:play-services-maps:8.4.0'
 }

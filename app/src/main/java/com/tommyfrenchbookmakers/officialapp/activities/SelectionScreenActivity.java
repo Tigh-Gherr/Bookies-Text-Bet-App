@@ -128,7 +128,7 @@ public class SelectionScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_selection_screen);
+        setContentView(R.layout.activity_sel_scr);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar_app_bar);
         setSupportActionBar(mToolbar);

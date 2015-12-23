@@ -51,6 +51,8 @@
     <string name="text_view_payout_total">Bet Payout:</string>
     <string name="text_view_market_over">%1$s %2$s is over.</string>
 
+    <string name="toolbar_meeting_information">EW: %1$s Tricast: %2$s</string>
+
     <string name="edit_text_input">Enter barcode.</string>
     <string name="edit_text_barcode_length">Your barcode length:</string>
 
@@ -91,6 +93,7 @@
     <string name="snackbar_body_enter_valid_wager">Enter a valid wager.</string>
     <string name="snackbar_body_wager_added">%s added.</string>
     <string name="snackbar_body_no_stake_entered">No stake entered, cannot add wager.</string>
+
     <string name="alert_dialog_body_leave_betslip_warning">Leaving this page will erase you current betslip.</string>
     <string name="alert_dialog_button_leave">Leave</string>
     <string name="alert_dialog_button_stay">Stay</string>

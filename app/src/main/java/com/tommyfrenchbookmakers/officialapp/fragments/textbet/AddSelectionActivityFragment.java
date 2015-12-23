@@ -144,8 +144,9 @@ public class AddSelectionActivityFragment extends Fragment {
                     public void onPageSelected(int position) {
                         Market market = mMeetings.get(mMeetingPosition).getMarkets().get(position);
                         ((AddSelectionActivity)getActivity()).getSupportActionBar().setSubtitle(
-                                "EW: " + (!market.getEwOdds().equals("1/1") ? market.getEwOdds() : "N/A") + " Triciast: " + (market.isTricast() ? "Yes" : "No")
+                                "EW: " + (!market.getEwOdds().equals("1/1") ? market.getEwOdds() : "N/A") + " Tricast: " + (market.isTricast() ? "Yes" : "No")
                         );
+//                        ((AddSelectionActivity)getActivity()).getSupportActionBar().setSubtitle(R.string.toolbar_meeting_information);
                     }
 
                     @Override

@@ -11,14 +11,17 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.tighearnan.frenchsscanner.R;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.tommyfrenchbookmakers.officialapp.Global;
 import com.tommyfrenchbookmakers.officialapp.TestCorrectScoreActivity;
 import com.tommyfrenchbookmakers.officialapp.activities.resultchecker.AccountInputActivity;
@@ -38,6 +41,8 @@ public class SelectionScreenActivityFragment extends Fragment {
     private AppCompatButton mReferenceButton;
     private AppCompatButton mTextBetButton;
 
+    GoogleMap mArmaghGoogleMap;
+
     public SelectionScreenActivityFragment() {
     }
 
@@ -49,7 +54,7 @@ public class SelectionScreenActivityFragment extends Fragment {
     private boolean checkForPermission(final int permissionCode, final String permission) {
         int check = ContextCompat.checkSelfPermission(getActivity(), permission);
 
-        if(check != PackageManager.PERMISSION_GRANTED) {
+        if (check != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), permission)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 switch (permissionCode) {
@@ -75,7 +80,7 @@ public class SelectionScreenActivityFragment extends Fragment {
                 });
                 builder.show();
             } else {
-                requestPermissions(new String[]{permission}, permissionCode);
+                requestPermissions(new String[] { permission }, permissionCode);
             }
             return false;
         }
@@ -88,7 +93,7 @@ public class SelectionScreenActivityFragment extends Fragment {
         boolean granted = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
         switch (requestCode) {
             case Global.REQUEST_PERMISSION_CAMERA:
-                if(granted) {
+                if (granted) {
                     // Granted
                     startActivity(new Intent(getActivity(), BarcodeScannerActivity.class));
                 } else {
@@ -97,7 +102,7 @@ public class SelectionScreenActivityFragment extends Fragment {
                 }
                 break;
             case Global.REQUEST_PERMISSION_SMS:
-                if(granted) {
+                if (granted) {
                     startTextBetActivity();
                 } else {
                     Snackbar.make(getView(), "Cannot start Text Bet, SMS permission not granted", Snackbar.LENGTH_LONG)
@@ -115,8 +120,8 @@ public class SelectionScreenActivityFragment extends Fragment {
         mScanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if(checkForPermission(Global.REQUEST_PERMISSION_CAMERA, Manifest.permission.CAMERA))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (checkForPermission(Global.REQUEST_PERMISSION_CAMERA, Manifest.permission.CAMERA))
                         startActivity(new Intent(getActivity(), BarcodeScannerActivity.class));
                 } else {
                     startActivity(new Intent(getActivity(), BarcodeScannerActivity.class));
@@ -144,8 +149,8 @@ public class SelectionScreenActivityFragment extends Fragment {
         mTextBetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if(checkForPermission(Global.REQUEST_PERMISSION_SMS, Manifest.permission.SEND_SMS))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (checkForPermission(Global.REQUEST_PERMISSION_SMS, Manifest.permission.SEND_SMS))
                         startTextBetActivity();
 
                 } else {
@@ -160,6 +165,37 @@ public class SelectionScreenActivityFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), TestCorrectScoreActivity.class));
+            }
+        });
+
+        final MapView armaghOffice = (MapView) v.findViewById(R.id.map_view_armaghOffice);
+        armaghOffice.onCreate(savedInstanceState);
+        armaghOffice.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                googleMap.addMarker(new MarkerOptions().position(googleMap.getCameraPosition().target).title("Armagh"));
+                armaghOffice.onResume();
+            }
+        });
+
+        final MapView lurganOffices = (MapView) v.findViewById(R.id.map_view_lurganOffices);
+        lurganOffices.onCreate(savedInstanceState);
+        lurganOffices.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(54.466068, -6.337399)).title("William Street"));
+                googleMap.addMarker(new MarkerOptions().position(new LatLng(54.464843, -6.334288)).title("North Street"));
+                lurganOffices.onResume();
+            }
+        });
+
+        final MapView derryOffice = (MapView) v.findViewById(R.id.map_view_derryOffice);
+        derryOffice.onCreate(savedInstanceState);
+        derryOffice.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                googleMap.addMarker(new MarkerOptions().position(googleMap.getCameraPosition().target).title("Derry"));
+                derryOffice.onResume();
             }
         });
 

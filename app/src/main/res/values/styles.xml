@@ -6,8 +6,8 @@
     </style>
 
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+        <!--<item name="windowActionBar">false</item>-->
+        <!--<item name="windowNoTitle">true</item>-->
         <item name="colorPrimary">@color/primaryColour</item>
         <item name="colorPrimaryDark">@color/primaryColourDark</item>
         <item name="colorAccent">@color/accentColour</item>
@@ -23,6 +23,12 @@
         <item name="android:layout_marginBottom">4dp</item>
         <item name="android:clickable">true</item>
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="HeaderStyleCollapsed" parent="@android:style/TextAppearance" >
+        <item name="android:textColor">@color/md_white_1000</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
