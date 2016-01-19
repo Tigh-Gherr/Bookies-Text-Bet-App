@@ -14,17 +14,19 @@ public class BetSlipSelection {
     private String mOddsDecimal;
     private String mEachWayOdds;
     private String mMarketName;
+    private boolean mTricastSelection;
     private boolean mTakingOdds;
     private boolean mNonRunnerInsertFav;
     private boolean mNonRunnerInsertSecondFav;
 
-    public BetSlipSelection(Participant p, boolean isTakingPrice, String eachWayOdds) {
+    public BetSlipSelection(Participant p, boolean isTakingPrice, String eachWayOdds, boolean tricastSelection) {
         mParticipantId = p.getId();
         mName = p.getName();
         mOdds = p.getOdds();
         mOddsDecimal = p.getOddsDecimal();
         mMarketName = p.getMarketName();
         mMarketId = Integer.parseInt(p.getMarketId());
+        mTricastSelection = tricastSelection;
 
         mTakingOdds = isTakingPrice;
         mEachWayOdds = eachWayOdds;
@@ -96,5 +98,9 @@ public class BetSlipSelection {
 
     public void setMarketId(int marketId) {
         mMarketId = marketId;
+    }
+
+    public boolean isTricastSelection() {
+        return mTricastSelection;
     }
 }

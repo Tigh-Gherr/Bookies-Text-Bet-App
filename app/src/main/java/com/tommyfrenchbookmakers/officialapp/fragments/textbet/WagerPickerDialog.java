@@ -111,12 +111,13 @@ public class WagerPickerDialog extends AppCompatDialogFragment {
 
         BetSlip betslip = BetSlipSingleton.get(getActivity()).getBetSlip();
         boolean hasSameRace = betslip.hasSameRace();
-        boolean allSameRace = betslip.allInSameRace();
+        boolean allSameRace = hasSameRace && betslip.allInSameRace();
+        boolean canBeTricast = allSameRace && betslip.canBeTricast();
 
         for (WagerType w : WagerType.values()) {
-
+            int minNumberOfSelections = w.getMinNumberOfSelections();
             // Bare minimum for a wager to be considered.
-            if (w.getMinNumberOfSelections() <= mNumberOfSelections) {
+            if (minNumberOfSelections <= mNumberOfSelections) {
 
                 switch (w.getCategory()) {
                     case Global.WAGER_CATEGORY_MULTIPLE:
@@ -129,27 +130,31 @@ public class WagerPickerDialog extends AppCompatDialogFragment {
                         }
                         break;
                     case Global.WAGER_CATEGORY_FULL_COVER_WITH_SINGLES:
-                        if(!hasSameRace && w.getMinNumberOfSelections() == mNumberOfSelections) {
+                        if(!hasSameRace && minNumberOfSelections == mNumberOfSelections) {
                             wagerTypes.add(w);
                         }
                         break;
                     case Global.WAGER_CATEGORY_FULL_COVER_WITHOUT_SINGLES:
-                        if(!hasSameRace && w.getMinNumberOfSelections() == mNumberOfSelections) {
+                        if(!hasSameRace && minNumberOfSelections == mNumberOfSelections) {
                             wagerTypes.add(w);
                         }
                         break;
                     case Global.WAGER_CATEGORY_PENDING_RETURN:
-                        if(allSameRace && w.getMinNumberOfSelections() == mNumberOfSelections) {
-                            wagerTypes.add(w);
+                        if(w == WagerType.TRICAST || w == WagerType.COMB_TRICAST) {
+                            if(canBeTricast) wagerTypes.add(w);
+                        } else {
+                            if (allSameRace && minNumberOfSelections == mNumberOfSelections) {
+                                wagerTypes.add(w);
+                            }
                         }
                         break;
                     case Global.WAGER_CATEGORY_SPECIAL:
-                        if(!hasSameRace && w.getMinNumberOfSelections() == mNumberOfSelections) {
+                        if(!hasSameRace && minNumberOfSelections == mNumberOfSelections) {
                             wagerTypes.add(w);
                         }
                         break;
                     case Global.WAGER_CATEGORY_UP_AND_DOWN:
-                        if(!hasSameRace && w.getMinNumberOfSelections() == mNumberOfSelections) {
+                        if(!hasSameRace && minNumberOfSelections == mNumberOfSelections) {
                             wagerTypes.add(w);
                         }
                         break;

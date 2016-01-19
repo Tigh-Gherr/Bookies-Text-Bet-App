@@ -86,7 +86,8 @@ public class MarketPageFragment extends Fragment {
                     }
 
                     if(participant.getOdds().equals("SP")) {
-                        betSlip.getSelections().add(new BetSlipSelection(participant, true, mMarket.getEwOdds()));
+                        boolean isTricast = !(participant.getName().equals("Favourite") || participant.getName().equals("2nd Favourite"));
+                        betSlip.getSelections().add(new BetSlipSelection(participant, true, mMarket.getEwOdds(), isTricast));
                         displaySnackBar(getString(R.string.snackbar_body_added_without_odds, participant.getName()));
                         return;
                     }
@@ -97,11 +98,11 @@ public class MarketPageFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             switch (which) {
                                 case R.id.add_without_odds:
-                                    betSlip.getSelections().add(new BetSlipSelection(participant, false, mMarket.getEwOdds()));
+                                    betSlip.getSelections().add(new BetSlipSelection(participant, false, mMarket.getEwOdds(), mMarket.isTricast()));
                                     displaySnackBar(getString(R.string.snackbar_body_added_at_SP, participant.getName()));
                                     break;
                                 case R.id.add_with_odds:
-                                    betSlip.getSelections().add(new BetSlipSelection(participant, true, mMarket.getEwOdds()));
+                                    betSlip.getSelections().add(new BetSlipSelection(participant, true, mMarket.getEwOdds(), mMarket.isTricast()));
                                     displaySnackBar(getString(R.string.snackbar_body_added_with_odds, participant.getName(), participant.getOdds()));
                                     break;
                             }
