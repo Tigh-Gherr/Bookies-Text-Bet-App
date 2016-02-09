@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.tommyfrenchbookmakers.officialapp.fragments.SelectionScreenActivityFragment"
+    tools:context="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivityFragment"
     tools:showIn="com.tommyfrenchbookmakers.officialapp.activities.SelectionScreenActivity">
 
     <ScrollView
@@ -105,25 +105,33 @@
                 android:textColor="@color/md_white_1000"
                 android:textStyle="bold" />
 
-
-            <TextView
-                android:id="@+id/text_view_armaghOffice"
+            <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Armagh:"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
 
-            <com.google.android.gms.maps.MapView
-                android:id="@+id/map_view_armaghOffice"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                map:cameraTargetLat="54.345488"
-                map:cameraTargetLng="-6.656665"
-                map:cameraZoom="16"
-                map:liteMode="true"
-                map:mapType="normal"/>
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/map_view_armaghOffice"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    map:cameraTargetLat="54.345488"
+                    map:cameraTargetLng="-6.656665"
+                    map:cameraZoom="16"
+                    map:liteMode="true"
+                    map:mapType="normal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:textColor="@color/md_white_1000"
+                    android:textStyle="bold"
+                    android:textSize="17sp"
+                    android:layout_gravity="top|left"
+                    android:gravity="top"
+                    android:background="@drawable/shape_gradient_alpha"
+                    android:padding="8dp"
+                    android:text="Armagh: " />
+
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/text_view_lurganOffices"
@@ -163,7 +171,27 @@
                 map:cameraTargetLng="-7.283950"
                 map:cameraZoom="16"
                 map:liteMode="true"
-                map:mapType="normal"/>
+                map:mapType="normal" />
+
+            <TextView
+                android:id="@+id/text_view_moiraOffice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp"
+                android:text="Moira:"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/map_view_moiraOffice"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                map:cameraTargetLat="54.481364"
+                map:cameraTargetLng="-6.224975"
+                map:cameraZoom="16"
+                map:liteMode="true"
+                map:mapType="normal" />
 
         </LinearLayout>
 

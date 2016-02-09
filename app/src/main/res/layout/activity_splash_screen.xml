@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.tommyfrenchbookmakers.officialapp.activities.SplashScreenActivity">
+    tools:context="com.tommyfrenchbookmakers.officialapp.ui.SplashScreenActivity">
 
     <TextView
         android:id="@+id/text_view_splashScreenNoInternet"

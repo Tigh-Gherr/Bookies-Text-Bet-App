@@ -3,7 +3,6 @@ package com.tommyfrenchbookmakers.officialapp.betslipobjects;
 import android.content.Context;
 
 import com.android.tighearnan.frenchsscanner.R;
-import com.tommyfrenchbookmakers.officialapp.customutils.ParseUtils;
 
 import java.util.ArrayList;
 

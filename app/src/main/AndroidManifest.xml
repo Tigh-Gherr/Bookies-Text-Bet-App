@@ -48,22 +48,21 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="com.tommyfrenchbookmakers.officialapp.activities.resultchecker.ResultPagerActivity"
+            android:name="com.tommyfrenchbookmakers.officialapp.ui.ResultPagerActivity.ResultPagerActivity"
             android:label="@string/title_activity_result"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tommyfrenchbookmakers.officialapp.activities.resultchecker.BarcodeScannerActivity" />
+                android:value="com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity" />
         </activity>
         <activity
-            android:name="com.tommyfrenchbookmakers.officialapp.activities.SplashScreenActivity"
+            android:name="com.tommyfrenchbookmakers.officialapp.ui.SplashScreenActivity"
             android:label="@string/app_name"
             android:noHistory="true"
             android:screenOrientation="portrait">
@@ -74,70 +73,77 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.tommyfrenchbookmakers.officialapp.activities.SelectionScreenActivity"
+            android:name="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity"
             android:label="@string/title_activity_selection_screen"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="com.tommyfrenchbookmakers.officialapp.activities.resultchecker.TypeBarcodeActivity"
+            android:name="com.tommyfrenchbookmakers.officialapp.ui.TypeBarcodeActivity.TypeBarcodeActivity"
             android:label="@string/title_activity_input"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tommyfrenchbookmakers.officialapp.activities.SelectionScreenActivity" />
+                android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity" />
         </activity>
         <activity
-            android:name="com.tommyfrenchbookmakers.officialapp.activities.resultchecker.AccountInputActivity"
+            android:name="com.tommyfrenchbookmakers.officialapp.ui.AccountAndReferenceInput.AccountAndReferenceInputActivity"
             android:label="@string/title_activity_account_input"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tommyfrenchbookmakers.officialapp.activities.SelectionScreenActivity" />
+                android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity" />
         </activity>
         <activity
-            android:name="com.tommyfrenchbookmakers.officialapp.activities.textbet.TextBetSlipActivity"
+            android:name="com.tommyfrenchbookmakers.officialapp.ui.TextBetSlipActivity.TextBetSlipActivity"
             android:label="@string/title_activity_better_text_bet"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tommyfrenchbookmakers.officialapp.activities.SelectionScreenActivity" />
+                android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity" />
         </activity>
         <activity
-            android:name="com.tommyfrenchbookmakers.officialapp.activities.textbet.AddSelectionActivity"
+            android:name="com.tommyfrenchbookmakers.officialapp.ui.AddSelectionActivity.AddSelectionActivity"
             android:label="@string/title_activity_add_selection"
-            android:parentActivityName="com.tommyfrenchbookmakers.officialapp.activities.textbet.TextBetSlipActivity"
+            android:parentActivityName="com.tommyfrenchbookmakers.officialapp.ui.TextBetSlipActivity.TextBetSlipActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tommyfrenchbookmakers.officialapp.activities.textbet.TextBetSlipActivity" />
+                android:value="com.tommyfrenchbookmakers.officialapp.ui.TextBetSlipActivity.TextBetSlipActivity" />
         </activity>
         <activity
-            android:name="com.tommyfrenchbookmakers.officialapp.activities.resultchecker.BarcodeScannerActivity"
+            android:name="com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity"
             android:label="@string/title_activity_test_camera"
             android:launchMode="singleTask"
-            android:parentActivityName="com.tommyfrenchbookmakers.officialapp.activities.SelectionScreenActivity"
+            android:parentActivityName="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tommyfrenchbookmakers.officialapp.activities.SelectionScreenActivity" />
+                android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity" />
         </activity>
-        <activity android:name="com.tommyfrenchbookmakers.officialapp.TestCorrectScoreActivity"
+        <activity
+            android:name="com.tommyfrenchbookmakers.officialapp.TestCorrectScoreActivity"
             android:label="@string/title_activity_test_correct_score"
             android:launchMode="singleTask"
-            android:parentActivityName="com.tommyfrenchbookmakers.officialapp.activities.SelectionScreenActivity"
-            android:theme="@style/AppTheme" >
+            android:parentActivityName="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity"
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tommyfrenchbookmakers.officialapp.activities.SelectionScreenActivity" />
+                android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity" />
         </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAn7hjtAHaQeLm9stlW5-hP471CEnIAk4k" />
+
+        <activity
+            android:name="com.tommyfrenchbookmakers.officialapp.ui.CameraPreviewActivity"
+            android:label="@string/title_activity_camera_preview"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

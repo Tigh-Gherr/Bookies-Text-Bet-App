@@ -1,6 +1,6 @@
 package com.tommyfrenchbookmakers.officialapp.betslipobjects;
 
-import com.tommyfrenchbookmakers.officialapp.customutils.BettingUtils;
+import com.tommyfrenchbookmakers.officialapp.utils.BettingUtils;
 import com.tommyfrenchbookmakers.officialapp.enumerators.WagerType;
 
 /**

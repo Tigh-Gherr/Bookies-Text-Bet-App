@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.tommyfrenchbookmakers.officialapp.activities.SelectionScreenActivity" >
+    tools:context="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity" >
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -52,7 +52,7 @@
 
             <fragment
                 android:id="@+id/fragment"
-                android:name="com.tommyfrenchbookmakers.officialapp.fragments.SelectionScreenActivityFragment"
+                android:name="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivityFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:layout="@layout/fragment_selection_screen" />

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    tools:context="com.tommyfrenchbookmakers.officialapp.fragments.textbet.AddSelectionActivityFragment"
+    tools:context="com.tommyfrenchbookmakers.officialapp.ui.AddSelectionActivity.AddSelectionActivityFragment"
     tools:showIn="@layout/activity_add_selection">
 
     <FrameLayout

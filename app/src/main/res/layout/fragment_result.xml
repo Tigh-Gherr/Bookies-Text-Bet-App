@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_material_light"
-    tools:context="com.tommyfrenchbookmakers.officialapp.fragments.resultchecker.ResultActivityFragment">
+    tools:context="com.tommyfrenchbookmakers.officialapp.ui.ResultPagerActivity.ResultPageFragment">
 
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
         android:id="@+id/sliding_panel_selections"

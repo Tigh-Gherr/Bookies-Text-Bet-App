@@ -7,7 +7,7 @@
     android:layout_width="match_parent">
 
     <fragment android:id="@+id/fragment"
-        android:name="com.tommyfrenchbookmakers.officialapp.fragments.resultchecker.AccountAndReferenceInputActivityFragment"
+        android:name="com.tommyfrenchbookmakers.officialapp.ui.AccountAndReferenceInput.AccountAndReferenceInputActivityFragment"
         tools:layout="@layout/fragment_account_input"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

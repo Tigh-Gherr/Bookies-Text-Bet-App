@@ -27,15 +27,21 @@
     <string name="sms_body_text_bet_wagers">%1$s%2$s %3$s</string>
     <string name="sms_body_text_bet">Account: %1$s\n%2$s%3$s</string>
 
+    <string name="dialog_title_new_wager">New Wager</string>
+    <string name="dialog_button_add">Add</string>
+
     <string name="alert_dialog_title_confirm_bet_recheck">Confirm Message</string>
     <string name="alert_dialog_title_confirm_text_bet">Confirm Text Bet</string>
 
     <string name="alert_dialog_body_confirm_text_bet">Send current betslip to Tommy French Bookmaker\'s via SMS (standard network chargers may apply).</string>
+    <string name="alert_dialog_body_leave_betslip_warning">Leaving this page will erase you current betslip.</string>
     <string name="alert_dialog_body_test">This will send a test message to Tommy French Bookmakers text betting service.</string>
     <string name="alert_dialog_body_editing_error">This will request (via text message) Tommy French Bookmakers to review the currently scanned docket. Standard network chargers may apply.</string>
 
     <string name="alert_dialog_button_confirm">Confirm</string>
     <string name="alert_dialog_button_cancel">Cancel</string>
+    <string name="alert_dialog_button_leave">Leave</string>
+    <string name="alert_dialog_button_stay">Stay</string>
 
     <string name="error_message_no_internet">Lost internet connection. Reconnect and retry.</string>
     <string name="error_message_barcode_format">Incorrect barcode format: %s</string>
@@ -94,11 +100,10 @@
     <string name="snackbar_body_wager_added">%s added.</string>
     <string name="snackbar_body_no_stake_entered">No stake entered, cannot add wager.</string>
 
-    <string name="alert_dialog_body_leave_betslip_warning">Leaving this page will erase you current betslip.</string>
-    <string name="alert_dialog_button_leave">Leave</string>
-    <string name="alert_dialog_button_stay">Stay</string>
     <string name="nav_drawer_opened">Opened</string>
     <string name="nav_drawer_closed">Closed</string>
+    <string name="title_activity_camera">CameraActivity</string>
+    <string name="title_activity_camera_preview">CameraPreviewActivity</string>
 
 
 </resources>

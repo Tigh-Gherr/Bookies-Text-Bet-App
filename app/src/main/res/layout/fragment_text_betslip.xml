@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    tools:context="com.tommyfrenchbookmakers.officialapp.fragments.textbet.TextBetSlipActivityFragment"
+    tools:context="com.tommyfrenchbookmakers.officialapp.ui.TextBetSlipActivity.TextBetSlipActivityFragment"
     tools:showIn="@layout/activity_text_bet_slip">
 
     <TextView
