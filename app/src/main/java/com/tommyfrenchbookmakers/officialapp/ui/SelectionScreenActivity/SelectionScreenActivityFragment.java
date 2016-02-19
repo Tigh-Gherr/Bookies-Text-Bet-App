@@ -40,6 +40,8 @@ import java.util.List;
  */
 public class SelectionScreenActivityFragment extends Fragment {
 
+    // Pushed from computer. Download to laptop.
+
     private static final int ARMAGH = 0;
     private static final int LURGAN = 1;
     private static final int DERRY = 2;
