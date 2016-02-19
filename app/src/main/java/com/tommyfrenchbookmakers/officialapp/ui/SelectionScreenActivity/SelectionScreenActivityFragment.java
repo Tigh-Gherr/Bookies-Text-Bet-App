@@ -136,7 +136,7 @@ public class SelectionScreenActivityFragment extends Fragment {
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (checkForPermission(Global.REQUEST_PERMISSION_CAMERA, Manifest.permission.CAMERA))
-                        startActivity(new Intent(getActivity(), CameraPreviewActivity.class));
+                        startActivity(new Intent(getActivity(), BarcodeScannerActivity.class));
                 } else {
                     startActivity(new Intent(getActivity(), BarcodeScannerActivity.class));
                 }

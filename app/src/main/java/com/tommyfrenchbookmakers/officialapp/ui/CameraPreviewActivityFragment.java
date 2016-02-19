@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,6 +31,15 @@ public class CameraPreviewActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_camera_preview, container, false);
 
+        if (!checkCameraHardware(getActivity())) {
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("No On Device!")
+                    .setMessage("Going back...")
+                    .show();
+
+            getActivity().finish();
+        }
+
         mCamera = getCameraInstance();
 
         mCameraPreview = new CameraPreview(getActivity(), mCamera);
@@ -43,7 +54,9 @@ public class CameraPreviewActivityFragment extends Fragment {
                         mCamera.autoFocus(new Camera.AutoFocusCallback() {
                             @Override
                             public void onAutoFocus(boolean success, Camera camera) {
-
+                                if(!success) {
+                                    Snackbar.make(getView(), "Autofocus failed.", Snackbar.LENGTH_SHORT).show();
+                                }
                             }
                         });
                         break;
