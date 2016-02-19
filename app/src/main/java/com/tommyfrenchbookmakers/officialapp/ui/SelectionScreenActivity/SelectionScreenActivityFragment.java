@@ -123,6 +123,7 @@ public class SelectionScreenActivityFragment extends Fragment {
                 } else {
                     Snackbar.make(getView(), "Cannot start Text Bet, SMS permission not granted", Snackbar.LENGTH_LONG)
                             .show();
+
                 }
         }
     }
