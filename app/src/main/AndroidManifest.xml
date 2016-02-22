@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.android.tighearnan.frenchsscanner"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.tighearnan.frenchsscanner"
     android:versionCode="2"
     android:versionName="1.1">
 
@@ -76,8 +76,7 @@
             android:name="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity"
             android:label="@string/title_activity_selection_screen"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.tommyfrenchbookmakers.officialapp.ui.TypeBarcodeActivity.TypeBarcodeActivity"
             android:label="@string/title_activity_input"
@@ -142,7 +141,15 @@
         <activity
             android:name="com.tommyfrenchbookmakers.officialapp.ui.CameraPreviewActivity"
             android:label="@string/title_activity_camera_preview"
+            android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name="com.tommyfrenchbookmakers.officialapp.ui.ContactUsActivity.ContactUsActivity"
+            android:label="@string/title_activity_contact_us"
+            android:parentActivityName="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity"
             android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity" />
         </activity>
     </application>
 

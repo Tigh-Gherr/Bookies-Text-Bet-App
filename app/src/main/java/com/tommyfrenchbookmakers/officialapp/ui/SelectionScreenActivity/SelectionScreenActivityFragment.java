@@ -27,6 +27,7 @@ import com.tommyfrenchbookmakers.officialapp.TestCorrectScoreActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.AccountAndReferenceInput.AccountAndReferenceInputActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.CameraPreviewActivity;
+import com.tommyfrenchbookmakers.officialapp.ui.ContactUsActivity.ContactUsActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.TypeBarcodeActivity.TypeBarcodeActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.TextBetSlipActivity.TextBetSlipActivity;
 import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlip;
@@ -181,7 +182,7 @@ public class SelectionScreenActivityFragment extends Fragment {
         belowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), TestCorrectScoreActivity.class));
+                startActivity(new Intent(getActivity(), ContactUsActivity.class));
             }
         });
 
