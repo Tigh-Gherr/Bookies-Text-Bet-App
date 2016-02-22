@@ -74,6 +74,7 @@
 
     <string name="download_url_account">http://www.barcodetesting.co.nf/getDocket/fromAccountAndReference.php?account=%1$s&amp;reference=%2$s</string>
     <string name="download_url_barcode">http://www.barcodetesting.co.nf/getDocket/fromBarcode.php?barcode=%s</string>
+    <string name="download_url_offices">http://www.barcodetesting.co.nf/getOffices.php</string>
     <string name="download_url_williamhill_xml">http://cachepricefeeds.williamhill.com/openbet_cdn?action=template&amp;template=getHierarchyByMarketType&amp;classId=2&amp;marketSort=--&amp;filterBIR=N</string>
 
     <string name="snackbar_action_return">Return</string>

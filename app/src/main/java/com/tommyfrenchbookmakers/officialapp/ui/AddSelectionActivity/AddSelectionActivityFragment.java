@@ -158,6 +158,7 @@ public class AddSelectionActivityFragment extends Fragment {
         });
         mMeetingsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMeetingsRecyclerView.setAdapter(mMeetingsAdapter);
+        mMeetingsRecyclerView.setHasFixedSize(true);
     }
 
     @Override

@@ -1,8 +1,11 @@
 package com.tommyfrenchbookmakers.officialapp.ui.ContactUsActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -48,6 +51,7 @@ public class ShopInfoAdapter extends RecyclerView.Adapter<ShopInfoAdapter.ShopIn
     public void onBindViewHolder(ShopInfoViewHolder holder, int position) {
         ShopInfo shop = mShopInfos.get(position);
         holder.mName.setText(shop.getName());
+        holder.mPhoneNumber.setText(shop.getPhoneNumber());
     }
 
     @Override
@@ -60,21 +64,30 @@ public class ShopInfoAdapter extends RecyclerView.Adapter<ShopInfoAdapter.ShopIn
     public class ShopInfoViewHolder extends RecyclerView.ViewHolder {
 
         TextView mName;
+        TextView mPhoneNumber;
+
         ImageButton mToggleMoreInfo;
+        ImageButton mCallShop;
+
         ExpandableRelativeLayout mExpandableLayout;
+
         MapView mMap;
 
         public ShopInfoViewHolder(final View itemView) {
             super(itemView);
 
             mName = (TextView) itemView.findViewById(R.id.text_view_shopName);
-            mToggleMoreInfo = (ImageButton) itemView.findViewById(R.id.image_button_toggleMoreInfo);
-            mToggleMoreInfo.setOnClickListener(new View.OnClickListener() {
+
+            FrameLayout container = (FrameLayout) itemView.findViewById(R.id.frame_layout_shopName);
+//            container.setClickable(true);
+            container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mExpandableLayout.toggle();
                 }
             });
+
+            mToggleMoreInfo = (ImageButton) itemView.findViewById(R.id.image_button_toggleMoreInfo);
 
             mExpandableLayout = (ExpandableRelativeLayout) itemView.findViewById(R.id.expandable_layout_shopMoreInfo);
             mExpandableLayout.setListener(new ExpandableLayoutListener() {
@@ -121,6 +134,19 @@ public class ShopInfoAdapter extends RecyclerView.Adapter<ShopInfoAdapter.ShopIn
                     googleMap.moveCamera(CameraUpdateFactory.newLatLng(shop.getLatLng()));
                 }
             });
+
+            mPhoneNumber = (TextView) itemView.findViewById(R.id.text_view_shopNumber);
+
+            mCallShop = (ImageButton) itemView.findViewById(R.id.image_button_callShop);
+            mCallShop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:" + mShopInfos.get(getAdapterPosition()).getPhoneNumber()));
+                    itemView.getContext().startActivity(intent);
+                }
+            });
+
         }
     }
 }

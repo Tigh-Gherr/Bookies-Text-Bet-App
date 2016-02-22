@@ -16,6 +16,12 @@ public class ShopInfo {
         mPhoneNumber = phoneNumber;
     }
 
+    public ShopInfo(String name, double lat, double lon, String phoneNumber) {
+        mName = name;
+        mLatLng = new LatLng(lat, lon);
+        mPhoneNumber = phoneNumber;
+    }
+
     public String getName() {
         return mName;
     }

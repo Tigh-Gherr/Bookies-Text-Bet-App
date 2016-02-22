@@ -12,6 +12,7 @@ import com.tommyfrenchbookmakers.officialapp.meetingobjects.Meeting;
 import com.tommyfrenchbookmakers.officialapp.meetingobjects.Participant;
 import com.tommyfrenchbookmakers.officialapp.singletons.GlobalDocket;
 import com.tommyfrenchbookmakers.officialapp.singletons.MeetingsSingleton;
+import com.tommyfrenchbookmakers.officialapp.ui.ContactUsActivity.ShopInfo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -79,6 +80,28 @@ public final class ParseUtils {
         }
 
         return dataFromWebService;
+    }
+
+    public static boolean shopInfoFromJSON(String dataToParse, ArrayList<ShopInfo> shopInfos) {
+        try {
+            JSONArray jsonArray = new JSONArray(dataToParse);
+            int numOfOffices = jsonArray.length();
+
+            for(int i = 0; i < numOfOffices; i++) {
+                JSONObject jsonShop = jsonArray.getJSONObject(i);
+                String name = jsonShop.getString("name");
+                String telephone = jsonShop.getString("telephone");
+                double latitude = jsonShop.getDouble("latitude");
+                double longitude = jsonShop.getDouble("longitude");
+
+                shopInfos.add(new ShopInfo(name, latitude, longitude, telephone));
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     // Used to create a Docket object from JSON data provided from a String.

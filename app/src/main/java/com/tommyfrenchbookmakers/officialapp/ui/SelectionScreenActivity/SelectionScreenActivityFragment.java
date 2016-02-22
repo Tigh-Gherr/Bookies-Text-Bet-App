@@ -41,22 +41,11 @@ import java.util.List;
  */
 public class SelectionScreenActivityFragment extends Fragment {
 
-    // Pushed from computer. Download to laptop.
-
-    private static final int ARMAGH = 0;
-    private static final int LURGAN = 1;
-    private static final int DERRY = 2;
-    private static final int MOIRA = 3;
-
     private AppCompatButton mScanButton;
     private AppCompatButton mTypeButton;
     private AppCompatButton mReferenceButton;
     private AppCompatButton mTextBetButton;
 
-    private MapView mArmaghMapView;
-    private MapView mLurganMapView;
-    private MapView mDerryMapView;
-    private MapView mMoiraMapView;
 
     private List<MapView> mOfficeMapViews;
 
@@ -178,7 +167,7 @@ public class SelectionScreenActivityFragment extends Fragment {
             }
         });
 
-        AppCompatButton belowButton = (AppCompatButton) v.findViewById(R.id.appcompat_button_below);
+        AppCompatButton belowButton = (AppCompatButton) v.findViewById(R.id.appcompat_button_contactUs);
         belowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -186,91 +175,7 @@ public class SelectionScreenActivityFragment extends Fragment {
             }
         });
 
-        mOfficeMapViews = Arrays.asList(
-                (MapView)v.findViewById(R.id.map_view_armaghOffice),
-                (MapView)v.findViewById(R.id.map_view_lurganOffices),
-                (MapView)v.findViewById(R.id.map_view_derryOffice),
-                (MapView)v.findViewById(R.id.map_view_moiraOffice)
-        );
 
-
-        for (MapView mv : mOfficeMapViews) mv.onCreate(savedInstanceState);
-//
-//        mArmaghMapView = (MapView) v.findViewById(R.id.map_view_armaghOffice);
-//        mArmaghMapView.onCreate(savedInstanceState);
-        mOfficeMapViews.get(ARMAGH).getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                googleMap.addMarker(new MarkerOptions().position(googleMap.getCameraPosition().target).title("Armagh"));
-            }
-        });
-
-//        mLurganMapView = (MapView) v.findViewById(R.id.map_view_lurganOffices);
-//        mLurganMapView.onCreate(savedInstanceState);
-        mOfficeMapViews.get(LURGAN).getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(54.466068, -6.337399)).title("William Street"));
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(54.464843, -6.334288)).title("North Street"));
-            }
-        });
-
-//        mDerryMapView = (MapView) v.findViewById(R.id.map_view_derryOffice);
-//        mDerryMapView.onCreate(savedInstanceState);
-        mOfficeMapViews.get(DERRY).getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                googleMap.addMarker(new MarkerOptions().position(googleMap.getCameraPosition().target).title("Derry"));
-            }
-        });
-
-        mOfficeMapViews.get(MOIRA).getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                googleMap.addMarker(new MarkerOptions().position(googleMap.getCameraPosition().target).title("Moira"));
-            }
-        });
-
-//        AppCompatButton growButton = (AppCompatButton) v.findViewById(R.id.appcompat_button_grow);
-//        growButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(getActivity(), GrowCorrectScoreActivity.class));
-//            }
-//        });
-
-//        belowButton.setVisibility(View.GONE);
-//        growButton.setVisibility(View.GONE);
         return v;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        for(MapView mv : mOfficeMapViews) mv.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        for(MapView mv : mOfficeMapViews) mv.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        for(MapView mv : mOfficeMapViews) mv.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        for(MapView mv : mOfficeMapViews) mv.onLowMemory();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        for(MapView mv : mOfficeMapViews) mv.onSaveInstanceState(outState);
     }
 }
