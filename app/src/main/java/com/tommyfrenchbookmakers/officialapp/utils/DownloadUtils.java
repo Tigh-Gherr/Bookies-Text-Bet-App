@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.support.v4.app.NavUtils;
 
-import com.tommyfrenchbookmakers.officialapp.interfaces.DataDownloadListener;
 import com.tommyfrenchbookmakers.officialapp.meetingobjects.Market;
 
 import org.xmlpull.v1.XmlPullParserException;

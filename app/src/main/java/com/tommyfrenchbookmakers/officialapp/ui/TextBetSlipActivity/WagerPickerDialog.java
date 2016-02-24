@@ -18,7 +18,6 @@ import com.android.tighearnan.frenchsscanner.R;
 import com.tommyfrenchbookmakers.officialapp.Global;
 import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlip;
 import com.tommyfrenchbookmakers.officialapp.enumerators.WagerType;
-import com.tommyfrenchbookmakers.officialapp.interfaces.WagerConfirmedListener;
 import com.tommyfrenchbookmakers.officialapp.singletons.BetSlipSingleton;
 
 import java.util.ArrayList;

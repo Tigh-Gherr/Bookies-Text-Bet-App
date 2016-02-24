@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.tighearnan.frenchsscanner"
-    android:versionCode="2"
-    android:versionName="1.1">
+<manifest package="com.android.tighearnan.frenchsscanner"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          android:versionCode="2"
+          android:versionName="1.1">
 
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <uses-feature
         android:name="android.hardware.camera2"
-        android:required="false" />
+        android:required="false"/>
     <uses-feature
         android:name="android.hardware.Camera"
-        android:required="false" />
+        android:required="false"/>
     <uses-feature
         android:name="android.hardware.Camera.autofocus"
-        android:required="false" />
+        android:required="false"/>
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="false" />
+        android:required="false"/>
     <uses-feature
         android:name="android.hardware.camera.front"
-        android:required="false" />
+        android:required="false"/>
     <uses-feature
         android:name="android.hardware.camera.autofocus"
-        android:required="false" />
+        android:required="false"/>
     <uses-feature
         android:name="android.hardware.camera.flash"
-        android:required="false" />
+        android:required="false"/>
     <uses-feature
         android:name="android.hardware.telephony"
-        android:required="false" />
+        android:required="false"/>
 
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="true"
         android:smallScreens="true"
-        android:xlargeScreens="true" />
+        android:xlargeScreens="true"/>
 
     <application
         android:allowBackup="true"
@@ -50,7 +50,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version"/>
 
         <activity
             android:name="com.tommyfrenchbookmakers.officialapp.ui.ResultPagerActivity.ResultPagerActivity"
@@ -59,7 +59,7 @@
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity" />
+                android:value="com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity"/>
         </activity>
         <activity
             android:name="com.tommyfrenchbookmakers.officialapp.ui.SplashScreenActivity"
@@ -67,9 +67,9 @@
             android:noHistory="true"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
@@ -83,7 +83,7 @@
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity" />
+                android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity"/>
         </activity>
         <activity
             android:name="com.tommyfrenchbookmakers.officialapp.ui.AccountAndReferenceInput.AccountAndReferenceInputActivity"
@@ -91,7 +91,7 @@
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity" />
+                android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity"/>
         </activity>
         <activity
             android:name="com.tommyfrenchbookmakers.officialapp.ui.TextBetSlipActivity.TextBetSlipActivity"
@@ -101,7 +101,7 @@
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity" />
+                android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity"/>
         </activity>
         <activity
             android:name="com.tommyfrenchbookmakers.officialapp.ui.AddSelectionActivity.AddSelectionActivity"
@@ -111,17 +111,7 @@
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tommyfrenchbookmakers.officialapp.ui.TextBetSlipActivity.TextBetSlipActivity" />
-        </activity>
-        <activity
-            android:name="com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity"
-            android:label="@string/title_activity_test_camera"
-            android:launchMode="singleTask"
-            android:parentActivityName="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity"
-            android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity" />
+                android:value="com.tommyfrenchbookmakers.officialapp.ui.TextBetSlipActivity.TextBetSlipActivity"/>
         </activity>
         <activity
             android:name="com.tommyfrenchbookmakers.officialapp.TestCorrectScoreActivity"
@@ -131,17 +121,17 @@
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity" />
+                android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity"/>
         </activity>
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAn7hjtAHaQeLm9stlW5-hP471CEnIAk4k" />
-
         <activity
-            android:name="com.tommyfrenchbookmakers.officialapp.ui.CameraPreviewActivity"
+            android:name="com.tommyfrenchbookmakers.officialapp.ui.CameraPreviewActivity.CameraPreviewActivity"
             android:label="@string/title_activity_camera_preview"
-            android:theme="@style/AppTheme"></activity>
+            android:parentActivityName="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity"/>
+        </activity>
         <activity
             android:name="com.tommyfrenchbookmakers.officialapp.ui.ContactUsActivity.ContactUsActivity"
             android:label="@string/title_activity_contact_us"
@@ -149,8 +139,12 @@
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity" />
+                android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity"/>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAn7hjtAHaQeLm9stlW5-hP471CEnIAk4k"/>
     </application>
 
 </manifest>

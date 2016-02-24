@@ -1,12 +1,10 @@
-package com.tommyfrenchbookmakers.officialapp.ui;
+package com.tommyfrenchbookmakers.officialapp.ui.CameraPreviewActivity;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Window;
-import android.view.WindowManager;
 
 import com.android.tighearnan.frenchsscanner.R;
 

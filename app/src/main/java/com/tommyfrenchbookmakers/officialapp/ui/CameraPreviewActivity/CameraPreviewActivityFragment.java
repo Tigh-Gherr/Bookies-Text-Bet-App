@@ -1,4 +1,4 @@
-package com.tommyfrenchbookmakers.officialapp.ui;
+package com.tommyfrenchbookmakers.officialapp.ui.CameraPreviewActivity;
 
 import android.content.Context;
 import android.content.pm.PackageManager;

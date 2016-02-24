@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.tighearnan.frenchsscanner.R;
-import com.tommyfrenchbookmakers.officialapp.interfaces.OnAdapterItemSelectedListener;
+import com.tommyfrenchbookmakers.officialapp.ui.OnAdapterItemSelectedListener;
 import com.tommyfrenchbookmakers.officialapp.meetingobjects.Market;
 import com.tommyfrenchbookmakers.officialapp.meetingobjects.Meeting;
 

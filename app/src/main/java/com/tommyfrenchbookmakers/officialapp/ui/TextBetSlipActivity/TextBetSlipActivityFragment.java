@@ -32,7 +32,6 @@ import com.tommyfrenchbookmakers.officialapp.utils.BettingUtils;
 import com.tommyfrenchbookmakers.officialapp.utils.NetworkUtils;
 import com.tommyfrenchbookmakers.officialapp.utils.SMSUtils;
 import com.tommyfrenchbookmakers.officialapp.enumerators.WagerType;
-import com.tommyfrenchbookmakers.officialapp.interfaces.WagerConfirmedListener;
 import com.tommyfrenchbookmakers.officialapp.singletons.BetSlipSingleton;
 
 import java.text.DecimalFormat;
@@ -81,12 +80,12 @@ public class TextBetSlipActivityFragment extends Fragment {
     }
 
     public void setPanelState(SlidingUpPanelLayout.PanelState state) {
-        if(state == SlidingUpPanelLayout.PanelState.COLLAPSED) {
+        if (state == SlidingUpPanelLayout.PanelState.COLLAPSED) {
             mPanelLayout.setPanelState(state);
         }
 
-        if(state == SlidingUpPanelLayout.PanelState.EXPANDED) {
-            if(mBetSlip.getSelections().size() == 0) {
+        if (state == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            if (mBetSlip.getSelections().size() == 0) {
                 Snackbar.make(getView(), R.string.snackbar_body_no_wagers, Snackbar.LENGTH_SHORT).show();
             } else {
                 mPanelLayout.setPanelState(state);
@@ -125,13 +124,13 @@ public class TextBetSlipActivityFragment extends Fragment {
         int endSize = wagers.size();
         decidePanelEnabled();
 
-        if(startSize != endSize) {
+        if (startSize != endSize) {
             updateWagersInfo();
         }
     }
 
     private void decidePanelEnabled() {
-        if(mBetSlip.getWagers().size() == 0) {
+        if (mBetSlip.getWagers().size() == 0) {
             mPanelLayout.setEnabled(false);
         } else {
             mPanelLayout.setEnabled(true);
@@ -142,7 +141,7 @@ public class TextBetSlipActivityFragment extends Fragment {
         double totalStake = 0d, totalReturn = 0d;
         ArrayList<BetSlipWager> wagers = mBetSlip.getWagers();
         final int size = wagers.size();
-        for(int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             BetSlipWager wager = wagers.get(i);
             wager.calculateStake(mBetSlip.getSelections().size());
             totalStake += wager.getTotalStake();
@@ -153,7 +152,7 @@ public class TextBetSlipActivityFragment extends Fragment {
 
         DecimalFormat df = new DecimalFormat("0.00");
         ((TextBetSlipActivity) getActivity()).getSupportActionBar()
-                .setSubtitle("Stake: £" + df.format(totalStake));
+                .setSubtitle(getString(R.string.toolbar_stake_information, "" + df.format(totalStake)));
         mNumberOfWagersTextView.animate().alpha(0f).setDuration(300).setListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -195,7 +194,7 @@ public class TextBetSlipActivityFragment extends Fragment {
             public void onWagerConfirmed(String unitStake, boolean eachWay, WagerType wagerType) {
                 DecimalFormat df = new DecimalFormat("0.00");
 
-                if(unitStake.length() == 0) {
+                if (unitStake.length() == 0) {
                     Snackbar.make(getView(), R.string.snackbar_body_no_stake_entered, Snackbar.LENGTH_LONG).show();
                     return;
                 }
@@ -203,9 +202,9 @@ public class TextBetSlipActivityFragment extends Fragment {
                 BetSlipWager wager = null;
 
                 // Checks to see if a bet of the same type already exists, if so it selects said BetSlipWager.
-                for(BetSlipWager w : mBetSlip.getWagers()) {
+                for (BetSlipWager w : mBetSlip.getWagers()) {
                     // If they are the same type, and they're both each way or not.
-                    if(w.getWagerType() == wagerType && (w.isEachWay() == eachWay)) {
+                    if (w.getWagerType() == wagerType && (w.isEachWay() == eachWay)) {
                         wager = w;
                         break;
                     }
@@ -214,11 +213,11 @@ public class TextBetSlipActivityFragment extends Fragment {
                     unitStake = df.format(Double.parseDouble(unitStake));
 
                     // If wager isn't null; will only be true if the chosen WagerType already has been chosen before.
-                    if(wager != null) {
+                    if (wager != null) {
                         // Add the new stake and the old stake together, and notify the RecyclerView of the valye changing.
                         wager.setUnitStake(df.format(Double.parseDouble(wager.getUnitStake()) + Double.parseDouble(unitStake)));
                         mWagersAdapter.notifyItemChanged(mBetSlip.getWagers().indexOf(wager));
-                        Snackbar.make(getView(), "£" + unitStake + " " + wagerType.getName() + (eachWay ? "ew" : "") + " added!", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(getView(), getString(R.string.snackbar_body_wager_added, wager.toString()), Snackbar.LENGTH_SHORT).show();
                     } else {
                         // Create a new BetSlipWager with the passed values. and notify the RecyclerView of this addition.
                         wager = new BetSlipWager(wagerType, unitStake, eachWay);

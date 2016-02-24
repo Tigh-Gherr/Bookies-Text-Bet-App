@@ -27,14 +27,12 @@ public class ContactUsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ArrayList<ShopInfo> shopInfos = new ArrayList<>();
-//        shopInfos.add(new ShopInfo("Armagh", new LatLng(54.345488, -6.656665), "02845454545"));
-//        shopInfos.add(new ShopInfo("William Street", new LatLng(54.466068, -6.337399), "02838324545"));
-//        shopInfos.add(new ShopInfo("North Street", new LatLng(54.464843, -6.334288), "02854545454"));
-        ShopInfoSingleton.get(this).setShopInfos(shopInfos);
-
-        OfficeDownloader officeDownloader = new OfficeDownloader();
-        officeDownloader.execute();
+        if(ShopInfoSingleton.get(this).getShopInfos() == null) {
+            ShopInfoSingleton.get(this).setShopInfos(new ArrayList<ShopInfo>());
+            new OfficeDownloader().execute();
+        } else {
+            setup();
+        }
     }
 
     private void setup() {

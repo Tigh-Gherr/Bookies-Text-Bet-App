@@ -17,23 +17,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.tighearnan.frenchsscanner.R;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.tommyfrenchbookmakers.officialapp.Global;
-import com.tommyfrenchbookmakers.officialapp.TestCorrectScoreActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.AccountAndReferenceInput.AccountAndReferenceInputActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity;
-import com.tommyfrenchbookmakers.officialapp.ui.CameraPreviewActivity;
+import com.tommyfrenchbookmakers.officialapp.ui.CameraPreviewActivity.CameraPreviewActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.ContactUsActivity.ContactUsActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.TypeBarcodeActivity.TypeBarcodeActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.TextBetSlipActivity.TextBetSlipActivity;
 import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlip;
 import com.tommyfrenchbookmakers.officialapp.singletons.BetSlipSingleton;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -129,7 +123,7 @@ public class SelectionScreenActivityFragment extends Fragment {
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (checkForPermission(Global.REQUEST_PERMISSION_CAMERA, Manifest.permission.CAMERA))
-                        startActivity(new Intent(getActivity(), BarcodeScannerActivity.class));
+                        startActivity(new Intent(getActivity(), CameraPreviewActivity.class));
                 } else {
                     startActivity(new Intent(getActivity(), BarcodeScannerActivity.class));
                 }

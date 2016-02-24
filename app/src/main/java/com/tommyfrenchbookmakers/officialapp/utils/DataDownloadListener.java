@@ -1,4 +1,4 @@
-package com.tommyfrenchbookmakers.officialapp.interfaces;
+package com.tommyfrenchbookmakers.officialapp.utils;
 
 /**
  * Created by Tíghearnán on 02/09/2015.

@@ -17,8 +17,9 @@
     <string name="title_activity_bet_slip">Bet Slip</string>
     <string name="title_activity_better_text_bet">Text Bet Slip</string>
     <string name="title_activity_add_selection">Meetings</string>
-    <string name="title_activity_test_camera">Camera</string>
     <string name="title_activity_test_correct_score">TestCorrectScore</string>
+    <string name="title_activity_camera_preview">CameraPreviewActivity</string>
+    <string name="title_activity_contact_us">Contact Us</string>
 
     <string name="sms_body_edited_wrong">There appears to be an error with barcode %s can a member of staff please review this?</string>
     <string name="sms_body_test_text_bet">Test</string>
@@ -58,6 +59,7 @@
     <string name="text_view_market_over">%1$s %2$s is over.</string>
 
     <string name="toolbar_meeting_information">EW: %1$s Tricast: %2$s</string>
+    <string name="toolbar_stake_information">Stake: £%s</string>
 
     <string name="edit_text_input">Enter barcode.</string>
     <string name="edit_text_barcode_length">Your barcode length:</string>
@@ -103,9 +105,6 @@
 
     <string name="nav_drawer_opened">Opened</string>
     <string name="nav_drawer_closed">Closed</string>
-    <string name="title_activity_camera">CameraActivity</string>
-    <string name="title_activity_camera_preview">CameraPreviewActivity</string>
-    <string name="title_activity_contact_us">ContactUsActivity</string>
 
 
 </resources>

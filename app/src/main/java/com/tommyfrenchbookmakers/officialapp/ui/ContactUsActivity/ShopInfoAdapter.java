@@ -103,6 +103,7 @@ public class ShopInfoAdapter extends RecyclerView.Adapter<ShopInfoAdapter.ShopIn
 
                 @Override
                 public void onPreOpen() {
+//                    mMap.setVisibility(View.VISIBLE);
                     mMap.onResume();
                     mToggleMoreInfo.setSelected(true);
                 }
@@ -124,7 +125,7 @@ public class ShopInfoAdapter extends RecyclerView.Adapter<ShopInfoAdapter.ShopIn
             });
 
             mMap = (MapView) itemView.findViewById(R.id.map_view_shop);
-            mMap.onCreate(mSavedInstanceState);
+            mMap.onCreate(null);
             mMap.getMapAsync(new OnMapReadyCallback() {
                 @Override
                 public void onMapReady(GoogleMap googleMap) {

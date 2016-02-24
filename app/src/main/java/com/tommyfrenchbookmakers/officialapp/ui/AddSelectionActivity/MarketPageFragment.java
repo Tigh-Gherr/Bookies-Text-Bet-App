@@ -23,8 +23,8 @@ import com.tommyfrenchbookmakers.officialapp.ui.TextBetSlipActivity.TextBetSlipA
 import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlip;
 import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlipSelection;
 import com.tommyfrenchbookmakers.officialapp.utils.DownloadUtils;
-import com.tommyfrenchbookmakers.officialapp.interfaces.DataDownloadListener;
-import com.tommyfrenchbookmakers.officialapp.interfaces.OnAdapterItemSelectedListener;
+import com.tommyfrenchbookmakers.officialapp.utils.DataDownloadListener;
+import com.tommyfrenchbookmakers.officialapp.ui.OnAdapterItemSelectedListener;
 import com.tommyfrenchbookmakers.officialapp.meetingobjects.Market;
 import com.tommyfrenchbookmakers.officialapp.meetingobjects.Meeting;
 import com.tommyfrenchbookmakers.officialapp.meetingobjects.Participant;

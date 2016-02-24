@@ -21,7 +21,7 @@ import android.view.MenuItem;
 import com.android.tighearnan.frenchsscanner.R;
 import com.tommyfrenchbookmakers.officialapp.Global;
 import com.tommyfrenchbookmakers.officialapp.utils.NavigationUtils;
-import com.tommyfrenchbookmakers.officialapp.interfaces.DataDownloadListener;
+import com.tommyfrenchbookmakers.officialapp.utils.DataDownloadListener;
 import com.tommyfrenchbookmakers.officialapp.singletons.GlobalDocket;
 import com.tommyfrenchbookmakers.officialapp.utils.DownloadUtils;
 import com.tommyfrenchbookmakers.officialapp.utils.SMSUtils;

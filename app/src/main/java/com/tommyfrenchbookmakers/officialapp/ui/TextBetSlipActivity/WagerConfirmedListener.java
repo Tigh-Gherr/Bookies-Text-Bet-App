@@ -1,4 +1,4 @@
-package com.tommyfrenchbookmakers.officialapp.interfaces;
+package com.tommyfrenchbookmakers.officialapp.ui.TextBetSlipActivity;
 
 import com.tommyfrenchbookmakers.officialapp.enumerators.WagerType;
 
