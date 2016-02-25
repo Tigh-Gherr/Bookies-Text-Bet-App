@@ -42,7 +42,6 @@ public class DownloadUtils {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            // TODO: Remove ProgressDialog, use ProgressBar and DataDownloadListener.
             // Create and display the ProgressDialog
             mDownloadedData = "";
             mDownloadingDocketDialog = new ProgressDialog(mContext);
@@ -80,7 +79,6 @@ public class DownloadUtils {
         protected void onPostExecute(Boolean success) {
             super.onPostExecute(success);
 
-            // TODO: Call to onDownloadComplete will instead dismiss the ProgressDialog and setup the host Fragment.
             // Dismiss the ProgressDialog. Send downloaded data and success information back to Fragment.
             mDownloadingDocketDialog.dismiss();
             mStatusListener.onDownloadComplete(success, mDownloadedData);
@@ -145,7 +143,6 @@ public class DownloadUtils {
         protected void onPostExecute(Boolean success) {
             super.onPostExecute(success);
 
-            // TODO: Call to onDownloadComplete will instead dismiss the ProgressDialog and setup the host Fragment.
             // Dismiss the ProgressDialog. Send downloaded data and success information back to Fragment.
             mDownloadingProgressDialog.dismiss();
             mStatus.onDownloadComplete(success, mDownloadedData);

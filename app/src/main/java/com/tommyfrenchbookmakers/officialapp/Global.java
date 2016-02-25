@@ -22,6 +22,7 @@ public class Global {
     public static final String INTENT_KEY_BARCODE = "BARCODE";
     public static final String INTENT_KEY_ACCOUNT = "ACCOUNT";
     public static final String INTENT_KEY_REFERENCE = "REFERENCE";
+    public static final String INTENT_KEY_SENDER = "SENDER";
 
     public static final int WAGER_CATEGORY_MULTIPLE = 20;
     public static final int WAGER_CATEGORY_FULL_COVER_WITH_SINGLES = 21;

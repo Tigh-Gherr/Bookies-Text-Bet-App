@@ -61,6 +61,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity"/>
         </activity>
+        <activity android:name="com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity"
+                  android:label="Barcode Scanner"
+                  android:screenOrientation="portrait"
+                  android:parentActivityName="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity"/>
+        </activity>
         <activity
             android:name="com.tommyfrenchbookmakers.officialapp.ui.SplashScreenActivity"
             android:label="@string/app_name"

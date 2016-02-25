@@ -1,6 +1,8 @@
 package com.tommyfrenchbookmakers.officialapp.ui.TextBetSlipActivity;
 
+import android.Manifest;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -13,10 +15,11 @@ import android.view.MenuItem;
 import com.android.tighearnan.frenchsscanner.R;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlip;
+import com.tommyfrenchbookmakers.officialapp.ui.BaseActivity;
 import com.tommyfrenchbookmakers.officialapp.utils.NavigationUtils;
 import com.tommyfrenchbookmakers.officialapp.singletons.BetSlipSingleton;
 
-public class TextBetSlipActivity extends AppCompatActivity {
+public class TextBetSlipActivity extends BaseActivity {
 
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
@@ -26,25 +29,14 @@ public class TextBetSlipActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_bet_slip);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        overridePendingTransition(0, 0);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
-        mNavigationView.getMenu().getItem(0).getSubMenu().getItem(0).setChecked(true);
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                if(!item.isChecked()) {
-                    NavigationUtils.onNavigationMenuItemPressed(item.getItemId(), TextBetSlipActivity.this);
-                }
+        checkForPermission(REQUEST_PERMISSION_SMS, Manifest.permission.SEND_SMS);
+    }
 
-                mDrawerLayout.closeDrawers();
-                return true;
-            }
-        });
+    @Override
+    protected int getSelfNavDrawerItem() {
+        return NAVDRAWER_ITEM_TEXTBET;
     }
 
     // Create options menu

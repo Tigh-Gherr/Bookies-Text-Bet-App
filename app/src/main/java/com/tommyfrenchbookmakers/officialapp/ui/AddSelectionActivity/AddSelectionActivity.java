@@ -13,43 +13,27 @@ import android.view.MenuItem;
 
 import com.android.tighearnan.frenchsscanner.R;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+import com.tommyfrenchbookmakers.officialapp.ui.BaseActivity;
 import com.tommyfrenchbookmakers.officialapp.utils.NavigationUtils;
 
-public class AddSelectionActivity extends AppCompatActivity {
+public class AddSelectionActivity extends BaseActivity {
 
     AppBarLayout mAppBarLayout;
-    private Toolbar mToolbar;
+    /*private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
-    private NavigationView mNavigationView;
+    private NavigationView mNavigationView;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_selection);
-        mToolbar = (Toolbar) findViewById(R.id.app_bar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         mAppBarLayout = (AppBarLayout) findViewById(R.id.abl_test);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
-        mNavigationView.getMenu().getItem(0).getSubMenu().getItem(0).setChecked(true);
+    }
 
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                int id = item.getItemId();
-                if (id == R.id.nav_textBet) {
-                    NavUtils.navigateUpFromSameTask(AddSelectionActivity.this);
-                } else {
-                    NavigationUtils.onNavigationMenuItemPressed(id, AddSelectionActivity.this);
-                }
-
-                mDrawerLayout.closeDrawers();
-                return true;
-            }
-        });
+    @Override
+    protected int getSelfNavDrawerItem() {
+        return NAVDRAWER_ITEM_TEXTBET;
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -60,7 +44,7 @@ public class AddSelectionActivity extends AppCompatActivity {
     }
 
     public void setToolbarTitle(String title) {
-        mToolbar.setTitle(title);
+        getActionBarToolbar().setTitle(title);
     }
 
     @Override

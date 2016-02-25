@@ -2,6 +2,7 @@ package com.tommyfrenchbookmakers.officialapp.ui.ResultPagerActivity;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -20,6 +21,10 @@ import android.view.MenuItem;
 
 import com.android.tighearnan.frenchsscanner.R;
 import com.tommyfrenchbookmakers.officialapp.Global;
+import com.tommyfrenchbookmakers.officialapp.ui.AccountAndReferenceInput.AccountAndReferenceInputActivity;
+import com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity;
+import com.tommyfrenchbookmakers.officialapp.ui.BaseActivity;
+import com.tommyfrenchbookmakers.officialapp.ui.TypeBarcodeActivity.TypeBarcodeActivity;
 import com.tommyfrenchbookmakers.officialapp.utils.NavigationUtils;
 import com.tommyfrenchbookmakers.officialapp.utils.DataDownloadListener;
 import com.tommyfrenchbookmakers.officialapp.singletons.GlobalDocket;
@@ -33,13 +38,13 @@ import java.text.DecimalFormat;
 /**
  * Created by Tíghearnán on 15/07/2015.
  */
-public class ResultPagerActivity extends AppCompatActivity implements DataDownloadListener {
+public class ResultPagerActivity extends BaseActivity implements DataDownloadListener {
 
     // UI widgets
     private Toolbar mToolbar;
     private ViewPager mViewPager;
-    private DrawerLayout mDrawerLayout;
-    private NavigationView mNavigationView;
+
+    private int sender;
 
     // Custom Objects
     private Docket mDocket;
@@ -106,7 +111,7 @@ public class ResultPagerActivity extends AppCompatActivity implements DataDownlo
         // Sets the page transition animation.
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        /*mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -121,7 +126,12 @@ public class ResultPagerActivity extends AppCompatActivity implements DataDownlo
                 mDrawerLayout.closeDrawers();
                 return true;
             }
-        });
+        });*/
+    }
+
+    @Override
+    protected int getSelfNavDrawerItem() {
+        return sender;
     }
 
     // Sets up activity
@@ -131,17 +141,16 @@ public class ResultPagerActivity extends AppCompatActivity implements DataDownlo
         setContentView(R.layout.activity_result_pager);
         mViewPager = (ViewPager) findViewById(R.id.view_pager_resultPager);
 
-        mToolbar = (Toolbar) findViewById(R.id.app_bar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mToolbar = getActionBarToolbar();
+
+        sender = getIntent().getIntExtra(Global.INTENT_KEY_SENDER, 0);
 
         // Fetches the download type.
         int type = getIntent().getIntExtra(Global.INTENT_KEY_DOWNLOAD_TYPE, 0);
 
         // If the download type was a barcode.
         if (type == Global.DOWNLOAD_TYPE_BARCODE) {
-            String barcode = getIntent().getStringExtra("BARCODE");
+            String barcode = getIntent().getStringExtra(Global.INTENT_KEY_BARCODE);
             DownloadUtils.DocketFromBarcode docketFromBarcode =
                     new DownloadUtils.DocketFromBarcode(ResultPagerActivity.this, this);
             docketFromBarcode.execute(getString(R.string.download_url_barcode, barcode));

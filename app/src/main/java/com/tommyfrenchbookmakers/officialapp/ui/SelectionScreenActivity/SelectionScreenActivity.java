@@ -31,6 +31,7 @@ import com.tommyfrenchbookmakers.officialapp.singletons.BetSlipSingleton;
 
 public class SelectionScreenActivity extends AppCompatActivity {
 
+    /*              TODO: Migrate to BaseActivity               */
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private Toolbar mToolbar;
@@ -99,7 +100,7 @@ public class SelectionScreenActivity extends AppCompatActivity {
                 if(granted) {
                     launchActivity(BarcodeScannerActivity.class);
                 } else {
-                    Snackbar.make(mDrawerLayout, "Cannot start Barcode Scanner, SMS permission not granted.", Snackbar.LENGTH_LONG)
+                    Snackbar.make(mDrawerLayout, "Cannot start Barcode Scanner, Camera permission not granted.", Snackbar.LENGTH_LONG)
                             .show();
                 }
                 break;
@@ -141,7 +142,7 @@ public class SelectionScreenActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.nav_textBet:
+                    case R.id.navdrawer_item_textbet:
                         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             if(checkForPermission(Global.REQUEST_PERMISSION_SMS, Manifest.permission.SEND_SMS)) {
                                 startTextBetActivity();
@@ -150,10 +151,10 @@ public class SelectionScreenActivity extends AppCompatActivity {
                             startTextBetActivity();
                         }
                         return true;
-                    case R.id.nav_checkResult:
+                    case R.id.navdrawer_item_check_result:
                         launchActivity(AccountAndReferenceInputActivity.class);
                         return true;
-                    case R.id.nav_scanBarcode:
+                    case R.id.navdrawer_item_scan_barcode:
                         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             if(checkForPermission(Global.REQUEST_PERMISSION_CAMERA, Manifest.permission.CAMERA)) {
                                 launchActivity(BarcodeScannerActivity.class);
@@ -162,7 +163,7 @@ public class SelectionScreenActivity extends AppCompatActivity {
                             launchActivity(BarcodeScannerActivity.class);
                         }
                         return true;
-                    case R.id.nav_typeBarcode:
+                    case R.id.navdrawer_item_type_barcode:
                         launchActivity(TypeBarcodeActivity.class);
                         return true;
                 }

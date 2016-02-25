@@ -3,6 +3,7 @@ package com.tommyfrenchbookmakers.officialapp.ui.TypeBarcodeActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
@@ -31,7 +32,7 @@ import com.tommyfrenchbookmakers.officialapp.utils.NetworkUtils;
  */
 public class TypeBarcodeActivityFragment extends Fragment {
 
-    private Toolbar mToolbar;
+//    private Toolbar mToolbar;
     private AppCompatButton mGoButton;
     private EditText mInputEditText;
     private TextView mBarcodeDigitTextView;
@@ -44,16 +45,14 @@ public class TypeBarcodeActivityFragment extends Fragment {
             if (NetworkUtils.networkIsAvailable(getActivity())) {
                 Intent i = new Intent(getActivity(), ResultPagerActivity.class);
                 i.putExtra(Global.INTENT_KEY_DOWNLOAD_TYPE, Global.DOWNLOAD_TYPE_BARCODE);
-                i.putExtra("BARCODE", mInputEditText.getText().toString());
+                i.putExtra(Global.INTENT_KEY_BARCODE, mInputEditText.getText().toString());
+                i.putExtra(Global.INTENT_KEY_SENDER, ((TypeBarcodeActivity)getActivity()).getSelfNavDrawerItem());
                 startActivity(i);
             } else {
-                Toast toast = Toast.makeText(getActivity(),
-                        R.string.error_message_no_internet,
-                        Toast.LENGTH_LONG);
-
-                ((TextView) ((LinearLayout) toast.getView()).getChildAt(0))
-                        .setGravity(Gravity.CENTER_HORIZONTAL);
-                toast.show();
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
+                Snackbar.make(getView(), R.string.error_message_no_internet, Snackbar.LENGTH_LONG)
+                        .show();
             }
         } else {
             Toast.makeText(getActivity(),
@@ -66,11 +65,6 @@ public class TypeBarcodeActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_type_barcode, container, false);
-
-        mToolbar = (Toolbar) v.findViewById(R.id.app_bar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mBarcodeDigitTextView = (TextView) v.findViewById(R.id.text_view_currentBarcodeDigit);
 

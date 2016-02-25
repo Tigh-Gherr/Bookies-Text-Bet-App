@@ -106,5 +106,10 @@
     <string name="nav_drawer_opened">Opened</string>
     <string name="nav_drawer_closed">Closed</string>
 
+    <string name="navdrawer_item_textbet">Text Bet</string>
+    <string name="navdrawer_item_check_result">Check Result</string>
+    <string name="navdrawer_item_scan_barcode">Scan Barcode</string>
+    <string name="navdrawer_item_type_barcode">Type Barcode</string>
+
 
 </resources>

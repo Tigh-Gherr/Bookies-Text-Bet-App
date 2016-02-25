@@ -6,10 +6,6 @@
     android:orientation="vertical"
     tools:context="com.tommyfrenchbookmakers.officialapp.ui.TypeBarcodeActivity.TypeBarcodeActivityFragment">
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/app_bar" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

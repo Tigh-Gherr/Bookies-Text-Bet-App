@@ -5,10 +5,6 @@
     android:orientation="vertical"
     tools:context="com.tommyfrenchbookmakers.officialapp.ui.AccountAndReferenceInput.AccountAndReferenceInputActivityFragment">
 
-    <include
-        android:id="@+id/app_bar"
-        layout="@layout/app_bar" />
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

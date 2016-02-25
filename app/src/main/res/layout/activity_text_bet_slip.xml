@@ -8,6 +8,7 @@
     android:layout_height="match_parent">
 
     <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.tommyfrenchbookmakers.officialapp.ui.TextBetSlipActivity.TextBetSlipActivity">
@@ -18,7 +19,7 @@
             android:theme="@style/AppTheme.AppBarOverlay">
 
             <include
-                android:id="@+id/app_bar"
+                android:id="@+id/toolbar"
                 layout="@layout/app_bar" />
 
         </android.support.design.widget.AppBarLayout>

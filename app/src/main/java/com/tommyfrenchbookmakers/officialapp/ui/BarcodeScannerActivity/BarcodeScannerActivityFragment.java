@@ -74,6 +74,7 @@ public class BarcodeScannerActivityFragment extends Fragment implements ZBarScan
                 Intent i = new Intent(getActivity(), ResultPagerActivity.class);
                 i.putExtra(Global.INTENT_KEY_DOWNLOAD_TYPE, Global.DOWNLOAD_TYPE_BARCODE);
                 i.putExtra(Global.INTENT_KEY_BARCODE, barcode);
+                i.putExtra(Global.INTENT_KEY_SENDER, ((BarcodeScannerActivity)getActivity()).getSelfNavDrawerItem());
                 startActivity(i);
             } else {
                 createSnackBar(R.string.error_message_no_internet);

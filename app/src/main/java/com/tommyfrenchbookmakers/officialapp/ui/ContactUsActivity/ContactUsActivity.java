@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.android.tighearnan.frenchsscanner.R;
 import com.google.android.gms.maps.model.LatLng;
+import com.tommyfrenchbookmakers.officialapp.ui.BaseActivity;
 import com.tommyfrenchbookmakers.officialapp.utils.ParseUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -21,87 +22,19 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class ContactUsActivity extends AppCompatActivity {
+public class ContactUsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if(ShopInfoSingleton.get(this).getShopInfos() == null) {
-            ShopInfoSingleton.get(this).setShopInfos(new ArrayList<ShopInfo>());
-            new OfficeDownloader().execute();
-        } else {
-            setup();
-        }
-    }
-
-    private void setup() {
         setContentView(R.layout.activity_contact_us);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        overridePendingTransition(0, 0);
     }
 
-    public class OfficeDownloader extends AsyncTask<Void, Void, String> {
-
-        private ProgressDialog mProgressDialog;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mProgressDialog = new ProgressDialog(ContactUsActivity.this);
-            mProgressDialog.setMessage("Fetching shops...");
-            mProgressDialog.setIndeterminate(true);
-            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            mProgressDialog.setCancelable(true);
-            mProgressDialog.setProgressNumberFormat(null);
-            mProgressDialog.setProgressPercentFormat(null);
-
-            mProgressDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-
-            return download(getString(R.string.download_url_offices));
-        }
-
-        private String download(String link) {
-            String dl = "";
-            HttpURLConnection connection;
-
-            try {
-                URL url = new URL(link);
-                connection = (HttpURLConnection) url.openConnection();
-
-                ByteArrayOutputStream out = new ByteArrayOutputStream();
-                InputStream inputStream = connection.getInputStream();
-
-                if(connection.getResponseCode() != HttpURLConnection.HTTP_OK) return null;
-
-                int bytesRead = 0;
-                byte[] buffer = new byte[1024];
-                while((bytesRead = inputStream.read(buffer)) > 0) {
-                    out.write(buffer, 0, bytesRead);
-                }
-                out.close();
-                dl = new String(out.toByteArray());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return dl;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            mProgressDialog.dismiss();
-
-            if(ParseUtils.shopInfoFromJSON(s, ShopInfoSingleton.get(ContactUsActivity.this).getShopInfos())) {
-                setup();
-            }
-
-        }
+    @Override
+    protected int getSelfNavDrawerItem() {
+        return NAVDRAWER_ITEM_CONTACT_US;
     }
+
 }

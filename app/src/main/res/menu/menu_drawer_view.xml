@@ -4,12 +4,12 @@
     <item android:title="Account Services">
         <menu>
             <item
-                android:id="@+id/nav_textBet"
-                android:icon="@drawable/ic_message"
+                android:id="@+id/navdrawer_item_textbet"
+                android:icon="@drawable/ic_navdrawer_item_textbet"
                 android:title="Text Bet" />
             <item
-                android:id="@+id/nav_checkResult"
-                android:icon="@drawable/ic_results"
+                android:id="@+id/navdrawer_item_check_result"
+                android:icon="@drawable/ic_navdrawer_item_check_results"
                 android:title="Check Result" />
         </menu>
     </item>
@@ -17,13 +17,17 @@
     <item android:title="Barcode Services">
         <menu>
             <item
-                android:id="@+id/nav_scanBarcode"
-                android:icon="@drawable/ic_camera_alt_black_24px"
+                android:id="@+id/navdrawer_item_scan_barcode"
+                android:icon="@drawable/ic_navdrawer_item_scan_barcode"
                 android:title="Scan Barcode" />
             <item
-                android:id="@+id/nav_typeBarcode"
-                android:icon="@drawable/ic_keyboard_24dp"
+                android:id="@+id/navdrawer_item_type_barcode"
+                android:icon="@drawable/ic_navdrawer_item_type_barcode"
                 android:title="Type Barcode" />
+            <item
+                android:id="@+id/navdrawer_item_contact_us"
+                android:icon="@drawable/ic_navdrawer_item_contact_us"
+                android:title="Contact Us" />
         </menu>
 
     </item>

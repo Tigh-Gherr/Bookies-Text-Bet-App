@@ -24,7 +24,7 @@ import com.tommyfrenchbookmakers.officialapp.utils.NetworkUtils;
 
 public class AccountAndReferenceInputActivityFragment extends Fragment {
 
-    private Toolbar mToolbar;
+//    private Toolbar mToolbar;
     private EditText mAccountNumberEditText;
     private EditText mReferenceNumberEditText;
     private AppCompatButton mGoButton;
@@ -42,6 +42,8 @@ public class AccountAndReferenceInputActivityFragment extends Fragment {
                         i.putExtra(Global.INTENT_KEY_DOWNLOAD_TYPE, Global.DOWNLOAD_TYPE_ACCOUNT_AND_REFERENCE);
                         i.putExtra(Global.INTENT_KEY_ACCOUNT, mAccountNumberEditText.getText().toString().toLowerCase());
                         i.putExtra(Global.INTENT_KEY_REFERENCE, mReferenceNumberEditText.getText().toString());
+                        i.putExtra(Global.INTENT_KEY_SENDER, ((AccountAndReferenceInputActivity)getActivity()).getSelfNavDrawerItem());
+
                         startActivity(i);
                     } else {
                         Toast.makeText(getActivity(), "Not connected to internet", Toast.LENGTH_LONG).show();
@@ -68,10 +70,10 @@ public class AccountAndReferenceInputActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_account_input, container, false);
 
-        mToolbar = (Toolbar) v.findViewById(R.id.app_bar);
+        /*mToolbar = (Toolbar) v.findViewById(R.id.app_bar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         mAccountNumberEditText = (EditText) v.findViewById(R.id.edit_text_accountInputAccountNumber);
         mAccountNumberEditText.requestFocus();

@@ -32,11 +32,9 @@ import java.util.ArrayList;
 public class ShopInfoAdapter extends RecyclerView.Adapter<ShopInfoAdapter.ShopInfoViewHolder> {
 
     private ArrayList<ShopInfo> mShopInfos;
-    private Bundle mSavedInstanceState;
 
-    public ShopInfoAdapter(ArrayList<ShopInfo> shopInfos, Bundle savedInstanceState) {
+    public ShopInfoAdapter(ArrayList<ShopInfo> shopInfos) {
         mShopInfos = shopInfos;
-        mSavedInstanceState = savedInstanceState;
     }
 
     @Override

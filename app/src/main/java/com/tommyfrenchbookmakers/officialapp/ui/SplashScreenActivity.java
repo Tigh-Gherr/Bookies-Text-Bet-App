@@ -10,6 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.tighearnan.frenchsscanner.R;
+import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlip;
+import com.tommyfrenchbookmakers.officialapp.singletons.BetSlipSingleton;
 import com.tommyfrenchbookmakers.officialapp.utils.NetworkUtils;
 import com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity;
 
@@ -25,6 +27,8 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
+        BetSlipSingleton.get(this).setBetSlip(new BetSlip());
 
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar_splashScreenSpinner);
         mCheckingInternetTextView = (TextView) findViewById(R.id.text_view_splashScreenCheckingInternet);

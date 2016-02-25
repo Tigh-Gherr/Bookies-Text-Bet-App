@@ -8,16 +8,25 @@
     android:layout_height="match_parent"
     tools:context="com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity">
 
-    <fragment
-        android:id="@+id/fragment"
-        android:name="com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivityFragment"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <FrameLayout
+        android:id="@+id/main_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:layout="@layout/fragment_barcode_scanner" />
+        android:layout_height="match_parent">
+
+        <fragment
+            android:id="@+id/fragment"
+            android:name="com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivityFragment"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:layout="@layout/fragment_barcode_scanner" />
+
+    </FrameLayout>
+
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"

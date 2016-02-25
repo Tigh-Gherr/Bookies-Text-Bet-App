@@ -11,7 +11,6 @@ import android.support.v4.content.ContextCompat;
 
 import com.android.tighearnan.frenchsscanner.R;
 import com.tommyfrenchbookmakers.officialapp.Global;
-import com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.AccountAndReferenceInput.AccountAndReferenceInputActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.TypeBarcodeActivity.TypeBarcodeActivity;
@@ -57,19 +56,19 @@ public final class NavigationUtils {
 
     public static void onNavigationMenuItemPressed(int itemId, Context c) {
         switch (itemId) {
-            case R.id.nav_textBet:
+            case R.id.navdrawer_item_textbet:
                 if(BetSlipSingleton.get(c).getBetSlip() == null) {
                     BetSlipSingleton.get(c).setBetSlip(new BetSlip());
                 }
                 c.startActivity(new Intent(c, TextBetSlipActivity.class));
                 break;
-            case R.id.nav_typeBarcode:
+            case R.id.navdrawer_item_type_barcode:
                 c.startActivity(new Intent(c, TypeBarcodeActivity.class));
                 break;
-            case R.id.nav_scanBarcode:
+            case R.id.navdrawer_item_scan_barcode:
                 c.startActivity(new Intent(c, BarcodeScannerActivity.class));
                 break;
-            case R.id.nav_checkResult:
+            case R.id.navdrawer_item_check_result:
                 c.startActivity(new Intent(c, AccountAndReferenceInputActivity.class));
                 break;
         }

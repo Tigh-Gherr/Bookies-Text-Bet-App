@@ -8,18 +8,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.android.tighearnan.frenchsscanner.R;
+import com.tommyfrenchbookmakers.officialapp.ui.BaseActivity;
 import com.tommyfrenchbookmakers.officialapp.utils.NavigationUtils;
 
-public class TypeBarcodeActivity extends AppCompatActivity {
+public class TypeBarcodeActivity extends BaseActivity {
 
-    DrawerLayout mDrawerLayout;
-    NavigationView mNavigationView;
+//    DrawerLayout mDrawerLayout;
+//    NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_type_barcode);
-
+/*
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         mNavigationView.getMenu().getItem(1).getSubMenu().getItem(1).setChecked(true);
@@ -33,9 +34,14 @@ public class TypeBarcodeActivity extends AppCompatActivity {
                 mDrawerLayout.closeDrawers();
                 return true;
             }
-        });
+        });*/
+        overridePendingTransition(0, 0);
     }
 
+    @Override
+    protected int getSelfNavDrawerItem() {
+        return NAVDRAWER_ITEM_TYPE_BARCODE;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -58,4 +64,5 @@ public class TypeBarcodeActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

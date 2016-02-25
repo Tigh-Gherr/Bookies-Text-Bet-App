@@ -47,7 +47,9 @@ public class SelectionScreenActivityFragment extends Fragment {
     }
 
     private void startTextBetActivity() {
-        BetSlipSingleton.get(getActivity()).setBetSlip(new BetSlip());
+        if(BetSlipSingleton.get(getActivity()).getBetSlip() == null) {
+            BetSlipSingleton.get(getActivity()).setBetSlip(new BetSlip());
+        }
         startActivity(new Intent(getActivity(), TextBetSlipActivity.class));
     }
 
