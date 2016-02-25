@@ -31,7 +31,6 @@ import com.tommyfrenchbookmakers.officialapp.singletons.BetSlipSingleton;
 
 public class SelectionScreenActivity extends AppCompatActivity {
 
-    /*              TODO: Migrate to BaseActivity               */
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     private Toolbar mToolbar;
@@ -100,7 +99,7 @@ public class SelectionScreenActivity extends AppCompatActivity {
                 if(granted) {
                     launchActivity(BarcodeScannerActivity.class);
                 } else {
-                    Snackbar.make(mDrawerLayout, "Cannot start Barcode Scanner, Camera permission not granted.", Snackbar.LENGTH_LONG)
+                    Snackbar.make(mDrawerLayout, "Cannot start Barcode Scanner, SMS permission not granted.", Snackbar.LENGTH_LONG)
                             .show();
                 }
                 break;
@@ -130,7 +129,7 @@ public class SelectionScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sel_scr);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar_app_bar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(false);

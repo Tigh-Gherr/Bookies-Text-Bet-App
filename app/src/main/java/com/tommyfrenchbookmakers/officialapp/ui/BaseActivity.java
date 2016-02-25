@@ -31,6 +31,7 @@ import com.android.tighearnan.frenchsscanner.R;
 import com.tommyfrenchbookmakers.officialapp.ui.AccountAndReferenceInput.AccountAndReferenceInputActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.ContactUsActivity.ContactUsActivity;
+import com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.TextBetSlipActivity.TextBetSlipActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.TypeBarcodeActivity.TypeBarcodeActivity;
 
@@ -65,7 +66,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         ActionBar ab = getSupportActionBar();
-        if(ab != null) {
+        if (ab != null) {
 //            ab.setDisplayHomeAsUpEnabled(this instanceof ContactUsActivity);
         }
     }
@@ -77,7 +78,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setupNavDrawer();
         View mainContent = findViewById(R.id.main_content);
 
-        if(mainContent != null) {
+        if (mainContent != null) {
             mainContent.setAlpha(0f);
             mainContent.animate().alpha(1f).setDuration(MAIN_CONTENT_FADEIN_DURATION);
         }
@@ -88,11 +89,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected boolean checkForPermission(final int requestCode, final String permission) {
         int check = ContextCompat.checkSelfPermission(BaseActivity.this, permission);
 
-        if(check == PackageManager.PERMISSION_GRANTED) {
+        if (check == PackageManager.PERMISSION_GRANTED) {
             return true;
         }
 
-        if(ActivityCompat.shouldShowRequestPermissionRationale(BaseActivity.this, permission)) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(BaseActivity.this, permission)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
             switch (requestCode) {
                 case REQUEST_PERMISSION_SMS:
@@ -111,12 +112,12 @@ public abstract class BaseActivity extends AppCompatActivity {
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    requestPermissions(new String[] {permission}, requestCode);
+                    requestPermissions(new String[]{permission}, requestCode);
                 }
             });
             builder.show();
         } else {
-            requestPermissions(new String[] {permission}, requestCode);
+            requestPermissions(new String[]{permission}, requestCode);
         }
 
         return false;
@@ -127,7 +128,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         boolean granted = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
         switch (requestCode) {
             case REQUEST_PERMISSION_SMS:
-                if(granted) {
+                if (granted) {
 //                    start(TextBetSlipActivity.class);
                 } else {
                     Snackbar.make(mDrawerLayout, "Cannot start Text Bet, SMS permission not granted.", Snackbar.LENGTH_LONG)
@@ -136,7 +137,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 }
                 break;
             case REQUEST_PERMISSION_CAMERA:
-                if(granted) {
+                if (granted) {
 //                    start(BarcodeScannerActivity.class);
                 } else {
                     Snackbar.make(mDrawerLayout, "Cannot start Barcode Scanner, camera permission not granted.", Snackbar.LENGTH_LONG)
@@ -154,9 +155,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected Toolbar getActionBarToolbar() {
-        if(mToolbar == null) {
+        if (mToolbar == null) {
             mToolbar = (Toolbar) findViewById(R.id.toolbar);
-            if(mToolbar != null) {
+            if (mToolbar != null) {
                 setSupportActionBar(mToolbar);
             }
         }
@@ -174,9 +175,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         mNavDrawer = (NavigationView) mDrawerLayout.findViewById(R.id.navigation_view);
 
-        if(selfItem == NAVDRAWER_ITEM_INVALID) {
-            if(mNavDrawer != null) {
-                ((ViewGroup)mNavDrawer.getParent()).removeView(mNavDrawer);
+        if (selfItem == NAVDRAWER_ITEM_INVALID) {
+            if (mNavDrawer != null) {
+                ((ViewGroup) mNavDrawer.getParent()).removeView(mNavDrawer);
             }
             mDrawerLayout = null;
             return;
@@ -189,7 +190,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         });
 
-        if(mToolbar != null && getSelfNavDrawerItem() == NAVDRAWER_ITEM_INVALID) {
+        if (mToolbar != null && getSelfNavDrawerItem() == NAVDRAWER_ITEM_INVALID) {
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -224,11 +225,11 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         });
 
-
+        setSelectedDrawerItem(getSelfNavDrawerItem());
     }
 
     private boolean onNavDrawerItemClicked(final int itemId) {
-        if(itemId == getSelfNavDrawerItem()) {
+        if (itemId == getSelfNavDrawerItem()) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
             return true;
         }
@@ -240,10 +241,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         }, NAVDRAWER_LAUNCH_DELAY);
 
-        setSelectedDrawerItem(itemId);
-
         View mainContent = findViewById(R.id.main_content);
-        if(mainContent != null) {
+        if (mainContent != null) {
             mainContent.animate().alpha(0f).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
         }
 
@@ -252,13 +251,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void setSelectedDrawerItem(int itemId) {
-        if(mNavDrawer != null) {
-            for(int i = 0; i < mNavDrawer.getMenu().size(); i++) {
+        if (mNavDrawer != null) {
+            int size = mNavDrawer.getMenu().size();
+            for (int i = 0; i < size; i++) {
                 SubMenu menu = mNavDrawer.getMenu().getItem(i).getSubMenu();
 
-                for(int j = 0; j < menu.size(); j++) {
+                int subSize = menu.size();
+                for (int j = 0; j < subSize; j++) {
                     MenuItem item = menu.getItem(j);
-                    item.setChecked(itemId == getSelfNavDrawerItem());
+                    item.setChecked(item.getItemId() == getSelfNavDrawerItem());
                 }
             }
         }
