@@ -110,6 +110,7 @@ public class WagerPickerDialog extends AppCompatDialogFragment {
 
 
     private ArrayList<WagerType> getWagerTypes() {
+        // Will hold list of available WagerTypes that the user can pick from.
         ArrayList<WagerType> wagerTypes = new ArrayList<>();
 
         BetSlip betslip = BetSlipSingleton.get(getActivity()).getBetSlip();

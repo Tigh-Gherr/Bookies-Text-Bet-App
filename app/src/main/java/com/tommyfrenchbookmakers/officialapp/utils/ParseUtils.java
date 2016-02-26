@@ -254,7 +254,7 @@ public final class ParseUtils {
                         markets.add(new Market(name, offTime, id, ewOdds, ewPlaces, raceDate, tricast));
                     }
                 }
-            // If the parse is at an end tag.
+            // If the parser is at an end tag.
             } else if (eventType == XmlPullParser.END_TAG) {
                 // If the parser is leaving a Meeting.
                 if (parser.getName().equals(XML_MEETING)) {
@@ -313,6 +313,7 @@ public final class ParseUtils {
                         }
                     }
                 });
+                // TODO: Test break statement here.
             }
 
             // If the current Market ID matches the passed Markets ID.
