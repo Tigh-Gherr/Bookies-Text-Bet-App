@@ -55,6 +55,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private static final int MAIN_CONTENT_FADEIN_DURATION = 250;
     private static final int MAIN_CONTENT_FADEOUT_DURATION = 150;
+    private static final float HIDE_KEYBOARD_NAVDRAWER_OFFSET = 0.25f;
 
     private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
@@ -202,16 +203,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
-                onNavDrawerSlide(slideOffset);
+                onNavDrawerSlide(drawerView, slideOffset);
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                if (BaseActivity.this instanceof TypeBarcodeActivity
-                        || BaseActivity.this instanceof AccountAndReferenceInputActivity) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(drawerView.getWindowToken(), 0);
-                }
+
             }
 
             @Override
@@ -290,8 +287,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         finish();
     }
 
-    protected void onNavDrawerSlide(float offset) {
+    protected void onNavDrawerSlide(View drawerView, float offset) {
+        if (offset > HIDE_KEYBOARD_NAVDRAWER_OFFSET && (BaseActivity.this instanceof TypeBarcodeActivity
+                || BaseActivity.this instanceof AccountAndReferenceInputActivity)) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(drawerView.getWindowToken(), 0);
 
+        }
     }
 
 }

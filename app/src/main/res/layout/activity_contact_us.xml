@@ -9,9 +9,9 @@
     tools:context="com.tommyfrenchbookmakers.officialapp.ui.ContactUsActivity.ContactUsActivity">
 
     <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/main_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clickable="true">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -24,16 +24,21 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <fragment
-            android:id="@+id/fragment"
-            android:name="com.tommyfrenchbookmakers.officialapp.ui.ContactUsActivity.ContactUsActivityFragment"
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+        <FrameLayout
+            android:id="@+id/main_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:layout="@layout/fragment_contact_us"/>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <fragment
+                android:id="@+id/fragment"
+                android:name="com.tommyfrenchbookmakers.officialapp.ui.ContactUsActivity.ContactUsActivityFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_contact_us"/>
+
+        </FrameLayout>
+
 
     </android.support.design.widget.CoordinatorLayout>
 

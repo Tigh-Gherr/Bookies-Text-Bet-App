@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/main_content"
+        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -21,13 +21,21 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <fragment
-            android:id="@+id/fragment"
-            android:name="com.tommyfrenchbookmakers.officialapp.ui.AccountAndReferenceInput.AccountAndReferenceInputActivityFragment"
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/main_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:layout="@layout/fragment_account_input"/>
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <fragment
+                android:id="@+id/fragment"
+                android:name="com.tommyfrenchbookmakers.officialapp.ui.AccountAndReferenceInput.AccountAndReferenceInputActivityFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_account_input"/>
+
+        </android.support.v4.widget.NestedScrollView>
+
 
     </android.support.design.widget.CoordinatorLayout>
 

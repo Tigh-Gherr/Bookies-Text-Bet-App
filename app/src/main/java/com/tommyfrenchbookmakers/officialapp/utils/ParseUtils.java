@@ -83,6 +83,10 @@ public final class ParseUtils {
     }
 
     public static boolean shopInfoFromJSON(String dataToParse, ArrayList<ShopInfo> shopInfos) {
+        if(shopInfos == null) {
+            shopInfos = new ArrayList<>();
+        }
+
         try {
             JSONArray jsonArray = new JSONArray(dataToParse);
             int numOfOffices = jsonArray.length();

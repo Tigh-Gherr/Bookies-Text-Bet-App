@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/main_content"
+        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -16,25 +16,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!--<android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:popupTheme="@style/AppTheme.PopupOverlay"/>-->
-
             <include
                 android:id="@+id/toolbar"
                 layout="@layout/app_bar"/>
 
         </android.support.design.widget.AppBarLayout>
 
-        <fragment
-            android:id="@+id/fragment"
-            android:name="com.tommyfrenchbookmakers.officialapp.ui.TypeBarcodeActivity.TypeBarcodeActivityFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/main_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:layout="@layout/fragment_type_barcode"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <fragment
+                android:id="@+id/fragment"
+                android:name="com.tommyfrenchbookmakers.officialapp.ui.TypeBarcodeActivity.TypeBarcodeActivityFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_type_barcode"/>
+
+        </android.support.v4.widget.NestedScrollView>
+
 
     </android.support.design.widget.CoordinatorLayout>
 

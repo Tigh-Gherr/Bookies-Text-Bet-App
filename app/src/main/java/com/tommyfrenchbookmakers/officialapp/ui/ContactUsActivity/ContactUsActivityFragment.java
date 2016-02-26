@@ -3,7 +3,9 @@ package com.tommyfrenchbookmakers.officialapp.ui.ContactUsActivity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.tommyfrenchbookmakers.officialapp.utils.NetworkUtils;
 import com.tommyfrenchbookmakers.officialapp.utils.ParseUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -41,6 +44,29 @@ public class ContactUsActivityFragment extends Fragment {
 
     }
 
+    private boolean needsDownloaded() {
+        ArrayList<ShopInfo> shopInfos = ShopInfoSingleton.get(getActivity()).getShopInfos();
+        return shopInfos == null || shopInfos.size() == 0;
+    }
+
+    private void downloadShopInformation() {
+        if(needsDownloaded()) {
+            if(NetworkUtils.networkIsAvailable(getActivity())) {
+                new OfficeDownloader().execute();
+            } else {
+                Snackbar.make(getView(), R.string.error_message_no_internet, Snackbar.LENGTH_LONG)
+                        .setAction(R.string.snackbar_action_return, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                NavUtils.navigateUpFromSameTask(getActivity());
+                            }
+                        }).show();;
+            }
+        } else {
+            setup();
+        }
+    }
+
     private void setup() {
         mOfficeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mOfficeAdapter = new ShopInfoAdapter(ShopInfoSingleton.get(getActivity()).getShopInfos());
@@ -55,12 +81,15 @@ public class ContactUsActivityFragment extends Fragment {
 
         mOfficeRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_shopInfo);
 
-        if(ShopInfoSingleton.get(getActivity()).getShopInfos() == null) {
-            ShopInfoSingleton.get(getActivity()).setShopInfos(new ArrayList<ShopInfo>());
-            new OfficeDownloader().execute();
-        } else setup();
 
         return v;
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        downloadShopInformation();
     }
 
     public class OfficeDownloader extends AsyncTask<Void, Void, String> {
@@ -118,6 +147,7 @@ public class ContactUsActivityFragment extends Fragment {
 
             mProgressDialog.dismiss();
 
+            ShopInfoSingleton.get(getActivity()).setShopInfos(new ArrayList<ShopInfo>());
             if(ParseUtils.shopInfoFromJSON(s, ShopInfoSingleton.get(getActivity()).getShopInfos())) {
                 setup();
             }
