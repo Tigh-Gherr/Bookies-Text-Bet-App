@@ -1,34 +1,18 @@
 package com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity;
 
-import android.Manifest;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.tighearnan.frenchsscanner.R;
-import com.google.android.gms.maps.MapView;
-import com.tommyfrenchbookmakers.officialapp.Global;
 import com.tommyfrenchbookmakers.officialapp.ui.AccountAndReferenceInput.AccountAndReferenceInputActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity;
-import com.tommyfrenchbookmakers.officialapp.ui.CameraPreviewActivity.CameraPreviewActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.ContactUsActivity.ContactUsActivity;
-import com.tommyfrenchbookmakers.officialapp.ui.TypeBarcodeActivity.TypeBarcodeActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.TextBetSlipActivity.TextBetSlipActivity;
-import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlip;
-import com.tommyfrenchbookmakers.officialapp.singletons.BetSlipSingleton;
-
-import java.util.List;
+import com.tommyfrenchbookmakers.officialapp.ui.TypeBarcodeActivity.TypeBarcodeActivity;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -41,19 +25,17 @@ public class SelectionScreenActivityFragment extends Fragment {
     private AppCompatButton mTextBetButton;
 
 
-    private List<MapView> mOfficeMapViews;
-
     public SelectionScreenActivityFragment() {
     }
 
-    private void startTextBetActivity() {
+/*    private void startTextBetActivity() {
         if(BetSlipSingleton.get(getActivity()).getBetSlip() == null) {
             BetSlipSingleton.get(getActivity()).setBetSlip(new BetSlip());
         }
         startActivity(new Intent(getActivity(), TextBetSlipActivity.class));
-    }
+    }*/
 
-    private boolean checkForPermission(final int permissionCode, final String permission) {
+/*    private boolean checkForPermission(final int permissionCode, final String permission) {
         int check = ContextCompat.checkSelfPermission(getActivity(), permission);
 
         if (check != PackageManager.PERMISSION_GRANTED) {
@@ -88,8 +70,8 @@ public class SelectionScreenActivityFragment extends Fragment {
         }
 
         return true;
-    }
-
+    }*/
+/*
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         boolean granted = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
@@ -112,7 +94,7 @@ public class SelectionScreenActivityFragment extends Fragment {
 
                 }
         }
-    }
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -123,12 +105,13 @@ public class SelectionScreenActivityFragment extends Fragment {
         mScanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (checkForPermission(Global.REQUEST_PERMISSION_CAMERA, Manifest.permission.CAMERA))
-                        startActivity(new Intent(getActivity(), CameraPreviewActivity.class));
-                } else {
-                    startActivity(new Intent(getActivity(), BarcodeScannerActivity.class));
-                }
+                ((SelectionScreenActivity)getActivity()).launchActivity(BarcodeScannerActivity.class);
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    if (checkForPermission(Global.REQUEST_PERMISSION_CAMERA, Manifest.permission.CAMERA))
+//                        startActivity(new Intent(getActivity(), CameraPreviewActivity.class));
+//                } else {
+//                    startActivity(new Intent(getActivity(), BarcodeScannerActivity.class));
+//                }
             }
         });
 
@@ -136,7 +119,8 @@ public class SelectionScreenActivityFragment extends Fragment {
         mTypeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), TypeBarcodeActivity.class));
+//                startActivity(new Intent(getActivity(), TypeBarcodeActivity.class));
+                ((SelectionScreenActivity)getActivity()).launchActivity(TypeBarcodeActivity.class);
             }
         });
 
@@ -144,7 +128,8 @@ public class SelectionScreenActivityFragment extends Fragment {
         mReferenceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AccountAndReferenceInputActivity.class));
+//                startActivity(new Intent(getActivity(), AccountAndReferenceInputActivity.class));
+                ((SelectionScreenActivity)getActivity()).launchActivity(AccountAndReferenceInputActivity.class);
             }
         });
 
@@ -152,13 +137,14 @@ public class SelectionScreenActivityFragment extends Fragment {
         mTextBetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (checkForPermission(Global.REQUEST_PERMISSION_SMS, Manifest.permission.SEND_SMS))
-                        startTextBetActivity();
-
-                } else {
-                    startTextBetActivity();
-                }
+                ((SelectionScreenActivity)getActivity()).launchActivity(TextBetSlipActivity.class);
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    if (checkForPermission(Global.REQUEST_PERMISSION_SMS, Manifest.permission.SEND_SMS))
+//                        startTextBetActivity();
+//
+//                } else {
+//                    startTextBetActivity();
+//                }
 
             }
         });
@@ -167,7 +153,8 @@ public class SelectionScreenActivityFragment extends Fragment {
         belowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), ContactUsActivity.class));
+//                startActivity(new Intent(getActivity(), ContactUsActivity.class));
+                ((SelectionScreenActivity)getActivity()).launchActivity(ContactUsActivity.class);
             }
         });
 

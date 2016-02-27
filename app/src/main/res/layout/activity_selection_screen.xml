@@ -18,7 +18,7 @@
             android:layout_height="wrap_content">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar_app_bar"
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/primaryColour"
@@ -28,12 +28,20 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <fragment
-            android:id="@+id/fragment"
-            android:name="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivityFragment"
+        <FrameLayout
+            android:id="@+id/main_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout="@layout/fragment_selection_screen" />
+            android:layout_height="match_parent">
+
+            <fragment
+                android:id="@+id/fragment"
+                android:name="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivityFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_selection_screen" />
+
+        </FrameLayout>
+
 
     </LinearLayout>
 

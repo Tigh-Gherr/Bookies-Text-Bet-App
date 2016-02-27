@@ -41,6 +41,7 @@ import com.tommyfrenchbookmakers.officialapp.ui.TypeBarcodeActivity.TypeBarcodeA
 public abstract class BaseActivity extends AppCompatActivity {
 
     protected static final int NAVDRAWER_ITEM_INVALID = -1;
+    protected static final int NAVDRAWER_ITEM_HOME = 0;
     protected static final int NAVDRAWER_ITEM_TEXTBET = R.id.navdrawer_item_textbet;
     protected static final int NAVDRAWER_ITEM_CHECK_RESULT = R.id.navdrawer_item_check_result;
     protected static final int NAVDRAWER_ITEM_SCAN_BARCODE = R.id.navdrawer_item_scan_barcode;
@@ -68,7 +69,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
-//            ab.setDisplayHomeAsUpEnabled(this instanceof ContactUsActivity);
+//            ab.setHomeButtonEnabled(true);
+            ab.setHomeButtonEnabled(true);
+            ab.setDisplayHomeAsUpEnabled(!isSelectionScreen());
         }
     }
 
@@ -79,11 +82,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         setupNavDrawer();
         View mainContent = findViewById(R.id.main_content);
 
-        if (mainContent != null) {
+        if (mainContent != null && !isSelectionScreen()) {
             mainContent.setAlpha(0f);
             mainContent.animate().alpha(1f).setDuration(MAIN_CONTENT_FADEIN_DURATION);
         }
 
+    }
+
+    private boolean isSelectionScreen() {
+        return this instanceof SelectionScreenActivity;
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -256,7 +263,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 int subSize = menu.size();
                 for (int j = 0; j < subSize; j++) {
                     MenuItem item = menu.getItem(j);
-                    item.setChecked(item.getItemId() == getSelfNavDrawerItem());
+                    item.setChecked(item.getItemId() == itemId);
                 }
             }
         }
@@ -282,9 +289,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    private void start(Class c) {
+    protected void start(Class c) {
         startActivity(new Intent(this, c));
-        finish();
+        if(!isSelectionScreen()) {
+            finish();
+        }
     }
 
     protected void onNavDrawerSlide(View drawerView, float offset) {
@@ -296,4 +305,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    protected DrawerLayout getDrawerLayout() {
+        return mDrawerLayout;
+    }
 }

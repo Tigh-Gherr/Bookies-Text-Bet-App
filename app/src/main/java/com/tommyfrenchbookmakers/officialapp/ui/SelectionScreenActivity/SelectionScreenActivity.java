@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -19,91 +21,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.android.tighearnan.frenchsscanner.R;
 import com.tommyfrenchbookmakers.officialapp.Global;
 import com.tommyfrenchbookmakers.officialapp.ui.AccountAndReferenceInput.AccountAndReferenceInputActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity;
+import com.tommyfrenchbookmakers.officialapp.ui.BaseActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.TypeBarcodeActivity.TypeBarcodeActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.TextBetSlipActivity.TextBetSlipActivity;
 import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlip;
 import com.tommyfrenchbookmakers.officialapp.singletons.BetSlipSingleton;
 
-public class SelectionScreenActivity extends AppCompatActivity {
+public class SelectionScreenActivity extends BaseActivity {
 
-    private DrawerLayout mDrawerLayout;
-    private NavigationView mNavigationView;
-    private Toolbar mToolbar;
+    public void launchActivity(final Class c) {
+        View view = findViewById(R.id.main_content);
+        view.animate().alpha(0f).setDuration(150);
 
-    private void startTextBetActivity() {
-        BetSlipSingleton.get(SelectionScreenActivity.this).setBetSlip(new BetSlip());
-        launchActivity(TextBetSlipActivity.class);
-    }
-
-    private void launchActivity(Class c) {
-        startActivity(new Intent(SelectionScreenActivity.this, c));
-        mDrawerLayout.closeDrawers();
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    private boolean checkForPermission(final int permissionCode, final String permission) {
-        int check = ContextCompat.checkSelfPermission(SelectionScreenActivity.this, permission);
-
-        if(check != PackageManager.PERMISSION_GRANTED) {
-            if(ActivityCompat.shouldShowRequestPermissionRationale(SelectionScreenActivity.this, permission)) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(SelectionScreenActivity.this);
-                switch (permissionCode) {
-                    case Global.REQUEST_PERMISSION_SMS:
-                        builder.setTitle("Request Permission to use SMS");
-                        builder.setMessage("TFB App's Text Betting feature requires you to allow the app to send messages " +
-                                "directly from the app to TFB. To use this feature, click Allow on the forthcoming " +
-                                "pop-up.");
-                        break;
-                    case Global.REQUEST_PERMISSION_CAMERA:
-                        builder.setTitle("Request Permission to use Camera");
-                        builder.setMessage("In order to scan barcodes, this app must have access to the camera to view them. " +
-                                "Please grant this permission in the forth coming dialog.");
-                        break;
-                }
-
-                builder.setCancelable(false);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        requestPermissions(new String[] {permission}, permissionCode);
-                    }
-                });
-                builder.show();
-            } else {
-                requestPermissions(new String[] {permission}, permissionCode);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                start(c);
             }
-            return false;
-        }
-
-        return true;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        boolean granted = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
-        switch (requestCode) {
-            case Global.REQUEST_PERMISSION_SMS:
-                if(granted) {
-                    startTextBetActivity();
-                } else {
-                    Snackbar.make(mDrawerLayout, "Cannot start Text Bet, SMS permission not granted.", Snackbar.LENGTH_LONG)
-                            .show();
-                }
-                break;
-            case Global.REQUEST_PERMISSION_CAMERA:
-                if(granted) {
-                    launchActivity(BarcodeScannerActivity.class);
-                } else {
-                    Snackbar.make(mDrawerLayout, "Cannot start Barcode Scanner, SMS permission not granted.", Snackbar.LENGTH_LONG)
-                            .show();
-                }
-                break;
-        }
+        }, 250);
     }
 
     @Override
@@ -114,69 +55,39 @@ public class SelectionScreenActivity extends AppCompatActivity {
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.home:
-                Snackbar.make(mDrawerLayout, "Pressed.", Snackbar.LENGTH_SHORT).show();
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_selection_screen);
+
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sel_scr);
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        DrawerLayout drawerLayout = getDrawerLayout();
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+                SelectionScreenActivity.this,
+                drawerLayout,
+                getActionBarToolbar(),
+                R.string.nav_drawer_opened,
+                R.string.nav_drawer_closed
+        );
 
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.navdrawer_item_textbet:
-                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            if(checkForPermission(Global.REQUEST_PERMISSION_SMS, Manifest.permission.SEND_SMS)) {
-                                startTextBetActivity();
-                            }
-                        } else {
-                            startTextBetActivity();
-                        }
-                        return true;
-                    case R.id.navdrawer_item_check_result:
-                        launchActivity(AccountAndReferenceInputActivity.class);
-                        return true;
-                    case R.id.navdrawer_item_scan_barcode:
-                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            if(checkForPermission(Global.REQUEST_PERMISSION_CAMERA, Manifest.permission.CAMERA)) {
-                                launchActivity(BarcodeScannerActivity.class);
-                            }
-                        } else {
-                            launchActivity(BarcodeScannerActivity.class);
-                        }
-                        return true;
-                    case R.id.navdrawer_item_type_barcode:
-                        launchActivity(TypeBarcodeActivity.class);
-                        return true;
-                }
-
-                return false;
-
-            }
-        });
-
-        ActionBarDrawerToggle actionBarDrawerToggle =
-                new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.nav_drawer_opened, R.string.nav_drawer_closed);
-
-        mDrawerLayout.setDrawerListener(actionBarDrawerToggle);
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
     }
 
+    @Override
+    protected int getSelfNavDrawerItem() {
+        return NAVDRAWER_ITEM_HOME;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        View view = findViewById(R.id.main_content);
+        view.setAlpha(1f);
+    }
 }
