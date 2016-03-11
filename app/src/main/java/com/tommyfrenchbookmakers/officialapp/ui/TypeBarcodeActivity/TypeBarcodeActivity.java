@@ -35,7 +35,7 @@ public class TypeBarcodeActivity extends BaseActivity {
                 return true;
             }
         });*/
-        overridePendingTransition(0, 0);
+//        overridePendingTransition(0, 0);
     }
 
     @Override

@@ -42,7 +42,7 @@ public class BarcodeScannerActivity extends BaseActivity {
             }
         });*/
         checkForPermission(REQUEST_PERMISSION_CAMERA, Manifest.permission.CAMERA);
-        overridePendingTransition(0, 0);
+//        overridePendingTransition(0, 0);
     }
 
     @Override

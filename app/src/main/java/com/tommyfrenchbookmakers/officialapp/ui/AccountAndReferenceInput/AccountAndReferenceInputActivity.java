@@ -38,7 +38,7 @@ public class AccountAndReferenceInputActivity extends BaseActivity {
             }
         });*/
 
-        overridePendingTransition(0, 0);
+//        overridePendingTransition(0, 0);
     }
 
     @Override

@@ -29,7 +29,7 @@ public class ContactUsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_us);
 
-        overridePendingTransition(0, 0);
+//        overridePendingTransition(0, 0);
     }
 
     @Override

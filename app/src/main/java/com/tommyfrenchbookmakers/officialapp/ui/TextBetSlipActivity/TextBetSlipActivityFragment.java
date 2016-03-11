@@ -109,32 +109,30 @@ public class TextBetSlipActivityFragment extends Fragment {
     private void updateWagers() {
         ArrayList<BetSlipWager> wagers = mBetSlip.getWagers();
         boolean hasSameRace = mBetSlip.hasSameRace();
-        int startSize = wagers.size();
-        for (int i = startSize - 1; i >= 0; i--) {
+        for (int i = wagers.size() - 1; i >= 0; i--) {
             BetSlipWager w = wagers.get(i);
             WagerType wagerType = w.getWagerType();
 
+            // If the wager has a fixed number of selections that do not match the total number of selections on the betslip.
+            // OR
+            // If the minimum number of selections is greater than the total number of selections on the best slip
+            // OR
+            // Betslip has selections in the same race, and the wagerType is a Multiple that isn't a single.
+
             if ((wagerType.getHasFixedNumberOfSelections() && mBetSlip.getSelections().size() != wagerType.getMinNumberOfSelections())
-                    || wagerType.getMinNumberOfSelections() > mBetSlip.getSelections().size() || (hasSameRace && wagerType == WagerType.ACCUM)) {
+                    || wagerType.getMinNumberOfSelections() > mBetSlip.getSelections().size()
+                    || (hasSameRace && wagerType.getCategory() == Global.WAGER_CATEGORY_MULTIPLE && wagerType != WagerType.SINGLE)) {
                 wagers.remove(w);
                 mWagersAdapter.notifyItemRemoved(i);
             }
         }
 
-        int endSize = wagers.size();
         decidePanelEnabled();
-
-        if (startSize != endSize) {
-            updateWagersInfo();
-        }
+        updateWagersInfo();
     }
 
     private void decidePanelEnabled() {
-        if (mBetSlip.getWagers().size() == 0) {
-            mPanelLayout.setEnabled(false);
-        } else {
-            mPanelLayout.setEnabled(true);
-        }
+        mPanelLayout.setEnabled(!(mBetSlip.getWagers().size() == 0));
     }
 
     private void updateWagersInfo() {

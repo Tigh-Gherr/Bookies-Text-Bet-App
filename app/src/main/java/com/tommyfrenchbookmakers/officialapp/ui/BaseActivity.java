@@ -21,6 +21,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
@@ -52,7 +53,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected static final int REQUEST_PERMISSION_CAMERA = 1;
 
     // delay to launch nav drawer item, to allow close animation to play
-    private static final int NAVDRAWER_LAUNCH_DELAY = 250;
+    private static final int NAVDRAWER_LAUNCH_DELAY = 200;
 
     private static final int MAIN_CONTENT_FADEIN_DURATION = 250;
     private static final int MAIN_CONTENT_FADEOUT_DURATION = 150;
@@ -80,12 +81,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
 
         setupNavDrawer();
-        View mainContent = findViewById(R.id.main_content);
+//        View mainContent = findViewById(R.id.main_content);
 
-        if (mainContent != null && !isSelectionScreen()) {
-            mainContent.setAlpha(0f);
-            mainContent.animate().alpha(1f).setDuration(MAIN_CONTENT_FADEIN_DURATION);
-        }
+//        if (mainContent != null && !isSelectionScreen()) {
+//            mainContent.setAlpha(0f);
+//            mainContent.animate().alpha(1f).setDuration(MAIN_CONTENT_FADEIN_DURATION);
+//        }
 
     }
 
@@ -139,7 +140,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                 if (granted) {
 //                    start(TextBetSlipActivity.class);
                 } else {
-                    Snackbar.make(mDrawerLayout, "Cannot start Text Bet, SMS permission not granted.", Snackbar.LENGTH_LONG)
+                    Snackbar.make(mDrawerLayout,
+                            "Cannot start Text Bet, SMS permission not granted.",
+                            Snackbar.LENGTH_LONG)
                             .show();
                     finish();
                 }
@@ -148,7 +151,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                 if (granted) {
 //                    start(BarcodeScannerActivity.class);
                 } else {
-                    Snackbar.make(mDrawerLayout, "Cannot start Barcode Scanner, camera permission not granted.", Snackbar.LENGTH_LONG)
+                    Snackbar.make(mDrawerLayout,
+                            "Cannot start Barcode Scanner, camera permission not granted.",
+                            Snackbar.LENGTH_LONG)
                             .show();
                     finish();
                 }
@@ -245,10 +250,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         }, NAVDRAWER_LAUNCH_DELAY);
 
-        View mainContent = findViewById(R.id.main_content);
-        if (mainContent != null) {
-            mainContent.animate().alpha(0f).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
-        }
+//        View mainContent = findViewById(R.id.main_content);
+//        if (mainContent != null) {
+//            mainContent.animate().alpha(0f).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
+//        }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -256,13 +261,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private void setSelectedDrawerItem(int itemId) {
         if (mNavDrawer != null) {
-            int size = mNavDrawer.getMenu().size();
-            for (int i = 0; i < size; i++) {
-                SubMenu menu = mNavDrawer.getMenu().getItem(i).getSubMenu();
+//            int size = mNavDrawer.getMenu().size();
+            Menu navMenu = mNavDrawer.getMenu();
+            for (int i = 0; i < navMenu.size(); i++) {
+                SubMenu section = navMenu.getItem(i).getSubMenu();
 
-                int subSize = menu.size();
-                for (int j = 0; j < subSize; j++) {
-                    MenuItem item = menu.getItem(j);
+                for (int j = 0; j < section.size(); j++) {
+                    MenuItem item = section.getItem(j);
                     item.setChecked(item.getItemId() == itemId);
                 }
             }

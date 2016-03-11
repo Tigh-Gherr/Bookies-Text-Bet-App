@@ -29,7 +29,7 @@ public class TextBetSlipActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text_bet_slip);
-        overridePendingTransition(0, 0);
+//        overridePendingTransition(0, 0);
 
         checkForPermission(REQUEST_PERMISSION_SMS, Manifest.permission.SEND_SMS);
     }
