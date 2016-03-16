@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -109,6 +111,7 @@ public class TextBetSlipActivityFragment extends Fragment {
     private void updateWagers() {
         ArrayList<BetSlipWager> wagers = mBetSlip.getWagers();
         boolean hasSameRace = mBetSlip.hasSameRace();
+        int numberOfSelections = mBetSlip.getSelections().size();
         for (int i = wagers.size() - 1; i >= 0; i--) {
             BetSlipWager w = wagers.get(i);
             WagerType wagerType = w.getWagerType();
@@ -119,11 +122,42 @@ public class TextBetSlipActivityFragment extends Fragment {
             // OR
             // Betslip has selections in the same race, and the wagerType is a Multiple that isn't a single.
 
-            if ((wagerType.getHasFixedNumberOfSelections() && mBetSlip.getSelections().size() != wagerType.getMinNumberOfSelections())
+            /*if ((wagerType.getHasFixedNumberOfSelections() && mBetSlip.getSelections().size() != wagerType.getMinNumberOfSelections())
                     || wagerType.getMinNumberOfSelections() > mBetSlip.getSelections().size()
                     || (hasSameRace && wagerType.getCategory() == Global.WAGER_CATEGORY_MULTIPLE && wagerType != WagerType.SINGLE)) {
-                wagers.remove(w);
-                mWagersAdapter.notifyItemRemoved(i);
+                removeWager(i);
+            }*/
+
+
+            if(numberOfSelections >= wagerType.getMinNumberOfSelections()) {
+                switch (wagerType.getCategory()) {
+                    case Global.WAGER_CATEGORY_MULTIPLE:
+                        if(hasSameRace && wagerType != WagerType.SINGLE) {
+                            removeWager(i);
+                        }
+                        break;
+                    case Global.WAGER_CATEGORY_FULL_COVER_WITH_SINGLES:
+                        if (numberOfSelections != wagerType.getMinNumberOfSelections()) {
+                            removeWager(i);
+                        }
+                        break;
+                    case Global.WAGER_CATEGORY_FULL_COVER_WITHOUT_SINGLES:
+                        if (numberOfSelections != wagerType.getMinNumberOfSelections()) {
+                            removeWager(i);
+                        }
+                        break;
+                    case Global.WAGER_CATEGORY_PENDING_RETURN:
+                        if(numberOfSelections != wagerType.getMinNumberOfSelections()) {
+                            removeWager(i);
+                        }
+                        break;
+                    case Global.WAGER_CATEGORY_UP_AND_DOWN:
+                        if(hasSameRace) {
+                            removeWager(i);
+                        }
+                }
+            } else {
+                removeWager(i);
             }
         }
 
@@ -402,6 +436,31 @@ public class TextBetSlipActivityFragment extends Fragment {
         mWagersRecyclerView.setLayoutManager(linearLayoutManager);
         mWagersAdapter = new BetSlipWagersAdapter(mBetSlip.getWagers());
         mWagersRecyclerView.setAdapter(mWagersAdapter);
+        mWagersRecyclerView.setItemAnimator(new DefaultItemAnimator() {
+            Handler mHandler = new Handler();
+
+            @Override
+            public void onRemoveFinished(RecyclerView.ViewHolder item) {
+
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateWagersInfo();
+                    }
+                }, getRemoveDuration());
+            }
+
+            @Override
+            public void onAddFinished(RecyclerView.ViewHolder item) {
+
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateWagersInfo();
+                    }
+                }, getAddDuration());
+            }
+        });
 
         ItemTouchHelper.SimpleCallback wagersCallBack = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.UP) {
             @Override
@@ -414,11 +473,7 @@ public class TextBetSlipActivityFragment extends Fragment {
                 if (direction == ItemTouchHelper.UP) {
                     final int position = viewHolder.getAdapterPosition();
                     final BetSlipWager toBeDeleted = mBetSlip.getWagers().get(position);
-                    mBetSlip.getWagers().remove(toBeDeleted);
-                    mWagersAdapter.notifyItemRemoved(position);
-                    if (mBetSlip.getWagers().size() == 0) {
-                        mPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-                    }
+                    removeWager(position);
 
                     Snackbar.make(getView(),
                             getString(R.string.snackbar_body_betslip_wager_removed,
@@ -428,14 +483,9 @@ public class TextBetSlipActivityFragment extends Fragment {
                             .setAction(R.string.snackbar_action_undo, new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    mBetSlip.getWagers().add(position, toBeDeleted);
-                                    mWagersAdapter.notifyItemInserted(position);
-                                    if (mBetSlip.getWagers().size() == 1)
-                                        mPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
-                                    updateWagersInfo();
+                                    addWager(position, toBeDeleted);
                                 }
                             }).show();
-                    updateWagersInfo();
                 }
             }
 
@@ -443,6 +493,19 @@ public class TextBetSlipActivityFragment extends Fragment {
         ItemTouchHelper wagerTouchHelper = new ItemTouchHelper(wagersCallBack);
         wagerTouchHelper.attachToRecyclerView(mWagersRecyclerView);
 
+//        setupFloatingActionMenu(v);
+
+        return v;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        setupFloatingActionMenu(view);
+    }
+
+    private void setupFloatingActionMenu(View v) {
         mFloatingMenu = (FloatingActionMenu) v.findViewById(R.id.fam_betSlipOptions);
 
         mFabNewSelection = (FloatingActionButton) v.findViewById(R.id.fab_newSelection);
@@ -510,8 +573,22 @@ public class TextBetSlipActivityFragment extends Fragment {
                 }
             }
         });
+    }
 
-        return v;
+    private void addWager(int position, BetSlipWager toBeDeleted) {
+        mBetSlip.getWagers().add(position, toBeDeleted);
+        mWagersAdapter.notifyItemInserted(position);
+        if (mBetSlip.getWagers().size() == 1) {
+            mPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
+        }
+    }
+
+    private void removeWager(int position) {
+        mBetSlip.getWagers().remove(position);
+        mWagersAdapter.notifyItemRemoved(position);
+        if (mBetSlip.getWagers().size() == 0) {
+            mPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        }
     }
 
     @Override
