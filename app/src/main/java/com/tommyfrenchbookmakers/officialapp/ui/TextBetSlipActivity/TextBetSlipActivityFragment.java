@@ -108,7 +108,7 @@ public class TextBetSlipActivityFragment extends Fragment {
         }
     }
 
-    private void updateWagers() {
+    private void removeIllegalWagers() {
         ArrayList<BetSlipWager> wagers = mBetSlip.getWagers();
         boolean hasSameRace = mBetSlip.hasSameRace();
         int numberOfSelections = mBetSlip.getSelections().size();
@@ -162,42 +162,47 @@ public class TextBetSlipActivityFragment extends Fragment {
         }
 
         decidePanelEnabled();
-        updateWagersInfo();
+        calculateWagerStakeAndReturns();
     }
 
     private void decidePanelEnabled() {
         mPanelLayout.setEnabled(!(mBetSlip.getWagers().size() == 0));
     }
 
-    private void updateWagersInfo() {
+    private void calculateWagerStakeAndReturns() {
         double totalStake = 0d, totalReturn = 0d;
         ArrayList<BetSlipWager> wagers = mBetSlip.getWagers();
         final int size = wagers.size();
         for (int i = 0; i < size; i++) {
             BetSlipWager wager = wagers.get(i);
+
             wager.calculateStake(mBetSlip.getSelections().size());
             totalStake += wager.getTotalStake();
 
             wager.setPotentialReturns(BettingUtils.calculateRunningTotal(wager, mBetSlip));
+            mWagersAdapter.notifyItemChanged(i);
             totalReturn += wager.getPotentialReturns();
         }
 
         DecimalFormat df = new DecimalFormat("0.00");
         ((TextBetSlipActivity) getActivity()).getSupportActionBar()
                 .setSubtitle(getString(R.string.toolbar_stake_information, "" + df.format(totalStake)));
-        mNumberOfWagersTextView.animate().alpha(0f).setDuration(300).setListener(new Animator.AnimatorListener() {
+        mNumberOfWagersTextView.animate().alpha(0f)
+                .setDuration(300).setListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-                if (size == 1)
+                if (size == 1) {
                     mTextNumberOfWagersPluralTextView.animate().alpha(0f).setDuration(300);
+                }
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
                 mNumberOfWagersTextView.setText(size + "");
                 mNumberOfWagersTextView.animate().alpha(1f).setDuration(300);
-                if (size != 1)
+                if (size != 1) {
                     mTextNumberOfWagersPluralTextView.animate().alpha(1f).setDuration(300);
+                }
             }
 
             @Override
@@ -213,7 +218,7 @@ public class TextBetSlipActivityFragment extends Fragment {
 
         mPotentialWinningsTextView.setText("£" + df.format(totalReturn));
 
-        mWagersAdapter.notifyDataSetChanged();
+//        mWagersAdapter.notifyDataSetChanged();
 
         if (wagers.size() == 0) mPanelLayout.setTouchEnabled(false);
         else mPanelLayout.setTouchEnabled(true);
@@ -257,7 +262,7 @@ public class TextBetSlipActivityFragment extends Fragment {
                         mWagersAdapter.notifyItemInserted(mBetSlip.getWagers().size());
                         Snackbar.make(getView(), getString(R.string.snackbar_body_wager_added, wager.toString()), Snackbar.LENGTH_SHORT).show();
                     }
-                    updateWagersInfo();
+                    calculateWagerStakeAndReturns();
                     decidePanelEnabled();
                 } catch (NumberFormatException mfe) {
                     // If an incompatible stake was entered, display an error.
@@ -399,12 +404,12 @@ public class TextBetSlipActivityFragment extends Fragment {
                                     mBetSlip.getSelections().add(position, toBeDeleted);
                                     mSelectionsAdapter.notifyItemInserted(position);
                                     updateVisibilities();
-                                    updateWagers();
+                                    removeIllegalWagers();
                                 }
                             }).show();
 
                     updateVisibilities();
-                    updateWagers();
+                    removeIllegalWagers();
                 }
             }
 
@@ -436,31 +441,6 @@ public class TextBetSlipActivityFragment extends Fragment {
         mWagersRecyclerView.setLayoutManager(linearLayoutManager);
         mWagersAdapter = new BetSlipWagersAdapter(mBetSlip.getWagers());
         mWagersRecyclerView.setAdapter(mWagersAdapter);
-        mWagersRecyclerView.setItemAnimator(new DefaultItemAnimator() {
-            Handler mHandler = new Handler();
-
-            @Override
-            public void onRemoveFinished(RecyclerView.ViewHolder item) {
-
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        updateWagersInfo();
-                    }
-                }, getRemoveDuration());
-            }
-
-            @Override
-            public void onAddFinished(RecyclerView.ViewHolder item) {
-
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        updateWagersInfo();
-                    }
-                }, getAddDuration());
-            }
-        });
 
         ItemTouchHelper.SimpleCallback wagersCallBack = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.UP) {
             @Override
@@ -561,7 +541,7 @@ public class TextBetSlipActivityFragment extends Fragment {
 
                                     mBetSlip.getWagers().clear();
                                     mWagersAdapter.notifyDataSetChanged();
-                                    updateWagersInfo();
+                                    calculateWagerStakeAndReturns();
                                     updateVisibilities();
                                 }
                             }).setNegativeButton(R.string.alert_dialog_button_cancel, new DialogInterface.OnClickListener() {
@@ -581,6 +561,7 @@ public class TextBetSlipActivityFragment extends Fragment {
         if (mBetSlip.getWagers().size() == 1) {
             mPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
         }
+        calculateWagerStakeAndReturns();
     }
 
     private void removeWager(int position) {
@@ -589,6 +570,7 @@ public class TextBetSlipActivityFragment extends Fragment {
         if (mBetSlip.getWagers().size() == 0) {
             mPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
         }
+        calculateWagerStakeAndReturns();
     }
 
     @Override
@@ -596,7 +578,7 @@ public class TextBetSlipActivityFragment extends Fragment {
         super.onResume();
         mSelectionsAdapter.notifyDataSetChanged();
         updateVisibilities();
-        updateWagers();
+        removeIllegalWagers();
     }
 
     @Override
