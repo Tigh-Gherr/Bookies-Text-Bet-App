@@ -18,7 +18,7 @@ import com.tommyfrenchbookmakers.officialapp.utils.NavigationUtils;
 
 public class AddSelectionActivity extends BaseActivity {
 
-    AppBarLayout mAppBarLayout;
+    private AppBarLayout mAppBarLayout;
     /*private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;*/

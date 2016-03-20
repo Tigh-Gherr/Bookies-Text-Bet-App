@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -176,18 +177,8 @@ public class CameraPreviewActivityFragment extends Fragment
                         return false;
                     }
 
+                    mCamera.cancelAutoFocus();
                     focusCamera(event);
-                    /*mCamera.autoFocus(new Camera.AutoFocusCallback() {
-                        @Override
-                        public void onAutoFocus(boolean success, Camera camera) {
-                            if(!success) {
-                                Snackbar.make(getView(),
-                                        "Autofocus failed.",
-                                        Snackbar.LENGTH_SHORT)
-                                        .show();
-                            }
-                        }
-                    });*/
                 }
                 return false;
             }
@@ -202,11 +193,10 @@ public class CameraPreviewActivityFragment extends Fragment
             }
         });
 
+        mToggleFlashImageButton = (AppCompatImageButton) v.findViewById(R.id.image_button_toggleFlash);
         if(!checkHasFlash(getActivity())) {
             mToggleFlashImageButton.setVisibility(View.GONE);
         }
-
-        mToggleFlashImageButton = (AppCompatImageButton) v.findViewById(R.id.image_button_toggleFlash);
         mToggleFlashImageButton.setOnTouchListener(mOnTouch);
         mToggleFlashImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -299,6 +289,9 @@ public class CameraPreviewActivityFragment extends Fragment
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
         openCameraInNewThread();
+        if(mCamera == null) {
+            return;
+        }
         mCamera.setPreviewCallback(this);
 
         Camera.Size previewSize = mCamera.getParameters().getPreviewSize();
@@ -312,7 +305,12 @@ public class CameraPreviewActivityFragment extends Fragment
             e.printStackTrace();
         }
 
-        mTextureView.setRotation(270.0f);
+        Toast.makeText(getActivity(), Build.MODEL, Toast.LENGTH_SHORT).show();
+        if(Build.MODEL.equals("Nexus 5X")) {
+            mTextureView.setRotation(270f);
+        } else {
+            mTextureView.setRotation(90f);
+        }
         mCamera.startPreview();
     }
 

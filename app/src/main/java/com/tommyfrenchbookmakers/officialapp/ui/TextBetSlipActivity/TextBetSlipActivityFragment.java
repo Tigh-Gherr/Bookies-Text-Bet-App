@@ -11,7 +11,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -26,15 +25,15 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.tommyfrenchbookmakers.officialapp.Global;
-import com.tommyfrenchbookmakers.officialapp.ui.AddSelectionActivity.AddSelectionActivity;
 import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlip;
 import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlipSelection;
 import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlipWager;
+import com.tommyfrenchbookmakers.officialapp.enumerators.WagerType;
+import com.tommyfrenchbookmakers.officialapp.singletons.BetSlipSingleton;
+import com.tommyfrenchbookmakers.officialapp.ui.AddSelectionActivity.AddSelectionActivity;
 import com.tommyfrenchbookmakers.officialapp.utils.BettingUtils;
 import com.tommyfrenchbookmakers.officialapp.utils.NetworkUtils;
 import com.tommyfrenchbookmakers.officialapp.utils.SMSUtils;
-import com.tommyfrenchbookmakers.officialapp.enumerators.WagerType;
-import com.tommyfrenchbookmakers.officialapp.singletons.BetSlipSingleton;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -198,7 +197,7 @@ public class TextBetSlipActivityFragment extends Fragment {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                mNumberOfWagersTextView.setText(size + "");
+                mNumberOfWagersTextView.setText(Integer.toString(size));
                 mNumberOfWagersTextView.animate().alpha(1f).setDuration(300);
                 if (size != 1) {
                     mTextNumberOfWagersPluralTextView.animate().alpha(1f).setDuration(300);
