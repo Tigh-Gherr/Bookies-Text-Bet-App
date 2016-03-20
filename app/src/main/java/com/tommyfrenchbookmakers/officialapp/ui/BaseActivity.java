@@ -1,5 +1,6 @@
 package com.tommyfrenchbookmakers.officialapp.ui;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,6 +29,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import com.android.tighearnan.frenchsscanner.R;
+import com.tommyfrenchbookmakers.officialapp.Global;
 import com.tommyfrenchbookmakers.officialapp.ui.AccountAndReferenceInput.AccountAndReferenceInputActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.CameraPreviewActivity.CameraPreviewActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.ContactUsActivity.ContactUsActivity;
@@ -150,7 +152,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 break;
             case REQUEST_PERMISSION_CAMERA:
                 if (granted) {
-//                    start(BarcodeScannerActivity.class);
+                    start(CameraPreviewActivity.class);
                 } else {
                     Snackbar.make(mDrawerLayout,
                             "Cannot start Barcode Scanner, camera permission not granted.",
@@ -262,7 +264,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private void setSelectedDrawerItem(int itemId) {
         if (mNavDrawer != null) {
-//            int size = mNavDrawer.getMenu().size();
             Menu navMenu = mNavDrawer.getMenu();
             for (int i = 0; i < navMenu.size(); i++) {
                 SubMenu section = navMenu.getItem(i).getSubMenu();
@@ -284,7 +285,12 @@ public abstract class BaseActivity extends AppCompatActivity {
                 start(AccountAndReferenceInputActivity.class);
                 break;
             case NAVDRAWER_ITEM_SCAN_BARCODE:
-                start(CameraPreviewActivity.class);
+                boolean permissionGranted =
+                        checkForPermission(Global.REQUEST_PERMISSION_CAMERA,
+                                            Manifest.permission.CAMERA);
+                if(permissionGranted) {
+                    start(CameraPreviewActivity.class);
+                }
                 break;
             case NAVDRAWER_ITEM_TYPE_BARCODE:
                 start(TypeBarcodeActivity.class);

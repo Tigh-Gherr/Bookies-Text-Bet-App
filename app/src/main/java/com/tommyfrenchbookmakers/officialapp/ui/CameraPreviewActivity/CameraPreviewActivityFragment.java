@@ -39,12 +39,16 @@ import com.tommyfrenchbookmakers.officialapp.utils.NetworkUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class CameraPreviewActivityFragment extends Fragment
                         implements Camera.PreviewCallback, TextureView.SurfaceTextureListener {
+
+    private static final int FOCUS_AREA_SIZE = 300;
 
     private Camera mCamera;
     private BarcodeDetector mDetector;
@@ -98,7 +102,7 @@ public class CameraPreviewActivityFragment extends Fragment
         }
     }
 
-    private void scanPreviewForBarcode(final Bitmap preview) {
+    private void scanPreviewForBarcode(Bitmap preview) {
         Frame frame = new Frame.Builder().setBitmap(preview).build();
         SparseArray<Barcode> barcodes = mDetector.detect(frame);
         if(barcodes.size() > 0) {
@@ -172,7 +176,8 @@ public class CameraPreviewActivityFragment extends Fragment
                         return false;
                     }
 
-                    mCamera.autoFocus(new Camera.AutoFocusCallback() {
+                    focusCamera(event);
+                    /*mCamera.autoFocus(new Camera.AutoFocusCallback() {
                         @Override
                         public void onAutoFocus(boolean success, Camera camera) {
                             if(!success) {
@@ -182,7 +187,7 @@ public class CameraPreviewActivityFragment extends Fragment
                                         .show();
                             }
                         }
-                    });
+                    });*/
                 }
                 return false;
             }
@@ -218,6 +223,62 @@ public class CameraPreviewActivityFragment extends Fragment
 
         return v;
     }
+
+    private void focusCamera(MotionEvent event) {
+//        mCamera.cancelAutoFocus();
+        Camera.Parameters parameters = mCamera.getParameters();
+
+        if(parameters.getMaxNumMeteringAreas() < 1) {
+            mCamera.autoFocus(new Camera.AutoFocusCallback() {
+                @Override
+                public void onAutoFocus(boolean success, Camera camera) {
+
+                }
+            });
+
+            return;
+        }
+
+        Rect focusRect = calculateTapArea(event.getX(), event.getY());
+        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+        List<Camera.Area> metringAreas = new ArrayList<>();
+        metringAreas.add(new Camera.Area(focusRect, 800));
+        parameters.setFocusAreas(metringAreas);
+
+        mCamera.setParameters(parameters);
+        mCamera.autoFocus(new Camera.AutoFocusCallback() {
+            @Override
+            public void onAutoFocus(boolean success, Camera camera) {
+                if(!success) {
+                    // stuff
+                }
+            }
+        });
+    }
+
+    private Rect calculateTapArea(float x, float y) {
+        int left = clamp(Float.valueOf((x / mTextureView.getWidth()) * 2000 - 1000).intValue(),
+                                                                                    FOCUS_AREA_SIZE);
+        int top = clamp(Float.valueOf((y / mTextureView.getHeight()) * 2000 - 1000).intValue(),
+                                                                                    FOCUS_AREA_SIZE);
+        return new Rect(left, top, left + FOCUS_AREA_SIZE, top + FOCUS_AREA_SIZE);
+    }
+
+    private int clamp(int touchCoordinateInCameraReper, int focusAreaSize) {
+        int result;
+        if(Math.abs(touchCoordinateInCameraReper) + focusAreaSize / 2 > 1000) {
+            if(touchCoordinateInCameraReper > 0) {
+                result = 1000 + focusAreaSize / 2;
+            } else {
+                result = -1000 + focusAreaSize / 2;
+            }
+        } else {
+            result = touchCoordinateInCameraReper - focusAreaSize / 2;
+        }
+
+        return result;
+    }
+
 
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {

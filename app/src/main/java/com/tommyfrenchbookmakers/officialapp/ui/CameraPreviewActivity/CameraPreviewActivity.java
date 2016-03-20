@@ -2,7 +2,6 @@ package com.tommyfrenchbookmakers.officialapp.ui.CameraPreviewActivity;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.v4.content.ContextCompat;
 import android.view.Window;
 
@@ -21,11 +20,6 @@ public class CameraPreviewActivity extends BaseActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_preview);
-    }
-
-    @Override
-    public void setContentView(@LayoutRes int layoutResID) {
-        super.setContentView(layoutResID);
     }
 
     @Override
