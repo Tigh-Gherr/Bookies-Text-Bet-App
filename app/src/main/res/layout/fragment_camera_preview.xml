@@ -1,15 +1,16 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              tools:context="com.tommyfrenchbookmakers.officialapp.ui.CameraPreviewActivity.CameraPreviewActivityFragment"
-              tools:showIn="@layout/activity_camera_preview">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    tools:context="com.tommyfrenchbookmakers.officialapp.ui.CameraPreviewActivity.CameraPreviewActivityFragment"
+    tools:showIn="@layout/activity_camera_preview">
 
     <TextureView
         android:id="@+id/camera_preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#000"/>
+        android:background="#000" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -21,15 +22,15 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="top|left"
-            android:src="@drawable/frenches_logo_512"/>
+            android:src="@drawable/frenches_logo_512" />
 
         <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/image_button_toggleFlash"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_gravity="top|right"
             android:background="@android:color/transparent"
-            android:src="@drawable/flash_state"
-            android:layout_gravity="top|right"/>
+            android:src="@drawable/flash_state" />
 
     </FrameLayout>
 

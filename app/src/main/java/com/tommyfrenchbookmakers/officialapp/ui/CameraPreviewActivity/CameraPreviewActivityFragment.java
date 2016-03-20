@@ -305,7 +305,6 @@ public class CameraPreviewActivityFragment extends Fragment
             e.printStackTrace();
         }
 
-        Toast.makeText(getActivity(), Build.MODEL, Toast.LENGTH_SHORT).show();
         if(Build.MODEL.equals("Nexus 5X")) {
             mTextureView.setRotation(270f);
         } else {
