@@ -84,13 +84,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
 
         setupNavDrawer();
-//        View mainContent = findViewById(R.id.main_content);
-
-//        if (mainContent != null && !isSelectionScreen()) {
-//            mainContent.setAlpha(0f);
-//            mainContent.animate().alpha(1f).setDuration(MAIN_CONTENT_FADEIN_DURATION);
-//        }
-
     }
 
     private boolean isSelectionScreen() {
@@ -252,11 +245,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 goToDrawerItem(itemId);
             }
         }, NAVDRAWER_LAUNCH_DELAY);
-
-//        View mainContent = findViewById(R.id.main_content);
-//        if (mainContent != null) {
-//            mainContent.animate().alpha(0f).setDuration(MAIN_CONTENT_FADEOUT_DURATION);
-//        }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;

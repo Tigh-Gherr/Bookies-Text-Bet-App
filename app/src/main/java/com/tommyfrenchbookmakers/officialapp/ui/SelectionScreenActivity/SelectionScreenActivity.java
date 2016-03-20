@@ -35,17 +35,7 @@ import com.tommyfrenchbookmakers.officialapp.singletons.BetSlipSingleton;
 
 public class SelectionScreenActivity extends BaseActivity {
 
-    public void launchActivity(final Class c) {
-//        View view = findViewById(R.id.main_content);
-//        view.animate().alpha(0f).setDuration(150);
-
-/*        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                start(c);
-            }
-        }, 250);*/
-
+    public void launchActivity(Class c) {
         start(c);
     }
 
@@ -90,6 +80,8 @@ public class SelectionScreenActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         View view = findViewById(R.id.main_content);
-        view.setAlpha(1f);
+        if(view != null) {
+            view.setAlpha(1f);
+        }
     }
 }
