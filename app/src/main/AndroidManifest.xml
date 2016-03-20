@@ -61,10 +61,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity"/>
         </activity>
-        <activity android:name="com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity"
-                  android:label="Barcode Scanner"
-                  android:screenOrientation="portrait"
-                  android:parentActivityName="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity" >
+        <activity
+            android:name="com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity"
+            android:label="Barcode Scanner"
+            android:parentActivityName="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity"/>
@@ -84,7 +85,7 @@
             android:name="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity"
             android:label="@string/title_activity_selection_screen"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.tommyfrenchbookmakers.officialapp.ui.TypeBarcodeActivity.TypeBarcodeActivity"
             android:label="@string/title_activity_input"
@@ -153,6 +154,12 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAn7hjtAHaQeLm9stlW5-hP471CEnIAk4k"/>
+
+        <activity
+            android:name="com.tommyfrenchbookmakers.officialapp.ui.LotteryPickerActivity.LotteryPickerActivity"
+            android:label="@string/title_activity_lottery_picker"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

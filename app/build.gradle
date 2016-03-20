@@ -40,4 +40,5 @@ dependencies {
 
     // Google Play Services
     compile 'com.google.android.gms:play-services-maps:8.4.0'
+    compile 'com.google.android.gms:play-services:8.4+'
 }

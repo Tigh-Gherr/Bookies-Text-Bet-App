@@ -1,6 +1,5 @@
 package com.tommyfrenchbookmakers.officialapp.ui;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,8 +29,9 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.android.tighearnan.frenchsscanner.R;
 import com.tommyfrenchbookmakers.officialapp.ui.AccountAndReferenceInput.AccountAndReferenceInputActivity;
-import com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity;
+import com.tommyfrenchbookmakers.officialapp.ui.CameraPreviewActivity.CameraPreviewActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.ContactUsActivity.ContactUsActivity;
+import com.tommyfrenchbookmakers.officialapp.ui.LotteryPickerActivity.LotteryPickerActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.TextBetSlipActivity.TextBetSlipActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.TypeBarcodeActivity.TypeBarcodeActivity;
@@ -48,6 +48,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected static final int NAVDRAWER_ITEM_SCAN_BARCODE = R.id.navdrawer_item_scan_barcode;
     protected static final int NAVDRAWER_ITEM_TYPE_BARCODE = R.id.navdrawer_item_type_barcode;
     protected static final int NAVDRAWER_ITEM_CONTACT_US = R.id.navdrawer_item_contact_us;
+    protected static final int NAVDRAWER_ITEM_LOTTERY_PICKER = R.id.navdrawer_item_lottery;
 
     protected static final int REQUEST_PERMISSION_SMS = 0;
     protected static final int REQUEST_PERMISSION_CAMERA = 1;
@@ -283,13 +284,16 @@ public abstract class BaseActivity extends AppCompatActivity {
                 start(AccountAndReferenceInputActivity.class);
                 break;
             case NAVDRAWER_ITEM_SCAN_BARCODE:
-                start(BarcodeScannerActivity.class);
+                start(CameraPreviewActivity.class);
                 break;
             case NAVDRAWER_ITEM_TYPE_BARCODE:
                 start(TypeBarcodeActivity.class);
                 break;
             case NAVDRAWER_ITEM_CONTACT_US:
                 start(ContactUsActivity.class);
+                break;
+            case NAVDRAWER_ITEM_LOTTERY_PICKER:
+                start(LotteryPickerActivity.class);
                 break;
         }
     }

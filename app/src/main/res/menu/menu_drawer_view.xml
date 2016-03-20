@@ -1,35 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Account Services">
+    <item android:title="@string/navdrawer_title_account_services">
         <menu>
             <item
                 android:id="@+id/navdrawer_item_textbet"
                 android:icon="@drawable/ic_navdrawer_item_textbet"
-                android:title="Text Bet" />
+                android:title="@string/navdrawer_item_textbet" />
             <item
                 android:id="@+id/navdrawer_item_check_result"
                 android:icon="@drawable/ic_navdrawer_item_check_results"
-                android:title="Check Result" />
+                android:title="@string/navdrawer_item_check_result" />
         </menu>
     </item>
 
-    <item android:title="Barcode Services">
+    <item android:title="@string/navdrawer_title_barcode_services">
         <menu>
             <item
                 android:id="@+id/navdrawer_item_scan_barcode"
                 android:icon="@drawable/ic_navdrawer_item_scan_barcode"
-                android:title="Scan Barcode" />
+                android:title="@string/navdrawer_item_scan_barcode" />
             <item
                 android:id="@+id/navdrawer_item_type_barcode"
                 android:icon="@drawable/ic_navdrawer_item_type_barcode"
-                android:title="Type Barcode" />
+                android:title="@string/navdrawer_item_type_barcode" />
+        </menu>
+    </item>
+
+    <item android:title="@string/navdrawer_title_to_be_grouped">
+        <menu>
             <item
                 android:id="@+id/navdrawer_item_contact_us"
                 android:icon="@drawable/ic_navdrawer_item_contact_us"
-                android:title="Contact Us" />
+                android:title="@string/navdrawer_item_contact_us" />
+            <item
+                android:id="@+id/navdrawer_item_lottery"
+                android:icon="@drawable/ic_navdrawer_item_lottery"
+                android:title="@string/navdrawer_item_lottery"/>
         </menu>
-
     </item>
 
 </menu>

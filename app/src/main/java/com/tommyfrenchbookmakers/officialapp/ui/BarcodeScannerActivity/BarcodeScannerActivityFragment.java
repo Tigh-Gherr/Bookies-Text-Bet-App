@@ -2,9 +2,9 @@ package com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageButton;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -51,9 +51,9 @@ public class BarcodeScannerActivityFragment extends Fragment implements ZBarScan
         mScannerView.setFlash(turnOn);
 
         if (turnOn) {
-            mToggleFlashImageButton.setImageResource(R.drawable.ic_flash_off_white_36dp);
+            mToggleFlashImageButton.setImageResource(R.drawable.ic_flash_off);
         } else {
-            mToggleFlashImageButton.setImageResource(R.drawable.ic_flash_on_white_36dp);
+            mToggleFlashImageButton.setImageResource(R.drawable.ic_flash_on);
         }
     }
 
@@ -74,7 +74,7 @@ public class BarcodeScannerActivityFragment extends Fragment implements ZBarScan
                 Intent i = new Intent(getActivity(), ResultPagerActivity.class);
                 i.putExtra(Global.INTENT_KEY_DOWNLOAD_TYPE, Global.DOWNLOAD_TYPE_BARCODE);
                 i.putExtra(Global.INTENT_KEY_BARCODE, barcode);
-                i.putExtra(Global.INTENT_KEY_SENDER, ((BarcodeScannerActivity)getActivity()).getSelfNavDrawerItem());
+                i.putExtra(Global.INTENT_KEY_SENDER, ((BarcodeScannerActivity)getActivity())    .getSelfNavDrawerItem());
                 startActivity(i);
             } else {
                 createSnackBar(R.string.error_message_no_internet);

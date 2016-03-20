@@ -20,6 +20,7 @@
     <string name="title_activity_test_correct_score">TestCorrectScore</string>
     <string name="title_activity_camera_preview">CameraPreviewActivity</string>
     <string name="title_activity_contact_us">Contact Us</string>
+    <string name="title_activity_lottery_picker">Lottery Picker</string>
 
     <string name="sms_body_edited_wrong">There appears to be an error with barcode %s can a member of staff please review this?</string>
     <string name="sms_body_test_text_bet">Test</string>
@@ -106,10 +107,15 @@
     <string name="nav_drawer_opened">Opened</string>
     <string name="nav_drawer_closed">Closed</string>
 
+    <string name="navdrawer_title_account_services">Account Services</string>
+    <string name="navdrawer_title_barcode_services">Barcode Services</string>
+    <string name="navdrawer_title_to_be_grouped">To Be Grouped</string>
+
     <string name="navdrawer_item_textbet">Text Bet</string>
     <string name="navdrawer_item_check_result">Check Result</string>
     <string name="navdrawer_item_scan_barcode">Scan Barcode</string>
     <string name="navdrawer_item_type_barcode">Type Barcode</string>
-
+    <string name="navdrawer_item_contact_us">Contact Us</string>
+    <string name="navdrawer_item_lottery">Lottery</string>
 
 </resources>
