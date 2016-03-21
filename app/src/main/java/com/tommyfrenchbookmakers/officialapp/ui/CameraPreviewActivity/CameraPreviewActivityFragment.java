@@ -3,58 +3,30 @@ package com.tommyfrenchbookmakers.officialapp.ui.CameraPreviewActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.ImageFormat;
-import android.graphics.Rect;
-import android.graphics.SurfaceTexture;
-import android.graphics.YuvImage;
-import android.hardware.Camera;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatImageButton;
-import android.util.SparseArray;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.android.tighearnan.frenchsscanner.R;
-import com.google.android.gms.vision.Frame;
-import com.google.android.gms.vision.barcode.Barcode;
-import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.tommyfrenchbookmakers.officialapp.Global;
 import com.tommyfrenchbookmakers.officialapp.ui.ResultPagerActivity.ResultPagerActivity;
 import com.tommyfrenchbookmakers.officialapp.utils.NetworkUtils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * A placeholder fragment containing a simple view.
  */
-public class CameraPreviewActivityFragment extends Fragment
-                        implements Camera.PreviewCallback, TextureView.SurfaceTextureListener {
+public class CameraPreviewActivityFragment extends Fragment {
 
-    private static final int FOCUS_AREA_SIZE = 300;
-
-    private Camera mCamera;
-    private BarcodeDetector mDetector;
     private TextureView mTextureView;
-    private CameraHandlerThread mThread;
 
     private ImageView mBackButtonImageView;
     private AppCompatImageButton mToggleFlashImageButton;
@@ -79,9 +51,84 @@ public class CameraPreviewActivityFragment extends Fragment
             return false;
         }
     };
+    private CameraModule mCameraModule;
 
 
     public CameraPreviewActivityFragment() {
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_camera_preview, container, false);
+
+        if (!checkCameraHardware(getActivity())) {
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("No On Device!")
+                    .setMessage("Going back...")
+                    .show();
+
+            getActivity().finish();
+        }
+
+
+        mCameraModule = new CameraModule(getActivity());
+
+        mCameraModule.setInstantiatedListener(new CameraInstantiatedListener() {
+            @Override
+            public void onInstantiation() {
+                mTextureView.setRotation(mCameraModule.getViewFinderRotation());
+                mTextureView.setLayoutParams(mCameraModule.getLayoutParams());
+            }
+        });
+
+        mCameraModule.setScanListener(new ScanSuccessfulListener() {
+            @Override
+            public void onScanSuccessful(String result) {
+                processBarcode(result);
+            }
+        });
+
+        mTextureView = (TextureView) v.findViewById(R.id.camera_preview);
+        mTextureView.setSurfaceTextureListener(mCameraModule);
+
+        mTextureView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    mCameraModule.focusCamera(event.getX(),
+                                        event.getY(),
+                                        mTextureView.getWidth(),
+                                        mTextureView.getHeight());
+                }
+                return false;
+            }
+        });
+
+        mBackButtonImageView = (ImageView) v.findViewById(R.id.image_view_backButton);
+        mBackButtonImageView.setOnTouchListener(mOnTouch);
+        mBackButtonImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavUtils.navigateUpFromSameTask(getActivity());
+            }
+        });
+
+        mToggleFlashImageButton = (AppCompatImageButton) v.findViewById(R.id.image_button_toggleFlash);
+        if(!checkHasFlash(getActivity())) {
+            mToggleFlashImageButton.setVisibility(View.GONE);
+        }
+        mToggleFlashImageButton.setOnTouchListener(mOnTouch);
+        mToggleFlashImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setSelected(!v.isSelected());
+                mCameraModule.setFlash(v.isSelected());
+
+            }
+        });
+
+        return v;
     }
 
     private boolean checkCameraHardware(Context context) {
@@ -94,22 +141,6 @@ public class CameraPreviewActivityFragment extends Fragment
                 .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
     }
 
-    private void instantiateCamera() {
-        mCamera = null;
-        try {
-            mCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
-        } catch (Exception e) {
-
-        }
-    }
-
-    private void scanPreviewForBarcode(Bitmap preview) {
-        Frame frame = new Frame.Builder().setBitmap(preview).build();
-        SparseArray<Barcode> barcodes = mDetector.detect(frame);
-        if(barcodes.size() > 0) {
-            processBarcode(barcodes.valueAt(0).rawValue);
-        }
-    }
 
     private void processBarcode(String barcode) {
         if (!barcode.startsWith("0")) {
@@ -142,232 +173,4 @@ public class CameraPreviewActivityFragment extends Fragment
         mToggleFlashImageButton.setSelected(false);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_camera_preview, container, false);
-
-        if (!checkCameraHardware(getActivity())) {
-            new AlertDialog.Builder(getActivity())
-                    .setTitle("No On Device!")
-                    .setMessage("Going back...")
-                    .show();
-
-            getActivity().finish();
-        }
-
-        mDetector = new BarcodeDetector.Builder(getActivity().getApplicationContext())
-                                                .setBarcodeFormats(Barcode.ALL_FORMATS)
-                                                .build();
-        if(!mDetector.isOperational()) {
-            Toast.makeText(getActivity(),
-                    "Error.",
-                    Toast.LENGTH_SHORT)
-                    .show();
-        }
-
-        mTextureView = (TextureView)v.findViewById(R.id.camera_preview);
-        mTextureView.setSurfaceTextureListener(this);
-
-        mTextureView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    if(mCamera == null) {
-                        return false;
-                    }
-
-                    mCamera.cancelAutoFocus();
-                    focusCamera(event);
-                }
-                return false;
-            }
-        });
-
-        mBackButtonImageView = (ImageView) v.findViewById(R.id.image_view_backButton);
-        mBackButtonImageView.setOnTouchListener(mOnTouch);
-        mBackButtonImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavUtils.navigateUpFromSameTask(getActivity());
-            }
-        });
-
-        mToggleFlashImageButton = (AppCompatImageButton) v.findViewById(R.id.image_button_toggleFlash);
-        if(!checkHasFlash(getActivity())) {
-            mToggleFlashImageButton.setVisibility(View.GONE);
-        }
-        mToggleFlashImageButton.setOnTouchListener(mOnTouch);
-        mToggleFlashImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setSelected(!v.isSelected());
-
-                Camera.Parameters parameters = mCamera.getParameters();
-                parameters.setFlashMode(v.isSelected() ?
-                        Camera.Parameters.FLASH_MODE_TORCH :
-                        Camera.Parameters.FLASH_MODE_OFF);
-                mCamera.setParameters(parameters);
-            }
-        });
-
-        return v;
-    }
-
-    private void focusCamera(MotionEvent event) {
-//        mCamera.cancelAutoFocus();
-        Camera.Parameters parameters = mCamera.getParameters();
-
-        if(parameters.getMaxNumMeteringAreas() < 1) {
-            mCamera.autoFocus(new Camera.AutoFocusCallback() {
-                @Override
-                public void onAutoFocus(boolean success, Camera camera) {
-
-                }
-            });
-
-            return;
-        }
-
-        Rect focusRect = calculateTapArea(event.getX(), event.getY());
-        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-        List<Camera.Area> metringAreas = new ArrayList<>();
-        metringAreas.add(new Camera.Area(focusRect, 800));
-        parameters.setFocusAreas(metringAreas);
-
-        mCamera.setParameters(parameters);
-        mCamera.autoFocus(new Camera.AutoFocusCallback() {
-            @Override
-            public void onAutoFocus(boolean success, Camera camera) {
-                if(!success) {
-                    // stuff
-                }
-            }
-        });
-    }
-
-    private Rect calculateTapArea(float x, float y) {
-        int left = clamp(Float.valueOf((x / mTextureView.getWidth()) * 2000 - 1000).intValue(),
-                                                                                    FOCUS_AREA_SIZE);
-        int top = clamp(Float.valueOf((y / mTextureView.getHeight()) * 2000 - 1000).intValue(),
-                                                                                    FOCUS_AREA_SIZE);
-        return new Rect(left, top, left + FOCUS_AREA_SIZE, top + FOCUS_AREA_SIZE);
-    }
-
-    private int clamp(int touchCoordinateInCameraReper, int focusAreaSize) {
-        int result;
-        if(Math.abs(touchCoordinateInCameraReper) + focusAreaSize / 2 > 1000) {
-            if(touchCoordinateInCameraReper > 0) {
-                result = 1000 + focusAreaSize / 2;
-            } else {
-                result = -1000 + focusAreaSize / 2;
-            }
-        } else {
-            result = touchCoordinateInCameraReper - focusAreaSize / 2;
-        }
-
-        return result;
-    }
-
-
-    @Override
-    public void onPreviewFrame(byte[] data, Camera camera) {
-        // Generate Bitmap from raw data.
-        Camera.Size previewSize = camera.getParameters().getPreviewSize();
-        int w = previewSize.width;
-        int h = previewSize.height;
-        YuvImage yuvImage = new YuvImage(data, ImageFormat.NV21,
-                w, h, null);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        yuvImage.compressToJpeg(new Rect(0, 0, w, h), 80, byteArrayOutputStream);
-        byte[] jdata = byteArrayOutputStream.toByteArray();
-        Bitmap bitmap = BitmapFactory.decodeByteArray(jdata, 0, jdata.length);
-
-        scanPreviewForBarcode(bitmap);
-    }
-
-    @Override
-    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-        openCameraInNewThread();
-        if(mCamera == null) {
-            return;
-        }
-        mCamera.setPreviewCallback(this);
-
-        Camera.Size previewSize = mCamera.getParameters().getPreviewSize();
-        mTextureView.setLayoutParams(new FrameLayout.LayoutParams(
-                previewSize.width, previewSize.height, Gravity.CENTER
-        ));
-
-        try {
-            mCamera.setPreviewTexture(surface);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if(Build.MODEL.equals("Nexus 5X")) {
-            mTextureView.setRotation(270f);
-        } else {
-            mTextureView.setRotation(90f);
-        }
-        mCamera.startPreview();
-    }
-
-    @Override
-    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-
-    }
-
-    @Override
-    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-        mCamera.setPreviewCallback(null);
-        mCamera.stopPreview();
-        mCamera.release();
-        return true;
-    }
-
-    @Override
-    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-
-    }
-
-    private void openCameraInNewThread() {
-        if (mThread == null) {
-            mThread = new CameraHandlerThread();
-        }
-
-        synchronized (mThread) {
-            mThread.openCamera();
-        }
-    }
-
-    private class CameraHandlerThread extends HandlerThread {
-        Handler mHandler;
-
-        public CameraHandlerThread() {
-            super("CameraHandlerThread");
-            start();
-            mHandler = new Handler(getLooper());
-        }
-
-        synchronized void notifyCameraOpened() {
-            notify();
-        }
-
-        void openCamera() {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    instantiateCamera();
-                    notifyCameraOpened();
-                }
-            });
-
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }
