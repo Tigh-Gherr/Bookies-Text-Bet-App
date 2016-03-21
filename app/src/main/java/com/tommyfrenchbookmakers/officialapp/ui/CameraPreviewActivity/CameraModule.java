@@ -26,6 +26,9 @@ import java.util.List;
  */
 public class CameraModule implements TextureView.SurfaceTextureListener, Camera.PreviewCallback {
 
+    private static final float NEXUS_5X_VIEW_ROTATION = 270.0f;
+    private static final float STANDARD_VIEW_ROTATION = 90.0f;
+
     private Camera mCamera;
     private BarcodeProcessor mProcessor;
     private CameraHandlerThread mThread;
@@ -93,9 +96,18 @@ public class CameraModule implements TextureView.SurfaceTextureListener, Camera.
     }
 
     public float getViewFinderRotation() {
-        return Build.MODEL.equals("Nexus 5X") ? 270f : 90f;
+        return Build.MODEL.equals("Nexus 5X") ?
+                    NEXUS_5X_VIEW_ROTATION : STANDARD_VIEW_ROTATION;
     }
 
+    public void setFlash(boolean turnOn) {
+        Camera.Parameters params = mCamera.getParameters();
+        params.setFlashMode(turnOn ?
+                Camera.Parameters.FLASH_MODE_TORCH :
+                Camera.Parameters.FLASH_MODE_OFF);
+
+        mCamera.setParameters(params);
+    }
 
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
@@ -159,15 +171,6 @@ public class CameraModule implements TextureView.SurfaceTextureListener, Camera.
         } catch (RuntimeException e) {
 
         }
-    }
-
-    public void setFlash(boolean turnOn) {
-        Camera.Parameters params = mCamera.getParameters();
-        params.setFlashMode(turnOn ?
-            Camera.Parameters.FLASH_MODE_TORCH :
-            Camera.Parameters.FLASH_MODE_OFF);
-
-        mCamera.setParameters(params);
     }
 
     private Rect calculateTapArea(float x, float y, int width, int height) {
