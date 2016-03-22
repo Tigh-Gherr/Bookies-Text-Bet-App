@@ -58,6 +58,26 @@ public class MarketPageFragment extends Fragment {
                 }).show();
     }
 
+    public void onPagedTo() {
+        if(true) {
+            mMarket.getParticipants().clear();
+            DownloadUtils.WilliamHillBetting williamHillBetting =
+                    new DownloadUtils.WilliamHillBetting(getActivity(), new DataDownloadListener() {
+                        @Override
+                        public void onDownloadStart() {
+
+                        }
+
+                        @Override
+                        public void onDownloadComplete(Boolean success, String downloadedData) {
+                            setupFragment();
+                        }
+                    }, mMarket);
+
+            williamHillBetting.execute(getString(R.string.download_url_williamhill_xml));
+        }
+    }
+
     public static MarketPageFragment newInstance(int marketPosition, int meetingPosition) {
         Bundle bundle = new Bundle();
         bundle.putInt("MARKET_POSITION", marketPosition);
@@ -170,9 +190,9 @@ public class MarketPageFragment extends Fragment {
         Meeting meeting = MeetingsSingleton.get(getActivity()).getMeetings().get(meetingPosition);
 
         mMarket = meeting.getMarkets().get(marketPosition);
-        mMarket.getParticipants().clear();
+//        mMarket.getParticipants().clear();
 
-        DownloadUtils.WilliamHillBetting williamHillBetting =
+        /*DownloadUtils.WilliamHillBetting williamHillBetting =
                 new DownloadUtils.WilliamHillBetting(getActivity(), new DataDownloadListener() {
                     @Override
                     public void onDownloadStart() {
@@ -184,7 +204,7 @@ public class MarketPageFragment extends Fragment {
                         setupFragment();
                     }
                 }, mMarket);
-        williamHillBetting.execute(getString(R.string.download_url_williamhill_xml));
+        williamHillBetting.execute(getString(R.string.download_url_williamhill_xml));*/
 
         mProgressBar = (ProgressBar) v.findViewById(R.id.progress_bar_textBetMarketSpinner);
         mDownloadingTextView = (TextView) v.findViewById(R.id.text_view_textBetMarketDownloadingParticipants);

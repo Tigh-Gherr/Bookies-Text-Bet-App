@@ -115,9 +115,11 @@ public class AddSelectionActivityFragment extends Fragment {
 
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 mMarketsPagers.setAdapter(new FragmentAccessibleStatePagerAdapter(fm) {
+
                     @Override
                     public Fragment getItem(int position) {
                         return MarketPageFragment.newInstance(position, mMeetingPosition);
+//                        return MarketPageFragment.newInstance(position, mMeetingPosition);
                     }
 
                     @Override
@@ -140,11 +142,12 @@ public class AddSelectionActivityFragment extends Fragment {
                     @Override
                     public void onPageSelected(int position) {
                         Market market = mMeetings.get(mMeetingPosition).getMarkets().get(position);
-                        ((AddSelectionActivity)getActivity()).getSupportActionBar().setSubtitle(
+                        ((AddSelectionActivity) getActivity()).getSupportActionBar().setSubtitle(
                                 "EW: " + (!market.getEwOdds().equals("1/1") ? market.getEwOdds() : "N/A") + " Tricast: " + (market.isTricast() ? "Yes" : "No")
                         );
 
-                        Fragment current = ((FragmentAccessibleStatePagerAdapter)mMarketsPagers.getAdapter()).getFragment(position);
+                        Fragment current = ((FragmentAccessibleStatePagerAdapter) mMarketsPagers.getAdapter()).getFragment(position);
+                        ((MarketPageFragment) current).onPagedTo();
                         // TODO: Start MarketPageFragment download!!!!
 //                        ((MarketPageFragment)current).showSnackbar();
 //                        ((AddSelectionActivity)getActivity()).getSupportActionBar().setSubtitle(R.string.toolbar_meeting_information);
@@ -157,6 +160,9 @@ public class AddSelectionActivityFragment extends Fragment {
                 });
 
                 mMarketTimesTabLayout.setupWithViewPager(mMarketsPagers);
+
+                ((MarketPageFragment)((FragmentAccessibleStatePagerAdapter)
+                        mMarketsPagers.getAdapter()).getFragment(0)).onPagedTo();
             }
         });
         mMeetingsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
