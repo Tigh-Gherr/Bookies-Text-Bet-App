@@ -4,31 +4,20 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.NavUtils;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 
 import com.android.tighearnan.frenchsscanner.R;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.tommyfrenchbookmakers.officialapp.ui.BaseActivity;
-import com.tommyfrenchbookmakers.officialapp.utils.NavigationUtils;
 
 public class AddSelectionActivity extends BaseActivity {
 
     private AppBarLayout mAppBarLayout;
-    /*private Toolbar mToolbar;
-    private DrawerLayout mDrawerLayout;
-    private NavigationView mNavigationView;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_selection);
         mAppBarLayout = (AppBarLayout) findViewById(R.id.abl_test);
-
     }
 
     @Override

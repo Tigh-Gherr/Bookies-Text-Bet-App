@@ -2,36 +2,28 @@ package com.tommyfrenchbookmakers.officialapp.ui.ResultPagerActivity;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.android.tighearnan.frenchsscanner.R;
 import com.tommyfrenchbookmakers.officialapp.Global;
-import com.tommyfrenchbookmakers.officialapp.ui.AccountAndReferenceInput.AccountAndReferenceInputActivity;
-import com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity;
-import com.tommyfrenchbookmakers.officialapp.ui.BaseActivity;
-import com.tommyfrenchbookmakers.officialapp.ui.TypeBarcodeActivity.TypeBarcodeActivity;
-import com.tommyfrenchbookmakers.officialapp.utils.NavigationUtils;
-import com.tommyfrenchbookmakers.officialapp.utils.DataDownloadListener;
+import com.tommyfrenchbookmakers.officialapp.docketobjects.Docket;
 import com.tommyfrenchbookmakers.officialapp.singletons.GlobalDocket;
+import com.tommyfrenchbookmakers.officialapp.transformers.ZoomOutPageTransformer;
+import com.tommyfrenchbookmakers.officialapp.ui.BaseActivity;
+import com.tommyfrenchbookmakers.officialapp.utils.DataDownloadListener;
 import com.tommyfrenchbookmakers.officialapp.utils.DownloadUtils;
 import com.tommyfrenchbookmakers.officialapp.utils.SMSUtils;
-import com.tommyfrenchbookmakers.officialapp.docketobjects.Docket;
-import com.tommyfrenchbookmakers.officialapp.transformers.ZoomOutPageTransformer;
 
 import java.text.DecimalFormat;
 
@@ -44,7 +36,7 @@ public class ResultPagerActivity extends BaseActivity implements DataDownloadLis
     private Toolbar mToolbar;
     private ViewPager mViewPager;
 
-    private int sender;
+    private int mSender;
 
     // Custom Objects
     private Docket mDocket;
@@ -70,7 +62,7 @@ public class ResultPagerActivity extends BaseActivity implements DataDownloadLis
 
         // Set up viewpager to house Bets.
         FragmentManager fm = getSupportFragmentManager();
-        mViewPager.setAdapter(new FragmentPagerAdapter(fm) {
+        mViewPager.setAdapter(new FragmentStatePagerAdapter(fm) {
 
             @Override
             public Fragment getItem(int position) {
@@ -110,28 +102,11 @@ public class ResultPagerActivity extends BaseActivity implements DataDownloadLis
 
         // Sets the page transition animation.
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
-
-        /*mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                int id = item.getItemId();
-
-                if(id == R.id.scanner_view) {
-                    NavUtils.navigateUpFromSameTask(ResultPagerActivity.this);
-                } else {
-                    NavigationUtils.onNavigationMenuItemPressed(item.getItemId(), ResultPagerActivity.this);
-                }
-                mDrawerLayout.closeDrawers();
-                return true;
-            }
-        });*/
     }
 
     @Override
     protected int getSelfNavDrawerItem() {
-        return sender;
+        return mSender;
     }
 
     // Sets up activity
@@ -143,7 +118,7 @@ public class ResultPagerActivity extends BaseActivity implements DataDownloadLis
 
         mToolbar = getActionBarToolbar();
 
-        sender = getIntent().getIntExtra(Global.INTENT_KEY_SENDER, 0);
+        mSender = getIntent().getIntExtra(Global.INTENT_KEY_SENDER, 0);
 
         // Fetches the download type.
         int type = getIntent().getIntExtra(Global.INTENT_KEY_DOWNLOAD_TYPE, 0);

@@ -13,18 +13,15 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
  */
 public class BarcodeProcessor {
     private BarcodeDetector mDetector;
-    private boolean mIsOperational;
     private String mBarcode;
 
     public BarcodeProcessor(Context context) {
         mDetector = new BarcodeDetector.Builder(context)
                 .setBarcodeFormats(Barcode.ALL_FORMATS).build();
-
-        mIsOperational = mDetector.isOperational();
     }
 
     public boolean isOperational() {
-        return mIsOperational;
+        return mDetector.isOperational();
     }
 
     public String getBarcode() {
@@ -42,6 +39,4 @@ public class BarcodeProcessor {
 
         return false;
     }
-
-
 }

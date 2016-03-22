@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +22,6 @@ import com.tommyfrenchbookmakers.officialapp.utils.NetworkUtils;
 
 public class AccountAndReferenceInputActivityFragment extends Fragment {
 
-//    private Toolbar mToolbar;
     private EditText mAccountNumberEditText;
     private EditText mReferenceNumberEditText;
     private AppCompatButton mGoButton;
@@ -46,7 +43,7 @@ public class AccountAndReferenceInputActivityFragment extends Fragment {
 
                         startActivity(i);
                     } else {
-                        Toast.makeText(getActivity(), "Not connected to internet", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), R.string.error_message_no_internet, Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(getActivity(), "Incorrect Reference Number length.", Toast.LENGTH_LONG).show();
@@ -69,11 +66,6 @@ public class AccountAndReferenceInputActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_account_input, container, false);
-
-        /*mToolbar = (Toolbar) v.findViewById(R.id.app_bar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         mAccountNumberEditText = (EditText) v.findViewById(R.id.edit_text_accountInputAccountNumber);
         mAccountNumberEditText.requestFocus();

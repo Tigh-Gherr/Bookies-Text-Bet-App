@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatButton;
@@ -21,14 +20,14 @@ import android.widget.LinearLayout;
 
 import com.android.tighearnan.frenchsscanner.R;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-import com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity;
-import com.tommyfrenchbookmakers.officialapp.utils.DownloadUtils;
-import com.tommyfrenchbookmakers.officialapp.utils.NetworkUtils;
-import com.tommyfrenchbookmakers.officialapp.utils.DataDownloadListener;
-import com.tommyfrenchbookmakers.officialapp.ui.OnAdapterItemSelectedListener;
 import com.tommyfrenchbookmakers.officialapp.meetingobjects.Market;
 import com.tommyfrenchbookmakers.officialapp.meetingobjects.Meeting;
 import com.tommyfrenchbookmakers.officialapp.singletons.MeetingsSingleton;
+import com.tommyfrenchbookmakers.officialapp.ui.OnAdapterItemSelectedListener;
+import com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity;
+import com.tommyfrenchbookmakers.officialapp.utils.DataDownloadListener;
+import com.tommyfrenchbookmakers.officialapp.utils.DownloadUtils;
+import com.tommyfrenchbookmakers.officialapp.utils.NetworkUtils;
 
 import java.util.ArrayList;
 
@@ -115,7 +114,7 @@ public class AddSelectionActivityFragment extends Fragment {
                 for (int i = 0; i < times.length; i++) times[i] = markets.get(i).getOffTime();
 
                 FragmentManager fm = getActivity().getSupportFragmentManager();
-                mMarketsPagers.setAdapter(new FragmentStatePagerAdapter(fm) {
+                mMarketsPagers.setAdapter(new FragmentAccessibleStatePagerAdapter(fm) {
                     @Override
                     public Fragment getItem(int position) {
                         return MarketPageFragment.newInstance(position, mMeetingPosition);
@@ -144,6 +143,10 @@ public class AddSelectionActivityFragment extends Fragment {
                         ((AddSelectionActivity)getActivity()).getSupportActionBar().setSubtitle(
                                 "EW: " + (!market.getEwOdds().equals("1/1") ? market.getEwOdds() : "N/A") + " Tricast: " + (market.isTricast() ? "Yes" : "No")
                         );
+
+                        Fragment current = ((FragmentAccessibleStatePagerAdapter)mMarketsPagers.getAdapter()).getFragment(position);
+                        // TODO: Start MarketPageFragment download!!!!
+//                        ((MarketPageFragment)current).showSnackbar();
 //                        ((AddSelectionActivity)getActivity()).getSupportActionBar().setSubtitle(R.string.toolbar_meeting_information);
                     }
 

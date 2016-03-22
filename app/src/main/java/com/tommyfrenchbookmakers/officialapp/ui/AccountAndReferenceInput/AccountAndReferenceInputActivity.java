@@ -1,44 +1,18 @@
 package com.tommyfrenchbookmakers.officialapp.ui.AccountAndReferenceInput;
 
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.android.tighearnan.frenchsscanner.R;
 import com.tommyfrenchbookmakers.officialapp.ui.BaseActivity;
-import com.tommyfrenchbookmakers.officialapp.utils.NavigationUtils;
 
 public class AccountAndReferenceInputActivity extends BaseActivity {
 
-//    private DrawerLayout mDrawerLayout;
-//    private NavigationView mNavigationView;
-
-    // Set up fragment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_input);
-
-        /*mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
-        mNavigationView.getMenu().getItem(0).getSubMenu().getItem(1).setChecked(true);
-
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                if(!item.isChecked()) {
-                    NavigationUtils.onNavigationMenuItemPressed(item.getItemId(), AccountAndReferenceInputActivity.this);
-                }
-
-                mDrawerLayout.closeDrawers();
-                return true;
-            }
-        });*/
-
-//        overridePendingTransition(0, 0);
     }
 
     @Override

@@ -26,8 +26,9 @@ import com.tommyfrenchbookmakers.officialapp.utils.NetworkUtils;
  */
 public class CameraPreviewActivityFragment extends Fragment {
 
-    private TextureView mTextureView;
+    private CameraModule mCameraModule;
 
+    private TextureView mTextureView;
     private ImageView mBackButtonImageView;
     private AppCompatImageButton mToggleFlashImageButton;
 
@@ -51,8 +52,6 @@ public class CameraPreviewActivityFragment extends Fragment {
             return false;
         }
     };
-    private CameraModule mCameraModule;
-
 
     public CameraPreviewActivityFragment() {
     }
@@ -97,9 +96,9 @@ public class CameraPreviewActivityFragment extends Fragment {
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
                     mCameraModule.focusCamera(event.getX(),
-                                        event.getY(),
-                                        mTextureView.getWidth(),
-                                        mTextureView.getHeight());
+                                            event.getY(),
+                                            mTextureView.getWidth(),
+                                            mTextureView.getHeight());
                 }
                 return false;
             }
@@ -124,7 +123,6 @@ public class CameraPreviewActivityFragment extends Fragment {
             public void onClick(View v) {
                 v.setSelected(!v.isSelected());
                 mCameraModule.setFlash(v.isSelected());
-
             }
         });
 
@@ -143,9 +141,9 @@ public class CameraPreviewActivityFragment extends Fragment {
 
 
     private void processBarcode(String barcode) {
-        if (!barcode.startsWith("0")) {
+        if (!barcode.startsWith(getString(R.string.barcode_prefix))) {
             Snackbar.make(getView(),
-                    barcode + " is not a docket!",
+                    getString(R.string.error_message_not_a_docket, barcode),
                     Snackbar.LENGTH_SHORT)
                     .show();
             return;

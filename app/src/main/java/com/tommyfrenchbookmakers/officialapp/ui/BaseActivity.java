@@ -58,8 +58,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     // delay to launch nav drawer item, to allow close animation to play
     private static final int NAVDRAWER_LAUNCH_DELAY = 200;
 
-    private static final int MAIN_CONTENT_FADEIN_DURATION = 250;
-    private static final int MAIN_CONTENT_FADEOUT_DURATION = 150;
     private static final float HIDE_KEYBOARD_NAVDRAWER_OFFSET = 0.25f;
 
     private Toolbar mToolbar;
@@ -102,19 +100,16 @@ public abstract class BaseActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
             switch (requestCode) {
                 case REQUEST_PERMISSION_SMS:
-                    builder.setTitle("Request Permission to use SMS");
-                    builder.setMessage("TFB App's Text Betting feature requires you to allow the app to send messages " +
-                            "directly from the app to TFB. To use this feature, click Allow on the forthcoming " +
-                            "pop-up.");
+                    builder.setTitle(getString(R.string.alert_dialog_title_request_permission_sms));
+                    builder.setMessage(getString(R.string.alert_dialog_body_request_permission_sms));
                     break;
                 case REQUEST_PERMISSION_CAMERA:
-                    builder.setTitle("Request Permission to use Camera");
-                    builder.setMessage("In order to scan barcodes, this app must have access to the camera to view them. " +
-                            "Please grant this permission in the forth coming dialog.");
+                    builder.setTitle(getString(R.string.alert_dialog_title_request_permission_camera));
+                    builder.setMessage(getString(R.string.alert_dialog_body_request_permission_camera));
                     break;
             }
             builder.setCancelable(false);
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(R.string.alert_dialog_button_ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     requestPermissions(new String[]{permission}, requestCode);
@@ -137,7 +132,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 //                    start(TextBetSlipActivity.class);
                 } else {
                     Snackbar.make(mDrawerLayout,
-                            "Cannot start Text Bet, SMS permission not granted.",
+                            R.string.permission_denied_sms,
                             Snackbar.LENGTH_LONG)
                             .show();
                     finish();
@@ -148,7 +143,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     start(CameraPreviewActivity.class);
                 } else {
                     Snackbar.make(mDrawerLayout,
-                            "Cannot start Barcode Scanner, camera permission not granted.",
+                            R.string.permission_denied_camera,
                             Snackbar.LENGTH_LONG)
                             .show();
                     finish();
@@ -182,7 +177,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         int selfItem = getSelfNavDrawerItem();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        mNavDrawer = (NavigationView) mDrawerLayout.findViewById(R.id.navigation_view);
+        if (mDrawerLayout != null) {
+            mNavDrawer = (NavigationView) mDrawerLayout.findViewById(R.id.navigation_view);
+        }
 
         if (selfItem == NAVDRAWER_ITEM_INVALID) {
             if (mNavDrawer != null) {
@@ -208,7 +205,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             });
         }
 
-        mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 onNavDrawerSlide(drawerView, slideOffset);

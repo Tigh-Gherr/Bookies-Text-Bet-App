@@ -15,9 +15,9 @@ import android.widget.TextView;
 
 import com.android.tighearnan.frenchsscanner.R;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-import com.tommyfrenchbookmakers.officialapp.singletons.GlobalDocket;
 import com.tommyfrenchbookmakers.officialapp.docketobjects.Docket;
 import com.tommyfrenchbookmakers.officialapp.docketobjects.DocketBet;
+import com.tommyfrenchbookmakers.officialapp.singletons.GlobalDocket;
 
 import java.text.DecimalFormat;
 

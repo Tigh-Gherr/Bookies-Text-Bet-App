@@ -18,18 +18,18 @@ import android.widget.TextView;
 
 import com.android.tighearnan.frenchsscanner.R;
 import com.cocosw.bottomsheet.BottomSheet;
-import com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity;
-import com.tommyfrenchbookmakers.officialapp.ui.TextBetSlipActivity.TextBetSlipActivity;
 import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlip;
 import com.tommyfrenchbookmakers.officialapp.betslipobjects.BetSlipSelection;
-import com.tommyfrenchbookmakers.officialapp.utils.DownloadUtils;
-import com.tommyfrenchbookmakers.officialapp.utils.DataDownloadListener;
-import com.tommyfrenchbookmakers.officialapp.ui.OnAdapterItemSelectedListener;
 import com.tommyfrenchbookmakers.officialapp.meetingobjects.Market;
 import com.tommyfrenchbookmakers.officialapp.meetingobjects.Meeting;
 import com.tommyfrenchbookmakers.officialapp.meetingobjects.Participant;
 import com.tommyfrenchbookmakers.officialapp.singletons.BetSlipSingleton;
 import com.tommyfrenchbookmakers.officialapp.singletons.MeetingsSingleton;
+import com.tommyfrenchbookmakers.officialapp.ui.OnAdapterItemSelectedListener;
+import com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity;
+import com.tommyfrenchbookmakers.officialapp.ui.TextBetSlipActivity.TextBetSlipActivity;
+import com.tommyfrenchbookmakers.officialapp.utils.DataDownloadListener;
+import com.tommyfrenchbookmakers.officialapp.utils.DownloadUtils;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -196,4 +196,9 @@ public class MarketPageFragment extends Fragment {
         return v;
     }
 
+    public void showSnackbar() {
+        Snackbar.make(getView(),
+                mMarket.getName() + " " + mMarket.getOffTime(),
+                Snackbar.LENGTH_SHORT).show();
+    }
 }

@@ -217,8 +217,6 @@ public class TextBetSlipActivityFragment extends Fragment {
 
         mPotentialWinningsTextView.setText("£" + df.format(totalReturn));
 
-//        mWagersAdapter.notifyDataSetChanged();
-
         if (wagers.size() == 0) mPanelLayout.setTouchEnabled(false);
         else mPanelLayout.setTouchEnabled(true);
     }

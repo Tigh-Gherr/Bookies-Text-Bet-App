@@ -16,6 +16,8 @@ import android.view.TextureView;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.android.tighearnan.frenchsscanner.R;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,7 +43,7 @@ public class CameraModule implements TextureView.SurfaceTextureListener, Camera.
 
         if(!mProcessor.isOperational()) {
             Toast.makeText(context,
-                    "Barcode scanner is not operational. Try exiting and coming back.",
+                    R.string.error_barcode_decoder_not_operational,
                     Toast.LENGTH_LONG).show();
         }
     }
@@ -71,7 +73,7 @@ public class CameraModule implements TextureView.SurfaceTextureListener, Camera.
 
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-
+        // Already handled by Camera by default.
     }
 
     @Override
@@ -84,7 +86,7 @@ public class CameraModule implements TextureView.SurfaceTextureListener, Camera.
 
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-
+        // Cannot extract Bitmap from this method.
     }
 
     public FrameLayout.LayoutParams getLayoutParams() {
@@ -111,7 +113,7 @@ public class CameraModule implements TextureView.SurfaceTextureListener, Camera.
 
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
-        if(mProcessor.scanPreviewForBarcode(getBitmapFromData(data))) {
+        if(mProcessor.scanPreviewForBarcode(getBitmapFromData(data))) { // Preview frame has barcode.
             mScanListener.onScanSuccessful(mProcessor.getBarcode());
         }
     }
@@ -120,8 +122,7 @@ public class CameraModule implements TextureView.SurfaceTextureListener, Camera.
         Camera.Size previewSize = mCamera.getParameters().getPreviewSize();
         int w = previewSize.width;
         int h = previewSize.height;
-        YuvImage yuvImage = new YuvImage(data, ImageFormat.NV21,
-                w, h, null);
+        YuvImage yuvImage = new YuvImage(data, ImageFormat.NV21, w, h, null);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         yuvImage.compressToJpeg(new Rect(0, 0, w, h), 80, byteArrayOutputStream);
         byte[] jdata = byteArrayOutputStream.toByteArray();
