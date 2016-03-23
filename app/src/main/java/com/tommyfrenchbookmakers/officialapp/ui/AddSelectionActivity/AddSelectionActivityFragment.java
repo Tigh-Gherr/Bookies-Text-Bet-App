@@ -12,7 +12,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +36,8 @@ import java.util.ArrayList;
  */
 public class AddSelectionActivityFragment extends Fragment {
 
+    // TODO: TEST THIS!!!!!
+
     private RecyclerView mMeetingsRecyclerView;
     private RecyclerView.Adapter mMeetingsAdapter;
     private ArrayList<Meeting> mMeetings;
@@ -52,6 +53,37 @@ public class AddSelectionActivityFragment extends Fragment {
     private int mMeetingPosition;
     private DownloadUtils.WilliamHillBetting mWilliamHillBetting;
 
+    private SlidingUpPanelLayout.PanelSlideListener mSlideListener
+            = new SlidingUpPanelLayout.PanelSlideListener() {
+        @Override
+        public void onPanelSlide(View panel, float slideOffset) {
+            AddSelectionActivity activity = ((AddSelectionActivity)getActivity());
+            activity.changeElevation(1f - slideOffset);
+
+            updateTitleBar(slideOffset, activity);
+        }
+
+        @Override
+        public void onPanelCollapsed(View panel) {
+
+        }
+
+        @Override
+        public void onPanelExpanded(View panel) {
+
+        }
+
+        @Override
+        public void onPanelAnchored(View panel) {
+
+        }
+
+        @Override
+        public void onPanelHidden(View panel) {
+
+        }
+    };
+
     public AddSelectionActivityFragment() {
     }
 
@@ -63,10 +95,31 @@ public class AddSelectionActivityFragment extends Fragment {
         mPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
     }
 
-    private void setupFragment() {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_add_selection, container, false);
+
+        mDownloadingMeetingsLinearLayout = (LinearLayout) v.findViewById(R.id.linear_layout_downloadingMeetings);
+        mNoRacingFrameLayout = (FrameLayout) v.findViewById(R.id.frame_layout_noRacing);
+        mPanelLayout = (SlidingUpPanelLayout) v.findViewById(R.id.sliding_layout_meetingsAndMarkets);
+        mMeetingsRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_selectMeeting);
+        mMarketTimesTabLayout = (TabLayout) v.findViewById(R.id.tab_layout_marketTimes);
+        mMarketsPagers = (ViewPager) v.findViewById(R.id.view_pager_meetingMarkets);
+
+        mPanelLayout.setAlpha(0f);
+        mPanelLayout.setVisibility(View.INVISIBLE);
+        mPanelLayout.setDragView(R.id.tab_layout_marketTimes);
+        mPanelLayout.setPanelSlideListener(mSlideListener);
+        return v;
+    }
+
+    private void displayDownloadedMeetings() {
         mMeetings = MeetingsSingleton.get(getActivity()).getMeetings();
 
-        mDownloadingMeetingsLinearLayout.animate().alpha(0f).setDuration(200).setListener(new Animator.AnimatorListener() {
+        mDownloadingMeetingsLinearLayout.animate().alpha(0f).
+                setDuration(200).
+                setListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
 
@@ -108,82 +161,7 @@ public class AddSelectionActivityFragment extends Fragment {
         mMeetingsAdapter = new TextBetMeetingAdapter(mMeetings, new OnAdapterItemSelectedListener() {
             @Override
             public void onItemSelected(int selectedPosition) {
-                mPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-                mMeetingPosition = selectedPosition;
-                final ArrayList<Market> markets = mMeetings.get(selectedPosition).getMarkets();
-                final String times[] = new String[markets.size()];
-                for (int i = 0; i < times.length; i++) times[i] = markets.get(i).getOffTime();
-
-                mMarketsPagers.clearOnPageChangeListeners();
-                mMarketsPagers.setAdapter(null);
-
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                mMarketsPagers.setAdapter(new FragmentAccessibleStatePagerAdapter(fm) {
-
-                    @Override
-                    public Fragment getItem(int position) {
-                        return MarketPageFragment.newInstance(position, mMeetingPosition);
-                    }
-
-                    @Override
-                    public int getCount() {
-                        return markets.size();
-                    }
-
-                    @Override
-                    public CharSequence getPageTitle(int position) {
-                        return times[position];
-                    }
-                });
-
-                mMarketsPagers.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-                    @Override
-                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                    }
-
-                    @Override
-                    public void onPageSelected(int position) {
-                        Market market = mMeetings.get(mMeetingPosition).getMarkets().get(position);
-                        ((AddSelectionActivity) getActivity()).getSupportActionBar().setSubtitle(
-                                "EW: " + (!market.getEwOdds().equals("1/1") ? market.getEwOdds() : "N/A") + " Tricast: " + (market.isTricast() ? "Yes" : "No")
-                        );
-
-                        FragmentAccessibleStatePagerAdapter adapter =
-                                (FragmentAccessibleStatePagerAdapter) mMarketsPagers.getAdapter();
-                        Fragment current = adapter.getFragment(position);
-
-                        ((MarketPageFragment) current).onPagedTo();
-                    }
-
-                    @Override
-                    public void onPageScrollStateChanged(int state) {
-                        if (state != ViewPager.SCROLL_STATE_IDLE) { // Prevents graphical oddities
-                            return;
-                        }
-
-                        int position = mMarketsPagers.getCurrentItem();
-
-                        FragmentAccessibleStatePagerAdapter adapter =
-                                (FragmentAccessibleStatePagerAdapter) mMarketsPagers.getAdapter();
-
-                        Fragment previous = adapter.getFragment(position - 1);
-                        Fragment next = adapter.getFragment(position + 1);
-
-                        if (previous != null) {
-                            ((MarketPageFragment) previous).displayDownloadScreen();
-                        }
-
-                        if (next != null) {
-                            ((MarketPageFragment) next).displayDownloadScreen();
-                        }
-                    }
-                });
-
-                mMarketTimesTabLayout.setupWithViewPager(mMarketsPagers);
-
-                ((MarketPageFragment) ((FragmentAccessibleStatePagerAdapter)
-                        mMarketsPagers.getAdapter()).getFragment(0)).onPagedTo();
+                setupPanelLayoutForSelectedMeeting(selectedPosition);
             }
         });
         mMeetingsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -191,62 +169,114 @@ public class AddSelectionActivityFragment extends Fragment {
         mMeetingsRecyclerView.setHasFixedSize(true);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_add_selection, container, false);
+    private void setupPanelLayoutForSelectedMeeting(int selectedPosition) {
+        mPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+        mMeetingPosition = selectedPosition;
+        final ArrayList<Market> markets = mMeetings.get(selectedPosition).getMarkets();
+        final String times[] = new String[markets.size()];
+        for (int i = 0; i < times.length; i++) {
+            times[i] = markets.get(i).getOffTime();
+        }
 
-        mDownloadingMeetingsLinearLayout = (LinearLayout) v.findViewById(R.id.linear_layout_downloadingMeetings);
+        setupViewPageForSelectedMeeting(markets, times);
+    }
 
-        mNoRacingFrameLayout = (FrameLayout) v.findViewById(R.id.frame_layout_noRacing);
+    private void setupViewPageForSelectedMeeting(final ArrayList<Market> markets, final String[] times) {
+        mMarketsPagers.clearOnPageChangeListeners();
+        mMarketsPagers.setAdapter(null);
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        mMarketsPagers.setAdapter(new FragmentAccessibleStatePagerAdapter(fm) {
 
-        mPanelLayout = (SlidingUpPanelLayout) v.findViewById(R.id.sliding_layout_meetingsAndMarkets);
-        mPanelLayout.setAlpha(0f);
-        mPanelLayout.setVisibility(View.INVISIBLE);
-        mPanelLayout.setDragView(R.id.tab_layout_marketTimes);
-        mPanelLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
-            public void onPanelSlide(View panel, float slideOffset) {
-                AddSelectionActivity activity = ((AddSelectionActivity)getActivity());
-                activity.changeElevation(1f - slideOffset);
-
-                if (slideOffset > 0.75f) {
-                    Meeting meeting = mMeetings.get(mMeetingPosition);
-                    Market market = meeting.getMarkets().get(mMarketTimesTabLayout.getSelectedTabPosition());
-                    activity.setToolbarTitle(meeting.getName());
-                    activity.getSupportActionBar().setSubtitle(
-                            "EW: " + (!market.getEwOdds().equals("1/1") ? market.getEwOdds() : "N/A") + " Tricast: " + (market.isTricast() ? "Yes" : "No")
-                    );
-                } else {
-                    activity.setToolbarTitle(getString(R.string.title_activity_add_selection));
-                    activity.getSupportActionBar().setSubtitle(null);
-                }
+            public Fragment getItem(int position) {
+                return MarketPageFragment.newInstance(position, mMeetingPosition);
             }
 
             @Override
-            public void onPanelCollapsed(View panel) {
+            public int getCount() {
+                return markets.size();
             }
 
             @Override
-            public void onPanelExpanded(View panel) {
-            }
-
-            @Override
-            public void onPanelAnchored(View panel) {
-
-            }
-
-            @Override
-            public void onPanelHidden(View panel) {
+            public CharSequence getPageTitle(int position) {
+                return times[position];
             }
         });
 
-        mMeetingsRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_selectMeeting);
+        mMarketsPagers.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
-        mMarketTimesTabLayout = (TabLayout) v.findViewById(R.id.tab_layout_marketTimes);
-        mMarketsPagers = (ViewPager) v.findViewById(R.id.view_pager_meetingMarkets);
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
-        return v;
+            @Override
+            public void onPageSelected(int position) {
+                createPage(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if (state == ViewPager.SCROLL_STATE_IDLE) { // Prevents graphical oddities
+                    resetPreviousAndNextPage();
+                }
+            }
+        });
+
+        mMarketTimesTabLayout.setupWithViewPager(mMarketsPagers);
+
+        ((MarketPageFragment) ((FragmentAccessibleStatePagerAdapter)
+                mMarketsPagers.getAdapter()).getFragment(0)).onPagedTo();
+    }
+
+    private void createPage(int position) {
+        updateMarketInformation(generateMarketInfo());
+
+        FragmentAccessibleStatePagerAdapter adapter =
+                (FragmentAccessibleStatePagerAdapter) mMarketsPagers.getAdapter();
+        Fragment current = adapter.getFragment(position);
+
+        ((MarketPageFragment) current).onPagedTo();
+    }
+
+    private void resetPreviousAndNextPage() {
+        int position = mMarketsPagers.getCurrentItem();
+
+        FragmentAccessibleStatePagerAdapter adapter =
+                (FragmentAccessibleStatePagerAdapter) mMarketsPagers.getAdapter();
+
+        Fragment previous = adapter.getFragment(position - 1);
+        Fragment next = adapter.getFragment(position + 1);
+
+        if (previous != null) {
+            ((MarketPageFragment) previous).displayDownloadScreen();
+        }
+
+        if (next != null) {
+            ((MarketPageFragment) next).displayDownloadScreen();
+        }
+    }
+
+    private void updateMarketInformation(String info) {
+        AddSelectionActivity activity = (AddSelectionActivity) getActivity();
+        activity.setToolbarTitle(info);
+    }
+
+    private String generateMarketInfo() {
+        Market market = mMeetings.get(mMeetingPosition).getMarkets()
+                .get(mMarketTimesTabLayout.getSelectedTabPosition());
+        return "EW: " + (!market.getEwOdds().equals("1/1") ? market.getEwOdds() : "N/A") +
+                " Tricast: " + (market.isTricast() ? "Yes" : "No");
+    }
+
+    private void updateTitleBar(float slideOffset, AddSelectionActivity activity) {
+        if (slideOffset > 0.75f) {
+            Meeting meeting = mMeetings.get(mMeetingPosition);
+            activity.setToolbarTitle(meeting.getName());
+            updateMarketInformation(generateMarketInfo());
+        } else {
+            activity.setToolbarTitle(getString(R.string.title_activity_add_selection));
+            updateMarketInformation(null);
+        }
     }
 
     @Override
@@ -263,10 +293,9 @@ public class AddSelectionActivityFragment extends Fragment {
 
                             @Override
                             public void onDownloadComplete(Boolean success, String downloadedData) {
-                                setupFragment();
+                                displayDownloadedMeetings();
                             }
                         });
-
                 mWilliamHillBetting.execute(getString(R.string.download_url_williamhill_xml));
             } catch (IllegalStateException ise) {
                 NavUtils.navigateUpFromSameTask(getActivity());
