@@ -183,10 +183,13 @@ public class AddSelectionActivityFragment extends Fragment {
 
     private void setupViewPageForSelectedMeeting(final ArrayList<Market> markets, final String[] times) {
         mMarketsPagers.clearOnPageChangeListeners();
-        mMarketsPagers.setAdapter(null);
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        mMarketsPagers.setAdapter(new FragmentAccessibleStatePagerAdapter(fm) {
 
+        /* TODO: Add this code to onViewCreated, I don't think this needs to be recreated every
+           TODO: time user selects a Meeting.
+         */
+
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        FragmentAccessibleStatePagerAdapter adapter = new FragmentAccessibleStatePagerAdapter(fm) {
             @Override
             public Fragment getItem(int position) {
                 return MarketPageFragment.newInstance(position, mMeetingPosition);
@@ -201,8 +204,9 @@ public class AddSelectionActivityFragment extends Fragment {
             public CharSequence getPageTitle(int position) {
                 return times[position];
             }
-        });
+        };
 
+        mMarketsPagers.setAdapter(adapter);
         mMarketsPagers.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
@@ -223,9 +227,7 @@ public class AddSelectionActivityFragment extends Fragment {
         });
 
         mMarketTimesTabLayout.setupWithViewPager(mMarketsPagers);
-
-        ((MarketPageFragment) ((FragmentAccessibleStatePagerAdapter)
-                mMarketsPagers.getAdapter()).getFragment(0)).onPagedTo();
+        ((MarketPageFragment)adapter.getFragment(0)).onPagedTo();
     }
 
     private void createPage(int position) {
@@ -258,7 +260,7 @@ public class AddSelectionActivityFragment extends Fragment {
 
     private void updateMarketInformation(String info) {
         AddSelectionActivity activity = (AddSelectionActivity) getActivity();
-        activity.setToolbarTitle(info);
+        activity.getSupportActionBar().setSubtitle(info);
     }
 
     private String generateMarketInfo() {
@@ -271,7 +273,7 @@ public class AddSelectionActivityFragment extends Fragment {
     private void updateTitleBar(float slideOffset, AddSelectionActivity activity) {
         if (slideOffset > 0.75f) {
             Meeting meeting = mMeetings.get(mMeetingPosition);
-            activity.setToolbarTitle(meeting.getName());
+            activity.setTitle(meeting.getName());
             updateMarketInformation(generateMarketInfo());
         } else {
             activity.setToolbarTitle(getString(R.string.title_activity_add_selection));
@@ -282,38 +284,54 @@ public class AddSelectionActivityFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (NetworkUtils.networkIsAvailable(getActivity())) {
-            try {
-                mWilliamHillBetting =
-                        new DownloadUtils.WilliamHillBetting(getActivity(), new DataDownloadListener() {
-                            @Override
-                            public void onDownloadStart() {
-
-                            }
-
-                            @Override
-                            public void onDownloadComplete(Boolean success, String downloadedData) {
-                                displayDownloadedMeetings();
-                            }
-                        });
-                mWilliamHillBetting.execute(getString(R.string.download_url_williamhill_xml));
-            } catch (IllegalStateException ise) {
-                NavUtils.navigateUpFromSameTask(getActivity());
-            }
+        if(getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            FragmentAccessibleStatePagerAdapter adapter =
+                    (FragmentAccessibleStatePagerAdapter) mMarketsPagers.getAdapter();
+            ((MarketPageFragment)adapter
+                    .getFragment(mMarketTimesTabLayout.getSelectedTabPosition()))
+                    .onPagedTo();
         } else {
-            Snackbar.make(getView(), R.string.error_message_no_internet, Snackbar.LENGTH_LONG).show();
+            if (NetworkUtils.networkIsAvailable(getActivity())) {
+                try {
+                    mWilliamHillBetting =
+                            new DownloadUtils.WilliamHillBetting(getActivity(), new DataDownloadListener() {
+                                @Override
+                                public void onDownloadStart() {
+
+                                }
+
+                                @Override
+                                public void onDownloadComplete(Boolean success, String downloadedData) {
+                                    displayDownloadedMeetings();
+                                }
+                            });
+                    mWilliamHillBetting.execute(getString(R.string.download_url_williamhill_xml));
+                } catch (IllegalStateException ise) {
+                    NavUtils.navigateUpFromSameTask(getActivity());
+                }
+            } else {
+                Snackbar.make(getView(), R.string.error_message_no_internet, Snackbar.LENGTH_LONG).show();
+            }
         }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mDownloadingMeetingsLinearLayout.setAlpha(1f);
-        mDownloadingMeetingsLinearLayout.setVisibility(View.VISIBLE);
-        mPanelLayout.setAlpha(0f);
-        mPanelLayout.setVisibility(View.INVISIBLE);
-        mNoRacingFrameLayout.setAlpha(0f);
-        mNoRacingFrameLayout.setVisibility(View.INVISIBLE);
-        if (mWilliamHillBetting != null) mWilliamHillBetting.cancel(false);
+        if(getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            FragmentAccessibleStatePagerAdapter adapter =
+                    (FragmentAccessibleStatePagerAdapter) mMarketsPagers.getAdapter();
+            ((MarketPageFragment)adapter
+                    .getFragment(mMarketTimesTabLayout.getSelectedTabPosition()))
+                    .displayDownloadScreen();
+        } else {
+            mDownloadingMeetingsLinearLayout.setAlpha(1f);
+            mDownloadingMeetingsLinearLayout.setVisibility(View.VISIBLE);
+            mPanelLayout.setAlpha(0f);
+            mPanelLayout.setVisibility(View.INVISIBLE);
+            mNoRacingFrameLayout.setAlpha(0f);
+            mNoRacingFrameLayout.setVisibility(View.INVISIBLE);
+            if (mWilliamHillBetting != null) mWilliamHillBetting.cancel(false);
+        }
     }
 }
