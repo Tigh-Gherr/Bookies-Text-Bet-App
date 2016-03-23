@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,6 +114,9 @@ public class AddSelectionActivityFragment extends Fragment {
                 final String times[] = new String[markets.size()];
                 for (int i = 0; i < times.length; i++) times[i] = markets.get(i).getOffTime();
 
+                mMarketsPagers.clearOnPageChangeListeners();
+                mMarketsPagers.setAdapter(null);
+
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 mMarketsPagers.setAdapter(new FragmentAccessibleStatePagerAdapter(fm) {
 
@@ -133,9 +137,9 @@ public class AddSelectionActivityFragment extends Fragment {
                 });
 
                 mMarketsPagers.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
                     @Override
                     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
                     }
 
                     @Override
@@ -173,7 +177,6 @@ public class AddSelectionActivityFragment extends Fragment {
                         if (next != null) {
                             ((MarketPageFragment) next).displayDownloadScreen();
                         }
-
                     }
                 });
 
