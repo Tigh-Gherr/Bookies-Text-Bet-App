@@ -119,7 +119,6 @@ public class AddSelectionActivityFragment extends Fragment {
                     @Override
                     public Fragment getItem(int position) {
                         return MarketPageFragment.newInstance(position, mMeetingPosition);
-//                        return MarketPageFragment.newInstance(position, mMeetingPosition);
                     }
 
                     @Override
@@ -146,22 +145,41 @@ public class AddSelectionActivityFragment extends Fragment {
                                 "EW: " + (!market.getEwOdds().equals("1/1") ? market.getEwOdds() : "N/A") + " Tricast: " + (market.isTricast() ? "Yes" : "No")
                         );
 
-                        Fragment current = ((FragmentAccessibleStatePagerAdapter) mMarketsPagers.getAdapter()).getFragment(position);
+                        FragmentAccessibleStatePagerAdapter adapter =
+                                (FragmentAccessibleStatePagerAdapter) mMarketsPagers.getAdapter();
+                        Fragment current = adapter.getFragment(position);
+
                         ((MarketPageFragment) current).onPagedTo();
-                        // TODO: Start MarketPageFragment download!!!!
-//                        ((MarketPageFragment)current).showSnackbar();
-//                        ((AddSelectionActivity)getActivity()).getSupportActionBar().setSubtitle(R.string.toolbar_meeting_information);
                     }
 
                     @Override
                     public void onPageScrollStateChanged(int state) {
+                        if (state != ViewPager.SCROLL_STATE_IDLE) { // Prevents graphical oddities
+                            return;
+                        }
+
+                        int position = mMarketsPagers.getCurrentItem();
+
+                        FragmentAccessibleStatePagerAdapter adapter =
+                                (FragmentAccessibleStatePagerAdapter) mMarketsPagers.getAdapter();
+
+                        Fragment previous = adapter.getFragment(position - 1);
+                        Fragment next = adapter.getFragment(position + 1);
+
+                        if (previous != null) {
+                            ((MarketPageFragment) previous).displayDownloadScreen();
+                        }
+
+                        if (next != null) {
+                            ((MarketPageFragment) next).displayDownloadScreen();
+                        }
 
                     }
                 });
 
                 mMarketTimesTabLayout.setupWithViewPager(mMarketsPagers);
 
-                ((MarketPageFragment)((FragmentAccessibleStatePagerAdapter)
+                ((MarketPageFragment) ((FragmentAccessibleStatePagerAdapter)
                         mMarketsPagers.getAdapter()).getFragment(0)).onPagedTo();
             }
         });
@@ -186,18 +204,19 @@ public class AddSelectionActivityFragment extends Fragment {
         mPanelLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
-                ((AddSelectionActivity) getActivity()).changeElevation(1f - slideOffset);
+                AddSelectionActivity activity = ((AddSelectionActivity)getActivity());
+                activity.changeElevation(1f - slideOffset);
 
                 if (slideOffset > 0.75f) {
                     Meeting meeting = mMeetings.get(mMeetingPosition);
                     Market market = meeting.getMarkets().get(mMarketTimesTabLayout.getSelectedTabPosition());
-                    ((AddSelectionActivity) getActivity()).setToolbarTitle(meeting.getName());
-                    ((AddSelectionActivity) getActivity()).getSupportActionBar().setSubtitle(
+                    activity.setToolbarTitle(meeting.getName());
+                    activity.getSupportActionBar().setSubtitle(
                             "EW: " + (!market.getEwOdds().equals("1/1") ? market.getEwOdds() : "N/A") + " Tricast: " + (market.isTricast() ? "Yes" : "No")
                     );
                 } else {
-                    ((AddSelectionActivity) getActivity()).setToolbarTitle(getString(R.string.title_activity_add_selection));
-                    ((AddSelectionActivity) getActivity()).getSupportActionBar().setSubtitle(null);
+                    activity.setToolbarTitle(getString(R.string.title_activity_add_selection));
+                    activity.getSupportActionBar().setSubtitle(null);
                 }
             }
 

@@ -52,6 +52,8 @@
     <string name="alert_dialog_button_stay">Stay</string>
     <string name="alert_dialog_button_ok">OK</string>
 
+    <string name="bottom_sheet_title_add_selection">%1$s %2$s</string>
+
     <string name="permission_denied_sms">Cannot start Text Bet, SMS permission not granted.</string>
     <string name="permission_denied_camera">Cannot start Barcode Scanner, camera permission not granted.</string>
 
