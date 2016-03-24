@@ -116,6 +116,7 @@
     <string name="snackbar_body_no_selections">No selections to place a wager on.</string>
     <string name="snackbar_body_enter_valid_wager">Enter a valid wager.</string>
     <string name="snackbar_body_wager_added">%s added.</string>
+    <string name="snackbar_body_wager_addition">£%1$s %2$s added.</string>
     <string name="snackbar_body_no_stake_entered">No stake entered, cannot add wager.</string>
 
     <string name="nav_drawer_opened">Opened</string>

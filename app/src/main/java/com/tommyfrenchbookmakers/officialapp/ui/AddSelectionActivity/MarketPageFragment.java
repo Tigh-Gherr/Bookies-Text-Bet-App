@@ -126,7 +126,7 @@ public class MarketPageFragment extends Fragment {
         mRaceOverLinearLayout.setAlpha(1f);
     }
 
-    public void onPagedTo() {
+    public void downloadMarket() {
         mMarket.getParticipants().clear();
         DownloadUtils.WilliamHillBetting williamHillBetting =
                 new DownloadUtils.WilliamHillBetting(getActivity(), new DataDownloadListener() {

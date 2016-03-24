@@ -41,7 +41,7 @@ public class TextBetSlipActivity extends BaseActivity {
         switch (item.getItemId()) {
             case R.id.show_wagers:      // Open the wager panel
                 TextBetSlipActivityFragment fragment = (TextBetSlipActivityFragment)getSupportFragmentManager().findFragmentById(R.id.fragment);
-                fragment.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+                fragment.expandPanel();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -52,7 +52,7 @@ public class TextBetSlipActivity extends BaseActivity {
         TextBetSlipActivityFragment fragment = (TextBetSlipActivityFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
         // If the fragments sliding panel is opened, close it
         if (fragment.getPanelState() != SlidingUpPanelLayout.PanelState.COLLAPSED) {
-            fragment.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+            fragment.collapsePanel();
         } else {
             BetSlip betSlip = BetSlipSingleton.get(this).getBetSlip();
             // If there is a selection on the bet slip, warn the user that the bet slip will be erased.
