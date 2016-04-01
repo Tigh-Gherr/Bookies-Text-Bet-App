@@ -62,7 +62,6 @@ public class TextBetSlipActivityFragment extends Fragment {
     private RecyclerView.Adapter mWagersAdapter;
     private SlidingUpPanelLayout.PanelSlideListener mSlideListener
             = new SlidingUpPanelLayout.PanelSlideListener() {
-        boolean hasTouchListener = false;
 
         @Override
         public void onPanelSlide(View panel, float slideOffset) {
@@ -76,21 +75,14 @@ public class TextBetSlipActivityFragment extends Fragment {
                 if (mFloatingMenu.isOpened()) {
                     mFloatingMenu.close(true);
                 }
-                View view = getView().findViewById(R.id.view_space);
+                View view = getView().findViewById(R.id.view_bottomPadding);
                 view.setVisibility(View.GONE);
-                hasTouchListener = enableTouchToClose(hasTouchListener);
             }
-
         }
 
         @Override
         public void onPanelCollapsed(View panel) {
-            if (hasTouchListener) {
-                mSelectionsRecyclerView.setOnTouchListener(null);
-                hasTouchListener = false;
-            }
-
-            View view = getView().findViewById(R.id.view_space);
+            View view = getView().findViewById(R.id.view_bottomPadding);
             view.setVisibility(View.VISIBLE);
         }
 
@@ -115,24 +107,6 @@ public class TextBetSlipActivityFragment extends Fragment {
         mFloatingMenu.setVisibility(View.INVISIBLE);
         mFloatingMenu.close(false);
     }
-
-    private boolean enableTouchToClose(boolean hasTouchListener) {
-        if (!hasTouchListener) {
-            mSelectionsRecyclerView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        collapsePanel();
-                    }
-                    return true;
-                }
-            });
-            return true;
-        }
-
-        return false;
-    }
-
 
     public TextBetSlipActivityFragment() {
     }
@@ -334,6 +308,7 @@ public class TextBetSlipActivityFragment extends Fragment {
                                 getString(R.string.snackbar_body_wager_addition,
                                         unitStake, wager.getWagerType().getName()),
                                 Snackbar.LENGTH_SHORT).show();
+                        calculateWagerStakeAndReturns();
                     } else {
                         wager = new BetSlipWager(wagerType, unitStake, eachWay);
                         addWager(wager);
@@ -402,6 +377,17 @@ public class TextBetSlipActivityFragment extends Fragment {
         mSelectionsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mSelectionsAdapter = new BetSlipSelectionsAdapter(mBetSlip.getSelections());
         mSelectionsRecyclerView.setAdapter(mSelectionsAdapter);
+
+        mSelectionsRecyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(getPanelState() != SlidingUpPanelLayout.PanelState.COLLAPSED) {
+                    collapsePanel();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         ItemTouchHelper.SimpleCallback selectionsCallBack = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override

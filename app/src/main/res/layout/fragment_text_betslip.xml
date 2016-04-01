@@ -41,7 +41,7 @@
                 android:layout_weight="1"/>
 
             <View
-                android:id="@+id/view_space"
+                android:id="@+id/view_bottomPadding"
                 android:layout_width="match_parent"
                 android:layout_height="68dp"
                 android:background="@android:color/transparent" />

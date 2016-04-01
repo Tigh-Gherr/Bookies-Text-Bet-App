@@ -198,7 +198,10 @@ public class ResultPagerActivity extends BaseActivity implements DataDownloadLis
                         switch (which) {
                             case DialogInterface.BUTTON_POSITIVE:
                                 String smsBody = getString(R.string.sms_body_edited_wrong, mDocket.getBarcode());
-                                SMSUtils smsUtils = new SMSUtils(ResultPagerActivity.this, Global.PHONE_NUMBER, smsBody, findViewById(R.id.view_pager_resultPager));
+                                SMSUtils smsUtils = new SMSUtils(ResultPagerActivity.this,
+                                        Global.PHONE_NUMBER,
+                                        smsBody,
+                                        findViewById(R.id.view_pager_resultPager));
                                 smsUtils.sendSMS();
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
@@ -225,7 +228,10 @@ public class ResultPagerActivity extends BaseActivity implements DataDownloadLis
                         switch (which) {
                             case DialogInterface.BUTTON_POSITIVE:
                                 String smsBody = getString(R.string.sms_body_test_text_bet);
-                                SMSUtils smsUtils = new SMSUtils(ResultPagerActivity.this, "+447537416036", smsBody, findViewById(R.id.view_pager_resultPager));
+                                SMSUtils smsUtils = new SMSUtils(ResultPagerActivity.this,
+                                        Global.TEXT_BET_PHONE_NUMBER,
+                                        smsBody,
+                                        findViewById(R.id.view_pager_resultPager));
                                 smsUtils.sendSMS();
                                 break;
                             case DialogInterface.BUTTON_NEGATIVE:
