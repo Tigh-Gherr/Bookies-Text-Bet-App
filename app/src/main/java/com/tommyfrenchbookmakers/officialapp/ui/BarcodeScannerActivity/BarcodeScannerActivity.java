@@ -1,24 +1,25 @@
 package com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity;
 
-import android.Manifest;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.Window;
-import android.view.WindowManager;
 
 import com.android.tighearnan.frenchsscanner.R;
 import com.tommyfrenchbookmakers.officialapp.ui.BaseActivity;
+
 
 public class BarcodeScannerActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.md_grey_700));
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barcode_scanner);
-
-        checkForPermission(REQUEST_PERMISSION_CAMERA, Manifest.permission.CAMERA);
     }
 
     @Override

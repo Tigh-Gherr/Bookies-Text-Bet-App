@@ -134,7 +134,7 @@
                 android:value="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity"/>
         </activity>
         <activity
-            android:name="com.tommyfrenchbookmakers.officialapp.ui.CameraPreviewActivity.CameraPreviewActivity"
+            android:name="com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity"
             android:label="@string/title_activity_camera_preview"
             android:parentActivityName="com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity"
             android:screenOrientation="portrait"

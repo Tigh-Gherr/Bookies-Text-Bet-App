@@ -2,41 +2,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/transparent"
     tools:context="com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivityFragment"
     tools:showIn="@layout/activity_barcode_scanner">
 
-    <me.dm7.barcodescanner.zbar.ZBarScannerView
-        android:id="@+id/scanner_view"
+    <TextureView
+        android:id="@+id/camera_preview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="#000" />
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:padding="15dp">
+        android:layout_height="match_parent"
+        android:padding="16dp">
 
         <ImageView
-            android:id="@+id/image_view_frenchsLogo"
+            android:id="@+id/image_view_backButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_gravity="top|left"
             android:src="@drawable/frenches_logo_512" />
 
         <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/appcompat_image_button_toggleCamera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:id="@+id/image_button_toggleFlash"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="top|right"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_camera_front_white_36dp" />
-
-        <android.support.v7.widget.AppCompatImageButton
-            android:id="@+id/appcompat_image_button_toggleFlash"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_flash_on" />
+            android:src="@drawable/flash_state" />
 
     </FrameLayout>
 

@@ -31,7 +31,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.android.tighearnan.frenchsscanner.R;
 import com.tommyfrenchbookmakers.officialapp.Global;
 import com.tommyfrenchbookmakers.officialapp.ui.AccountAndReferenceInput.AccountAndReferenceInputActivity;
-import com.tommyfrenchbookmakers.officialapp.ui.CameraPreviewActivity.CameraPreviewActivity;
+import com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity.BarcodeScannerActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.ContactUsActivity.ContactUsActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.LotteryPickerActivity.LotteryPickerActivity;
 import com.tommyfrenchbookmakers.officialapp.ui.SelectionScreenActivity.SelectionScreenActivity;
@@ -71,7 +71,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
-//            ab.setHomeButtonEnabled(true);
             ab.setHomeButtonEnabled(true);
             ab.setDisplayHomeAsUpEnabled(!isSelectionScreen());
         }
@@ -140,7 +139,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 break;
             case REQUEST_PERMISSION_CAMERA:
                 if (granted) {
-                    start(CameraPreviewActivity.class);
+                    start(BarcodeScannerActivity.class);
                 } else {
                     Snackbar.make(mDrawerLayout,
                             R.string.permission_denied_camera,
@@ -274,7 +273,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                         checkForPermission(Global.REQUEST_PERMISSION_CAMERA,
                                             Manifest.permission.CAMERA);
                 if(permissionGranted) {
-                    start(CameraPreviewActivity.class);
+                    start(BarcodeScannerActivity.class);
                 }
                 break;
             case NAVDRAWER_ITEM_TYPE_BARCODE:

@@ -1,91 +1,59 @@
 package com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatImageButton;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.android.tighearnan.frenchsscanner.R;
 import com.tommyfrenchbookmakers.officialapp.Global;
 import com.tommyfrenchbookmakers.officialapp.ui.ResultPagerActivity.ResultPagerActivity;
 import com.tommyfrenchbookmakers.officialapp.utils.NetworkUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
-import me.dm7.barcodescanner.zbar.BarcodeFormat;
-import me.dm7.barcodescanner.zbar.Result;
-import me.dm7.barcodescanner.zbar.ZBarScannerView;
-
 /**
  * A placeholder fragment containing a simple view.
  */
-public class BarcodeScannerActivityFragment extends Fragment implements ZBarScannerView.ResultHandler {
+public class BarcodeScannerActivityFragment extends Fragment {
 
-    private int mCameraNumber = 0;
+    private CameraModule mCameraModule;
 
-    private ZBarScannerView mScannerView;
-    private AppCompatImageButton mToggleCameraImageButton;
+    private TextureView mTextureView;
+    private ImageView mBackButtonImageView;
     private AppCompatImageButton mToggleFlashImageButton;
 
-    public BarcodeScannerActivityFragment() {
-    }
-
-    private void createSnackBar(int stringResId) {
-        Snackbar.make(getView(), stringResId, Snackbar.LENGTH_LONG).show();
-    }
-
-    private void restartCamera() {
-        mScannerView.startCamera(mCameraNumber);
-        setFlash(false);
-    }
-
-    private void setFlash(boolean turnOn) {
-        mScannerView.setFlash(turnOn);
-
-        if (turnOn) {
-            mToggleFlashImageButton.setImageResource(R.drawable.ic_flash_off);
-        } else {
-            mToggleFlashImageButton.setImageResource(R.drawable.ic_flash_on);
-        }
-    }
-
-    @Override
-    public void handleResult(Result result) {
-        String barcode = result.getContents();
-
-        if(!barcode.startsWith(getString(R.string.barcode_prefix))) {
-            Toast.makeText(getActivity(), "Not a docket.", Toast.LENGTH_LONG).show();
-            mScannerView.startCamera(mCameraNumber);
-            return;
-        } else {
-            barcode = barcode.substring(1);
-        }
-
-        if(result.getBarcodeFormat() == BarcodeFormat.I25) {
-            if(NetworkUtils.networkIsAvailable(getActivity())) {
-                Intent i = new Intent(getActivity(), ResultPagerActivity.class);
-                i.putExtra(Global.INTENT_KEY_DOWNLOAD_TYPE, Global.DOWNLOAD_TYPE_BARCODE);
-                i.putExtra(Global.INTENT_KEY_BARCODE, barcode);
-                i.putExtra(Global.INTENT_KEY_SENDER, ((BarcodeScannerActivity)getActivity()).getSelfNavDrawerItem());
-                startActivity(i);
-            } else {
-                createSnackBar(R.string.error_message_no_internet);
-                restartCamera();
+    private View.OnTouchListener mOnTouch = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    v.animate().setDuration(100)
+                            .scaleX(0.75f)
+                            .scaleY(0.75f);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    v.animate().setDuration(100)
+                            .scaleX(1f)
+                            .scaleY(1f);
+                    break;
+                case MotionEvent.ACTION_CANCEL:
+                    break;
             }
-        } else {
-            createSnackBar(R.string.error_message_barcode_format);
-            restartCamera();
+            return false;
         }
+    };
 
-        mScannerView.startCamera(mCameraNumber);
+    public BarcodeScannerActivityFragment() {
     }
 
     @Override
@@ -93,94 +61,114 @@ public class BarcodeScannerActivityFragment extends Fragment implements ZBarScan
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_barcode_scanner, container, false);
 
-        mScannerView = (ZBarScannerView) v.findViewById(R.id.scanner_view);
-        mScannerView.setFormats(new ArrayList<BarcodeFormat>(Collections.singletonList(BarcodeFormat.I25)));
+        if (!checkCameraHardware(getActivity())) {
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("No On Device!")
+                    .setMessage("Going back...")
+                    .show();
 
-        mToggleCameraImageButton = (AppCompatImageButton) v.findViewById(R.id.appcompat_image_button_toggleCamera);
-        if (android.hardware.Camera.getNumberOfCameras() < 2) {
-            mToggleCameraImageButton.setVisibility(View.INVISIBLE);
-            mToggleCameraImageButton.setClickable(false);
+            getActivity().finish();
         }
 
-        mToggleCameraImageButton.setTag(R.drawable.ic_camera_front_white_36dp);
-        mToggleCameraImageButton.setOnTouchListener(new View.OnTouchListener() {
+
+        mCameraModule = new CameraModule(getActivity());
+
+        mCameraModule.setInstantiatedListener(new CameraInstantiatedListener() {
+            @Override
+            public void onInstantiation() {
+                mTextureView.setRotation(mCameraModule.getViewFinderRotation());
+                mTextureView.setLayoutParams(mCameraModule.getLayoutParams());
+            }
+        });
+
+        mCameraModule.setScanListener(new ScanSuccessfulListener() {
+            @Override
+            public void onScanSuccessful(String result) {
+                processBarcode(result);
+            }
+        });
+
+        mTextureView = (TextureView) v.findViewById(R.id.camera_preview);
+        mTextureView.setSurfaceTextureListener(mCameraModule);
+
+        mTextureView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        mToggleCameraImageButton.animate().setDuration(100)
-                                .scaleX(0.75f)
-                                .scaleY(0.75f);
-                        return true;
-                    case MotionEvent.ACTION_CANCEL:
-                    case MotionEvent.ACTION_UP:
-                        mToggleCameraImageButton.animate().setDuration(100)
-                                .scaleX(1f)
-                                .scaleY(1f);
-
-                        mScannerView.stopCamera();
-                        if (R.drawable.ic_camera_rear_white_36dp ==
-                                Integer.parseInt(mToggleCameraImageButton.getTag().toString())) {
-                            mScannerView.startCamera(0);
-                            mCameraNumber = 0;
-                            mToggleCameraImageButton.setImageResource(R.drawable.ic_camera_front_white_36dp);
-                            mToggleCameraImageButton.setTag(R.drawable.ic_camera_front_white_36dp);
-                        } else {
-                            mScannerView.startCamera(1);
-                            mCameraNumber = 1;
-                            mToggleCameraImageButton.setImageResource(R.drawable.ic_camera_rear_white_36dp);
-                            mToggleCameraImageButton.setTag(R.drawable.ic_camera_rear_white_36dp);
-                        }
-                        // Handle touch result here
-                        return true;
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    mCameraModule.focusCamera(event.getX(),
+                                            event.getY(),
+                                            mTextureView.getWidth(),
+                                            mTextureView.getHeight());
                 }
-                // Dispatch touch result to parent
                 return false;
             }
         });
 
-        mToggleFlashImageButton = (AppCompatImageButton) v.findViewById(R.id.appcompat_image_button_toggleFlash);
-        if (!getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
+        mBackButtonImageView = (ImageView) v.findViewById(R.id.image_view_backButton);
+        mBackButtonImageView.setOnTouchListener(mOnTouch);
+        mBackButtonImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavUtils.navigateUpFromSameTask(getActivity());
+            }
+        });
+
+        mToggleFlashImageButton = (AppCompatImageButton) v.findViewById(R.id.image_button_toggleFlash);
+        if(!checkHasFlash(getActivity())) {
             mToggleFlashImageButton.setVisibility(View.GONE);
-            mToggleFlashImageButton.setClickable(false);
         }
-        mToggleFlashImageButton.setOnTouchListener(new View.OnTouchListener() {
+        mToggleFlashImageButton.setOnTouchListener(mOnTouch);
+        mToggleFlashImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        v.animate().setDuration(100).scaleX(0.75f).scaleY(0.75f);
-                        return true;
-                    case MotionEvent.ACTION_CANCEL:
-                    case MotionEvent.ACTION_UP:
-                        v.animate().setDuration(100).scaleX(1f).scaleY(1f);
-
-                        setFlash(!mScannerView.getFlash());
-
-                        // Handle touch event here
-                        return true;
-                }
-                // Dispatch touch event to parent
-                return false;
+            public void onClick(View v) {
+                v.setSelected(!v.isSelected());
+                mCameraModule.setFlash(v.isSelected());
             }
         });
-
-        setFlash(false);
 
         return v;
+    }
+
+    private boolean checkCameraHardware(Context context) {
+        return context.getPackageManager()
+                .hasSystemFeature(PackageManager.FEATURE_CAMERA);
+    }
+
+    private boolean checkHasFlash(Context context) {
+        return context.getPackageManager()
+                .hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+    }
+
+
+    private void processBarcode(String barcode) {
+        if (!barcode.startsWith(getString(R.string.barcode_prefix))) {
+            Snackbar.make(getView(),
+                    getString(R.string.error_message_not_a_docket, barcode),
+                    Snackbar.LENGTH_SHORT)
+                    .show();
+            return;
+        } else {
+            barcode = barcode.substring(1);
+        }
+
+        if(NetworkUtils.networkIsAvailable(getActivity())) {
+            Intent i = new Intent(getActivity(), ResultPagerActivity.class);
+            i.putExtra(Global.INTENT_KEY_DOWNLOAD_TYPE, Global.DOWNLOAD_TYPE_BARCODE);
+            i.putExtra(Global.INTENT_KEY_BARCODE, barcode);
+            i.putExtra(Global.INTENT_KEY_SENDER, ((BarcodeScannerActivity) getActivity()).getSelfNavDrawerItem());
+            startActivity(i);
+        } else {
+            Snackbar.make(getView(),
+                    R.string.error_message_no_internet,
+                    Snackbar.LENGTH_SHORT)
+                    .show();
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mScannerView.startCamera();
-        setFlash(false);
-        mScannerView.setResultHandler(this);
+        mToggleFlashImageButton.setSelected(false);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        mScannerView.stopCamera();
-    }
 }

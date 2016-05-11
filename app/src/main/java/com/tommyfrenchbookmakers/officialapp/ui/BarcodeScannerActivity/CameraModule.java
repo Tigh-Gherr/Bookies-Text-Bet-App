@@ -1,4 +1,4 @@
-package com.tommyfrenchbookmakers.officialapp.ui.CameraPreviewActivity;
+package com.tommyfrenchbookmakers.officialapp.ui.BarcodeScannerActivity;
 
 import android.content.Context;
 import android.graphics.Bitmap;
