@@ -149,7 +149,7 @@ public final class BettingUtils {
                 // TODO: Add calculation
                 break;
             case Global.WAGER_CATEGORY_SPECIAL:
-                // TODO: Add interface for special bets.
+                // TODO: Add user interface for special bets.
                 // TODO: Add calculation.
                 break;
             case Global.WAGER_CATEGORY_PENDING_RETURN:
