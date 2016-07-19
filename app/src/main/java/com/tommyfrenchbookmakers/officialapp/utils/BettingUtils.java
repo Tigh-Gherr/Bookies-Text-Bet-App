@@ -11,7 +11,7 @@ import org.paukov.combinatorics.Generator;
 import org.paukov.combinatorics.ICombinatoricsVector;
 
 /**
- * Created by Tíghearnán on 06/09/2015.
+ * Created by Tíghearnán Carroll on 06/09/2015.
  */
 public final class BettingUtils {
 
