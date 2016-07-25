@@ -65,16 +65,12 @@ public class BetSlip {
 
     public boolean allInSameRace() {
         int marketIds[] = getMarketIds();
-//
-//        for(int i = 0; i < marketIds.length - 1; i++) {
-//            for(int j = i + 1; j < marketIds.length; j++) {
-//                if(marketIds[i] != marketIds[j]) return false;
-//            }
-//        }
 
         for(int i = 1; i < marketIds.length; i++) {
-            if(marketIds[0] != marketIds[i]) return false;
-        }
+            if(marketIds[0] != marketIds[i]) {
+				return false;
+			}
+		}
 
         return true;
     }
@@ -82,8 +78,10 @@ public class BetSlip {
     public boolean canBeTricast() {
         int size = mSelections.size();
         for(int i = 0; i < size; i++) {
-            if(!mSelections.get(i).isTricastSelection()) return false;
-        }
+            if(!mSelections.get(i).isTricastSelection()) {
+				return false;
+			}
+		}
         return true;
     }
 
