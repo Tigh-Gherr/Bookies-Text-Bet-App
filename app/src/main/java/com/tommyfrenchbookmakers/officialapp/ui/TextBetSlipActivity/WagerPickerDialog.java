@@ -147,7 +147,9 @@ public class WagerPickerDialog extends AppCompatDialogFragment {
                         break;
                     case Global.WAGER_CATEGORY_PENDING_RETURN:
                         if(w == WagerType.TRICAST || w == WagerType.COMB_TRICAST) {
-                            if(canBeTricast) wagerTypes.add(w);
+							if(canBeTricast) {
+								 wagerTypes.add(w);
+							}
                         } else {
                             if (allSameRace && minNumberOfSelections == mNumberOfSelections) {
                                 wagerTypes.add(w);
