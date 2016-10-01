@@ -67,9 +67,10 @@ public enum WagerType {
     }
 
     public static WagerType getValueOf(String name) {
-        for (WagerType w :
-                WagerType.values()) {
-            if(w.getName().equals(name)) return w;
+        for (WagerType w : WagerType.values()) {
+            if(w.getName().equals(name)) {
+                return w;
+            }
         }
 
         return null;
