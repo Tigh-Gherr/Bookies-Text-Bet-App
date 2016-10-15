@@ -364,7 +364,13 @@ public class TextBetSlipActivityFragment extends Fragment {
                                 public void onClick(View v) {
                                     addWager(position, toBeDeleted);
                                 }
-                            }).show();
+                            }).setCallback(new Snackbar.Callback() {
+                        @Override
+                        public void onDismissed(Snackbar snackbar, int event) {
+                            super.onDismissed(snackbar, event);
+                            mFloatingMenu.animate().translationY(0);
+                        }
+                    }).show();
                 }
             }
 
@@ -414,7 +420,13 @@ public class TextBetSlipActivityFragment extends Fragment {
                                     updateVisibilities();
                                     removeIllegalWagers();
                                 }
-                            }).show();
+                            }).setCallback(new Snackbar.Callback() {
+                        @Override
+                        public void onDismissed(Snackbar snackbar, int event) {
+                            super.onDismissed(snackbar, event);
+                            mFloatingMenu.animate().translationY(0);
+                        }
+                    }).show();
 
                     updateVisibilities();
                     removeIllegalWagers();
