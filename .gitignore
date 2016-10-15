@@ -9,3 +9,4 @@
 app/app.iml
 build.gradle
 gradle/wrapper/gradle-wrapper.properties
+*.apk
