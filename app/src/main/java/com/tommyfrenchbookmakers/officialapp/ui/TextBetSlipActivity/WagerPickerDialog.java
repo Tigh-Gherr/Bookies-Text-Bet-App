@@ -88,7 +88,6 @@ public class WagerPickerDialog extends AppCompatDialogFragment {
         });
 
 
-
         builder.setView(v).setTitle(R.string.dialog_title_new_wager)
                 .setPositiveButton(R.string.dialog_button_add, new DialogInterface.OnClickListener() {
                     @Override
@@ -119,56 +118,58 @@ public class WagerPickerDialog extends AppCompatDialogFragment {
         boolean canBeTricast = allSameRace && betslip.canBeTricast();
 
         int length = WagerType.values().length;
-        for(int i = 0; i < length; i++) {
+        for (int i = 0; i < length; i++) {
             WagerType w = WagerType.values()[i];
             int minNumberOfSelections = w.getMinNumberOfSelections();
             // Bare minimum for a wager to be considered.
-            if (minNumberOfSelections <= mNumberOfSelections) {
-
-                switch (w.getCategory()) {
-                    case Global.WAGER_CATEGORY_MULTIPLE:
-                        if(w == WagerType.SINGLE) {
-                            wagerTypes.add(w);
-                        } else {
-                            if(!hasSameRace) {
-                                wagerTypes.add(w);
-                            }
-                        }
-                        break;
-                    case Global.WAGER_CATEGORY_FULL_COVER_WITH_SINGLES:
-                        if(!hasSameRace && minNumberOfSelections == mNumberOfSelections) {
-                            wagerTypes.add(w);
-                        }
-                        break;
-                    case Global.WAGER_CATEGORY_FULL_COVER_WITHOUT_SINGLES:
-                        if(!hasSameRace && minNumberOfSelections == mNumberOfSelections) {
-                            wagerTypes.add(w);
-                        }
-                        break;
-                    case Global.WAGER_CATEGORY_PENDING_RETURN:
-                        if(w == WagerType.TRICAST || w == WagerType.COMB_TRICAST) {
-							if(canBeTricast) {
-								 wagerTypes.add(w);
-							}
-                        } else {
-                            if (allSameRace && minNumberOfSelections == mNumberOfSelections) {
-                                wagerTypes.add(w);
-                            }
-                        }
-                        break;
-                    case Global.WAGER_CATEGORY_SPECIAL:
-                        if(!hasSameRace && minNumberOfSelections == mNumberOfSelections) {
-                            wagerTypes.add(w);
-                        }
-                        break;
-                    case Global.WAGER_CATEGORY_UP_AND_DOWN:
-                        if(!hasSameRace && minNumberOfSelections == mNumberOfSelections) {
-                            wagerTypes.add(w);
-                        }
-                        break;
-                }
-
+            if (minNumberOfSelections > mNumberOfSelections) {
+                continue;
             }
+
+            switch (w.getCategory()) {
+                case Global.WAGER_CATEGORY_MULTIPLE:
+                    if (w == WagerType.SINGLE) {
+                        wagerTypes.add(w);
+                    } else {
+                        if (!hasSameRace) {
+                            wagerTypes.add(w);
+                        }
+                    }
+                    break;
+                case Global.WAGER_CATEGORY_FULL_COVER_WITH_SINGLES:
+                    if (!hasSameRace && minNumberOfSelections == mNumberOfSelections) {
+                        wagerTypes.add(w);
+                    }
+                    break;
+                case Global.WAGER_CATEGORY_FULL_COVER_WITHOUT_SINGLES:
+                    if (!hasSameRace && minNumberOfSelections == mNumberOfSelections) {
+                        wagerTypes.add(w);
+                    }
+                    break;
+                case Global.WAGER_CATEGORY_PENDING_RETURN:
+                    if (w == WagerType.TRICAST || w == WagerType.COMB_TRICAST) {
+                        if (canBeTricast) {
+                            wagerTypes.add(w);
+                        }
+                    } else {
+                        if (allSameRace && minNumberOfSelections == mNumberOfSelections) {
+                            wagerTypes.add(w);
+                        }
+                    }
+                    break;
+                case Global.WAGER_CATEGORY_SPECIAL:
+                    if (!hasSameRace && minNumberOfSelections == mNumberOfSelections) {
+                        wagerTypes.add(w);
+                    }
+                    break;
+                case Global.WAGER_CATEGORY_UP_AND_DOWN:
+                    if (!hasSameRace && minNumberOfSelections == mNumberOfSelections) {
+                        wagerTypes.add(w);
+                    }
+                    break;
+            }
+
+
         }
 
         return wagerTypes;
